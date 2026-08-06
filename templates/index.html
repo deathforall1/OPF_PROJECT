@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futures Basis Forecasting via ARIMA Model | Project 13</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121824;
+            --bg-card: #1a2234;
+            --border-color: #2a364f;
+            --accent-blue: #38bdf8;
+            --accent-purple: #818cf8;
+            --accent-green: #34d399;
+            --accent-pink: #f472b6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(18, 24, 36, 0.95), rgba(26, 34, 52, 0.95));
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .badge-dhan {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--accent-blue);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .main-container {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 1.5rem;
+        }
+
+        .control-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            height: fit-content;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        select, input[type="number"] {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .order-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .content-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-secondary);
+            padding: 0.4rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 7px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .metric-card .title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .metric-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-card .subtext {
+            font-size: 0.75rem;
+            color: var(--accent-green);
+        }
+
+        .chart-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 380px;
+            width: 100%;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            background: var(--bg-card);
+        }
+
+        .code-box {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #c9d1d9;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <h1>Topic 13: Forecasting Futures basis ARIMA Model</h1>
+            <p>Indian Equity & Commodities Derivatives Econometric Forecasting Suite</p>
+        </div>
+        <div class="badge-dhan">
+            <div class="pulse-dot"></div>
+            <span>Dhan API Connected (Client ID: 1112620458)</span>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Control Sidebar -->
+        <div class="control-panel">
+            <div class="control-group">
+                <label>Select Asset Ticker</label>
+                <select id="assetSelect">
+                    <option value="NIFTY50">NIFTY 50 Futures</option>
+                    <option value="BANKNIFTY">BANK NIFTY Futures</option>
+                    <option value="GOLD">Gold Futures</option>
+                    <option value="CRUDEOIL">Crude Oil Futures</option>
+                    <option value="SP500">S&P 500 Futures</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Modeling Target</label>
+                <select id="targetSelect">
+                    <option value="Basis">Futures Basis (Futures - Spot)</option>
+                    <option value="Basis_Pct">Basis Yield %</option>
+                    <option value="Futures">Futures Price Level</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Model Optimization</label>
+                <select id="autoSelect">
+                    <option value="true">Auto-ARIMA (AICc Minimization)</option>
+                    <option value="false">Manual ARIMA Specification</option>
+                </select>
+            </div>
+
+            <div class="control-group" id="manualOrderGroup" style="display: none;">
+                <label>ARIMA Order (p, d, q)</label>
+                <div class="order-inputs">
+                    <input type="number" id="pInput" value="1" min="0" max="5" placeholder="p">
+                    <input type="number" id="dInput" value="1" min="0" max="2" placeholder="d">
+                    <input type="number" id="qInput" value="1" min="0" max="5" placeholder="q">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Forecast Horizon (Days)</label>
+                <input type="number" id="horizonInput" value="15" min="5" max="30">
+            </div>
+
+            <button class="btn-primary" onclick="runAnalysis()">Run Model & Forecast</button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-panel">
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('overview')">Market Overview</button>
+                <button class="tab-btn" onclick="switchTab('diagnostics')">Econometric Diagnostics</button>
+                <button class="tab-btn" onclick="switchTab('forecast')">ARIMA Forecasts</button>
+                <button class="tab-btn" onclick="switchTab('backtest')">Strategy Backtest</button>
+            </div>
+
+            <!-- Tab 1: Overview -->
+            <div id="tab-overview" class="tab-content active">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="title">Latest Spot Price</div>
+                        <div class="value" id="cardSpot">₹0.00</div>
+                        <div class="subtext">Underlying Index/Asset</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Latest Futures Price</div>
+                        <div class="value" id="cardFutures">₹0.00</div>
+                        <div class="subtext">Derivatives Contract</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Current Basis</div>
+                        <div class="value" id="cardBasis">₹0.00</div>
+                        <div class="subtext" id="cardBasisPct">0.00% Spread</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Data Points</div>
+                        <div class="value" id="cardObs">252</div>
+                        <div class="subtext">1-Year Historical Series</div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Spot Price vs. Futures Price Dynamics</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Futures Basis ($F_t - S_t$) & Cost-of-Carry Convergence</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="basisChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Diagnostics -->
+            <div id="tab-diagnostics" class="tab-content">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Stationarity Diagnostic Tests (ADF & KPSS)</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Series State</th>
+                                    <th>ADF Statistic</th>
+                                    <th>ADF p-value</th>
+                                    <th>KPSS Stat</th>
+                                    <th>Stationary Status</th>
+                                    <th>Conclusion</th>
+                                </tr>
+                            </thead>
+                            <tbody id="diagnosticTableBody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Autocorrelation (ACF) & Partial Autocorrelation (PACF)</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="acfPacfChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Forecast -->
+            <div id="tab-forecast" class="tab-content">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="title">Optimal ARIMA Order</div>
+                        <div class="value" id="cardOrder">(1, 1, 1)</div>
+                        <div class="subtext" id="cardAic">AIC: 0.00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Forecast RMSE</div>
+                        <div class="value" id="cardRmse">0.00</div>
+                        <div class="subtext">Root Mean Sq Error</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Directional Accuracy</div>
+                        <div class="value" id="cardHitRatio">0.0%</div>
+                        <div class="subtext">Out-of-Sample Hit Ratio</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Residual Ljung-Box</div>
+                        <div class="value" id="cardLjungBox">p > 0.05</div>
+                        <div class="subtext">White-Noise Verified</div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>ARIMA Out-of-Sample Multi-Step Forecast (95% & 80% CI Bands)</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Model Summary Output</h3>
+                    </div>
+                    <div class="code-box" id="modelSummaryBox">Loading model diagnostics...</div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Backtest -->
+            <div id="tab-backtest" class="tab-content">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="title">ARIMA Strategy Return</div>
+                        <div class="value" style="color: var(--accent-green);" id="cardStratReturn">0.0%</div>
+                        <div class="subtext">Cumulative Strategy Return</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Benchmark Return</div>
+                        <div class="value" id="cardBenchReturn">0.0%</div>
+                        <div class="subtext">Buy & Hold Futures</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Sharpe Ratio</div>
+                        <div class="value" id="cardSharpe">0.00</div>
+                        <div class="subtext">Risk-Adjusted Alpha</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="title">Max Drawdown</div>
+                        <div class="value" style="color: var(--accent-pink);" id="cardDrawdown">0.0%</div>
+                        <div class="subtext">Peak-to-Trough Loss</div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>ARIMA Signal Strategy Equity Curve vs. Benchmark</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="backtestChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let overviewChart, basisChart, acfPacfChart, forecastChart, backtestChart;
+
+        document.getElementById('autoSelect').addEventListener('change', function(e) {
+            document.getElementById('manualOrderGroup').style.display = e.target.value === 'false' ? 'flex' : 'none';
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        async function runAnalysis() {
+            const asset = document.getElementById('assetSelect').value;
+            const target = document.getElementById('targetSelect').value;
+            const autoSelect = document.getElementById('autoSelect').value === 'true';
+            const p = parseInt(document.getElementById('pInput').value);
+            const d = parseInt(document.getElementById('dInput').value);
+            const q = parseInt(document.getElementById('qInput').value);
+            const horizon = parseInt(document.getElementById('horizonInput').value);
+
+            // Fetch Dataset
+            const dsRes = await fetch(`/api/dataset?asset=${asset}`);
+            const ds = await dsRes.json();
+
+            updateOverview(ds);
+
+            // Fetch Diagnostics
+            const diagRes = await fetch(`/api/diagnostics?asset=${asset}&target=${target}`);
+            const diag = await diagRes.json();
+
+            updateDiagnostics(diag);
+
+            // Fetch Forecast
+            const fcRes = await fetch('/api/forecast', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({asset, target, auto_select: autoSelect, p, d, q, forecast_horizon: horizon})
+            });
+            const fc = await fcRes.json();
+
+            updateForecast(ds, fc);
+
+            // Fetch Backtest
+            const btRes = await fetch('/api/backtest', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({asset})
+            });
+            const bt = await btRes.json();
+
+            updateBacktest(bt);
+        }
+
+        function updateOverview(ds) {
+            const lastIdx = ds.spot.length - 1;
+            document.getElementById('cardSpot').innerText = '₹' + ds.spot[lastIdx].toLocaleString(undefined, {maximumFractionDigits: 2});
+            document.getElementById('cardFutures').innerText = '₹' + ds.futures[lastIdx].toLocaleString(undefined, {maximumFractionDigits: 2});
+            document.getElementById('cardBasis').innerText = '₹' + ds.basis[lastIdx].toFixed(2);
+            document.getElementById('cardBasisPct').innerText = ds.basis_pct[lastIdx].toFixed(2) + '% Spread';
+            document.getElementById('cardObs').innerText = ds.spot.length;
+
+            // Render Overview Chart
+            if (overviewChart) overviewChart.destroy();
+            const ctx1 = document.getElementById('overviewChart').getContext('2d');
+            overviewChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ds.dates,
+                    datasets: [
+                        { label: 'Spot Price', data: ds.spot, borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0 },
+                        { label: 'Futures Price', data: ds.futures, borderColor: '#818cf8', borderWidth: 2, pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Render Basis Chart
+            if (basisChart) basisChart.destroy();
+            const ctx2 = document.getElementById('basisChart').getContext('2d');
+            basisChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ds.dates,
+                    datasets: [
+                        { label: 'Futures Basis (F - S)', data: ds.basis, borderColor: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.1)', fill: true, borderWidth: 1.5, pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function updateDiagnostics(diag) {
+            const tbody = document.getElementById('diagnosticTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td>Level Series (${diag.target})</td>
+                    <td>${diag.adf_level.adf_statistic.toFixed(3)}</td>
+                    <td>${diag.adf_level.p_value.toFixed(4)}</td>
+                    <td>${diag.kpss_level.kpss_statistic ? diag.kpss_level.kpss_statistic.toFixed(3) : 'N/A'}</td>
+                    <td><span style="color: ${diag.adf_level.is_stationary ? '#34d399' : '#f472b6'}; font-weight: 600;">${diag.adf_level.is_stationary ? 'Stationary' : 'Non-Stationary'}</span></td>
+                    <td>${diag.adf_level.conclusion}</td>
+                </tr>
+                <tr>
+                    <td>First Differenced Series (Δ ${diag.target})</td>
+                    <td>${diag.adf_diff.adf_statistic.toFixed(3)}</td>
+                    <td>${diag.adf_diff.p_value.toFixed(4)}</td>
+                    <td>${diag.kpss_diff.kpss_statistic ? diag.kpss_diff.kpss_statistic.toFixed(3) : 'N/A'}</td>
+                    <td><span style="color: #34d399; font-weight: 600;">Stationary</span></td>
+                    <td>${diag.adf_diff.conclusion}</td>
+                </tr>
+            `;
+
+            if (acfPacfChart) acfPacfChart.destroy();
+            const ctx = document.getElementById('acfPacfChart').getContext('2d');
+            acfPacfChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: diag.acf_pacf_level.lags,
+                    datasets: [
+                        { label: 'ACF', data: diag.acf_pacf_level.acf, backgroundColor: '#38bdf8' },
+                        { label: 'PACF', data: diag.acf_pacf_level.pacf, backgroundColor: '#818cf8' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function updateForecast(ds, fc) {
+            document.getElementById('cardOrder').innerText = `(${fc.fit_info.order.join(', ')})`;
+            document.getElementById('cardAic').innerText = `AIC: ${fc.fit_info.aic.toFixed(2)}`;
+            document.getElementById('cardRmse').innerText = fc.walk_forward.metrics.rmse.toFixed(3);
+            document.getElementById('cardHitRatio').innerText = fc.walk_forward.metrics.directional_accuracy_pct.toFixed(1) + '%';
+            document.getElementById('cardLjungBox').innerText = fc.residuals.is_white_noise ? 'p = ' + fc.residuals.ljung_box_pvalue.toFixed(3) : 'Autocorrelated';
+
+            document.getElementById('modelSummaryBox').innerText = fc.summary;
+
+            if (forecastChart) forecastChart.destroy();
+            const ctx = document.getElementById('forecastChart').getContext('2d');
+
+            const trainDates = fc.train_dates.slice(-60);
+            const trainValues = fc.train_values.slice(-60);
+
+            const fcDates = fc.out_forecast.dates;
+            const fcMean = fc.out_forecast.mean;
+            const ci95Upper = fc.out_forecast.ci_95_upper;
+            const ci95Lower = fc.out_forecast.ci_95_lower;
+
+            const allLabels = [...trainDates, ...fcDates];
+            const histData = [...trainValues, ...Array(fcDates.length).fill(null)];
+            const fcData = [...Array(trainValues.length - 1).fill(null), trainValues[trainValues.length-1], ...fcMean];
+            const upperData = [...Array(trainValues.length - 1).fill(null), trainValues[trainValues.length-1], ...ci95Upper];
+            const lowerData = [...Array(trainValues.length - 1).fill(null), trainValues[trainValues.length-1], ...ci95Lower];
+
+            forecastChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: allLabels,
+                    datasets: [
+                        { label: 'Historical', data: histData, borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0 },
+                        { label: 'ARIMA Forecast', data: fcData, borderColor: '#f472b6', borderWidth: 2.5, pointRadius: 2 },
+                        { label: '95% Upper Bound', data: upperData, borderColor: 'rgba(244, 114, 182, 0.3)', borderDash: [4, 4], pointRadius: 0 },
+                        { label: '95% Lower Bound', data: lowerData, borderColor: 'rgba(244, 114, 182, 0.3)', borderDash: [4, 4], pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function updateBacktest(bt) {
+            document.getElementById('cardStratReturn').innerText = bt.metrics.total_strategy_return_pct.toFixed(2) + '%';
+            document.getElementById('cardBenchReturn').innerText = bt.metrics.total_benchmark_return_pct.toFixed(2) + '%';
+            document.getElementById('cardSharpe').innerText = bt.metrics.sharpe_ratio.toFixed(2);
+            document.getElementById('cardDrawdown').innerText = bt.metrics.max_drawdown_pct.toFixed(2) + '%';
+
+            if (backtestChart) backtestChart.destroy();
+            const ctx = document.getElementById('backtestChart').getContext('2d');
+            backtestChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: bt.dates,
+                    datasets: [
+                        { label: 'ARIMA Strategy', data: bt.strategy_returns_pct, borderColor: '#34d399', borderWidth: 2.5, pointRadius: 0 },
+                        { label: 'Benchmark (Futures)', data: bt.benchmark_returns_pct, borderColor: '#94a3b8', borderWidth: 1.5, borderDash: [3, 3], pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Run initial load
+        window.addEventListener('DOMContentLoaded', runAnalysis);
+    </script>
+</body>
+</html>
