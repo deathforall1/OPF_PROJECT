@@ -1,0 +1,13 @@
+{
+  "client_id": "1112620458",
+  "api_key": "0c668a3b",
+  "api_secret": "1a8caf67-4bd2-4fc2-b6b3-41eb1c353f93",
+  "access_token": "YOUR_DAILY_DHAN_ACCESS_TOKEN_HERE",
+  "base_url": "https://api.dhan.co/v2/",
+  "mcx_security_ids": {
+    "GOLD": "MCX_GOLD_FUT_SEC_ID",
+    "COPPER": "MCX_COPPER_FUT_SEC_ID",
+    "COTTON": "MCX_COTTON_FUT_SEC_ID",
+    "CRUDEOIL": "MCX_CRUDE_FUT_SEC_ID"
+  }
+}
