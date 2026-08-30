@@ -174,8 +174,8 @@ gave the discrepancies below their weight — where the rebuild and the workbook
 the workbook contains an error.
 
 \vspace{2mm}
-{\footnotesize
-\begin{tabular}{@{}p{0.035\textwidth}p{0.17\textwidth}p{0.075\textwidth}p{0.35\textwidth}p{0.30\textwidth}@{}}
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.032\textwidth}p{0.160\textwidth}p{0.068\textwidth}p{0.345\textwidth}p{0.300\textwidth}@{}}
 \hrow \wh{\#} & \wh{Where} & \wh{Severity} & \wh{Finding} & \wh{Action taken}\\
 1 & UTCL Sensitivity grid & HIGH & The two-way grid discounts P\&L row 17 (depreciation) instead of row 24 (FCFF), builds its terminal value off row 14 (revenue) instead of row 21 (NOPAT), and omits the non-controlling interest from the bridge. It prints Rs 27,314--117,876 per share against a base case of Rs 5,148. & Rebuilt. Exhibit U8 is the corrected grid. Fixed in the corrected workbook.\\
 \arow 2 & UTCL Source-Data NOPAT & HIGH & Historical NOPAT is computed as EBIT $\times(1-\text{Assumptions!}C4)$, but the tax rate lives in \texttt{B4}; \texttt{C4} is empty, so NOPAT equals EBIT and the published ten-year ROIC series is pre-tax. & Corrected to \texttt{B4}. Exhibit U4 uses the after-tax series (FY26: 10.8\%, not 14.4\%).\\
@@ -227,8 +227,8 @@ presenting, not because they change the answer.
 % ---------------------------------------------------------------- C
 \section*{C\quad The five consistencies, side by side}
 
-{\footnotesize
-\begin{tabular}{@{}p{0.028\textwidth}p{0.10\textwidth}p{0.055\textwidth}p{0.355\textwidth}p{0.055\textwidth}p{0.355\textwidth}@{}}
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.026\textwidth}p{0.095\textwidth}p{0.050\textwidth}p{0.352\textwidth}p{0.050\textwidth}p{0.352\textwidth}@{}}
 \hrow \wh{\#} & \wh{Consistency} & \wh{AMB} & \wh{Ambuja: evidence and gap} & \wh{UTCL} & \wh{UltraTech: evidence and gap}\\
 1 & Assumptions & \PASS & Volume is capacity $\times$ utilisation, so growth is tied to physical assets. Capex is an explicit input anchored to the expansion plan. Terminal year forced to steady state with reinvestment $= g \times$ operating invested capital. & \PASS & Same construction. Growth requires reinvestment throughout; capex is explicit and anchored to guidance; terminal year is a forced steady state.\\
 \arow 2 & Risk & \PASS & FCFF at WACC; CCF and APV at $\rho$; FCFE at $K_e$; EVA at WACC. Constant $D/V$ rebalancing applied in unlever, relever and shield. $\rho = \text{WACC}+K_d t(D/V)$ ties. & \PASS & Identical treatment. At a 6.1\% $D/V$ the policy choice actually matters here, and it is applied consistently.\\
@@ -604,22 +604,41 @@ Wikipedia.
 \arow 20 & Both & Statutory tax rate 25.168\% & Own assumption & Section 115BAA: 22\% plus 10\% surcharge plus 4\% cess & 26-Aug-26\\
 21 & Both & Peer financials and market capitalisations & Peer annual reports & Shree Cement, JK Cement, Ramco Cements, own FY2025-26 reports & 26-Aug-26\\
 \arow 22 & Both & Price series for the beta regression & Vendor series & Supplied with an adjusted-close column, a vendor convention rather than exchange bhavcopy format. Labelled vendor-sourced. & 26-Aug-26\\
+23 & AMB & Promoter holding 67.64\% at 31-Mar-26 (67.68\% voting rights); 67.29\% from 10-Apr-26 & Ambuja Cements Ltd & Company disclosure of the Sanghi amalgamation share issue of 1,29,93,708 equity shares. Primary-sourced and reliable. & 30-Aug-26\\
+\arow 24 & Both & \textbf{OPEN:} board composition and designations & Company annual reports & The Corporate Governance Report in each FY2025-26 annual report could not be opened directly from the working environment: the company and exchange domains were unreachable through the network egress policy in force. Names and designations in Sections 2 and 14 are recorded pending verification against that report. & 30-Aug-26\\
+25 & Both & \textbf{OPEN:} shareholding pattern by investor category & Exchange filings & The Regulation 31 quarterly shareholding filing could not be opened for the same reason. Only the promoter/free-float split is presented, and only for Ambuja, where it is company-disclosed. The institutional split (FPI, mutual fund, insurance, retail) is deliberately NOT printed rather than taken from an aggregator. & 30-Aug-26\\
+\arow 26 & UTCL & \textbf{OPEN:} promoter holding percentage & Exchange filings & UltraTech's promoter holding at 31-Mar-2026 could not be sourced primarily and is therefore described qualitatively (Aditya Birla group through Grasim Industries) rather than quantified. & 30-Aug-26\\
 \end{tabular}\par}
 
+\vspace{2mm}
+\begin{warnbox}\boxtitler{Why three rows above say OPEN rather than carrying a number}
+Board rosters and category-level shareholding data are freely available on financial
+aggregator sites. This report's sourcing policy excludes them, and the company and
+exchange domains were unreachable from the environment in which it was prepared. The
+choice was therefore between printing an aggregator figure in a report whose central
+claim is source discipline, or printing the structure and marking the gap. We marked
+the gap. Each item is a single lookup in the FY2025-26 annual report and the
+Regulation 31 filing, and Sections 2 and 14 are laid out so the figures drop straight
+in.
+\end{warnbox}
+
 \vspace{3mm}
-{\footnotesize\bfseries\color{navy}Authoritative landing pages}\par\vspace{1mm}
-{\scriptsize
-Ambuja financials: \texttt{ambujacement.com/investors/financials} \textbullet\
-UltraTech: \texttt{ultratechcement.com/investors/investor-reports} \textbullet\
-Exchange filings: \texttt{nseindia.com/companies-listing/corporate-filings-financial-results} \textbullet\
-G-Sec yields: \texttt{rbi.org.in/Scripts/BS\_ViewBulletin.aspx} \textbullet\
-ERP and default spreads: \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datacurrent.html} \textbullet\
-Sector betas: \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datafile/Betas.html}\par
-\vspace{1mm}
-Deep links to individual PDFs are deliberately not given: they are unstable, and
-citing a precise document URL that was not actually followed would be worse than
-citing the page that was. Each report is identified by name, year and note reference
-in the table above, which is sufficient to locate the exact figure.\par}
+{\footnotesize\bfseries\color{navy}Authoritative landing pages}\par\vspace{1.5mm}
+{\scriptsize\raggedright
+\begin{tabular}{@{}p{0.30\textwidth}p{0.66\textwidth}@{}}
+Ambuja financials & \texttt{ambujacement.com/investors/financials}\\
+UltraTech financials & \texttt{ultratechcement.com/investors/investor-reports}\\
+Exchange filings & \texttt{nseindia.com/companies-listing/corporate-filings-financial-results}\\
+G-Sec par yields (FBIL series) & \texttt{rbi.org.in/Scripts/BS\_ViewBulletin.aspx}\\
+ERP and default spreads & \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datacurrent.html}\\
+Sector betas & \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datafile/Betas.html}\\
+\end{tabular}\par
+\vspace{1.5mm}
+Deep links to individual PDFs are deliberately not given: they are unstable, and citing
+a precise document URL that was not actually followed would be worse than citing the
+page that was. Each report is identified by name, year and note reference in the table
+above, which is sufficient to locate the exact figure.\par}
+
 \clearpage
 
 % ---------------------------------------------------------------- J, K

@@ -5,7 +5,7 @@
 \ProvidesPackage{ibstyle}[2026/08/30 Equity research layout]
 
 \RequirePackage[a4paper,left=13mm,right=13mm,top=19mm,bottom=15mm,
-                headsep=5mm,footskip=8mm]{geometry}
+                headsep=4mm,headheight=19pt,footskip=8mm]{geometry}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{helvet}\renewcommand{\familydefault}{\sfdefault}
 \RequirePackage{graphicx,xcolor,array,booktabs,colortbl,longtable}
@@ -56,9 +56,19 @@
 \pagestyle{fancy}\fancyhf{}
 \renewcommand{\headrulewidth}{0.6pt}
 \renewcommand{\footrulewidth}{0pt}
+% \runhead{part label}  — text-only header (used by the appendix)
 \newcommand{\runhead}[1]{%
+  \renewcommand{\headrulewidth}{0.6pt}%
   \fancyhead[L]{\scriptsize\color{ash}\textsc{#1}}%
   \fancyhead[R]{\scriptsize\color{ash} Cement Sector \textbar\ Business Analysis \& Valuation \textbar\ \thepage}}
+
+% \runheadlogo{logo file in fig/}{part label} — puts the company mark on EVERY
+% page of that company's part. Drop a real logo PNG in at fig/<name>.png and
+% recompile to swap it in; nothing else changes.
+\newcommand{\runheadlogo}[2]{%
+  \renewcommand{\headrulewidth}{0.6pt}%
+  \fancyhead[L]{\raisebox{-1.5mm}{\includegraphics[height=4.0mm]{fig/#1}}}%
+  \fancyhead[R]{\scriptsize\color{ash}\textsc{#2} \textbar\ Business Analysis \& Valuation \textbar\ \thepage}}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{rule}\leaders\hrule height 0.6pt\hfill}}
 
 % ---------------------------------------------------------------- callouts
