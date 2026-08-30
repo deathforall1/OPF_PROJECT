@@ -1,0 +1,745 @@
+% =====================================================================
+%  PART III — COMBINED APPENDIX
+% =====================================================================
+\input{parts/_tables}
+
+\partpage{Part III}{Combined Appendix}{Supporting data, workings and disclosures for
+both companies. Everything in Parts I and II is reproducible from what follows and
+from the two accompanying Excel models.}
+
+\runhead{Part III \textbar\ Combined Appendix}
+
+% ---------------------------------------------------------------- A
+\banner{Appendix A}{Comparative chapter}{ONE EASY, ONE DIFFICULT}{Ambuja Rs 99.4}{UltraTech Rs 5,024}{Both SELL}{31 March 2026}
+
+\begin{paracol}{2}
+\section*{A\quad Comparative chapter: one easy, one difficult}
+\addtocounter{section}{0}
+
+The course pairs an easy-to-value company with a difficult one. UltraTech is the easy
+name and Ambuja the difficult one, and the distinction is not about size or quality
+but about how much had to be reconstructed before any return measure became
+meaningful.
+
+\subsection*{A.1\quad What made UltraTech easy}
+
+A ten-year audited standalone history that ties both ways in every year. Disclosed
+grey cement volume and capacity, which allow a capacity-times-utilisation forecast
+rather than an assumed growth rate. A reported effective tax rate of 26.1\% against a
+statutory 25.168\%, so no migration path is required. Explicit management guidance on
+capex and on a Rs 300 per tonne cost saving. One dominant product. The modelling
+problems were ordinary ones: choosing a horizon, handling circularity, and deciding
+what the terminal return should be.
+
+\subsection*{A.2\quad What made Ambuja difficult}
+
+Five distinct problems, each of which had to be solved before the model could produce
+a number worth reading.
+
+\subsubsection{Two years of consolidated history} The annual report provides
+FY2025-26 and a restated FY2024-25. Earlier consolidated years exist only in broker
+research. A return trend asserted from two points is thin, and the ten-year explicit
+forecast rests on a two-point base.
+
+\subsubsection{A restated year and a fifteen-month year} FY2024-25 was restated for
+the Sanghi and Penna amalgamation, and the transition year to March 2023 covered
+fifteen months. Any multi-year growth rate taken off the reported series without
+adjustment is wrong.
+
+\subsubsection{A tax line that is a net credit} Reported tax was a credit of
+Rs 2,338 crore, so reported profit exceeds pre-tax profit and the effective rate is
+minus 71\%. Every return in the report had to be recomputed at the statutory rate,
+and the credit decomposed into three drivers with different economics.
+
+\subsubsection{A merger in progress} At the valuation date the structure was a parent
+with listed subsidiaries; afterwards it is one entity with a 13.7\% larger share
+count. Both bases are shown.
+
+\subsubsection{A capital base that is one-third goodwill} Rs 22,979 crore of goodwill
+and intangibles, which must sit inside invested capital for the return measure but
+must be excluded from terminal reinvestment.
+
+\subsection*{A.3\quad How the five consistencies were preserved in each}
+
+In both models the same debt policy — constant $D/V$ with continuous rebalancing — is
+applied in the unlever, the relever, the discounting of the tax shield and the
+construction of the net borrowing line, and in both the identity $\rho = \text{WACC}
++ K_d t (D/V)$ ties exactly. In both, every liability included in the cost of capital
+is subtracted in the bridge and none is subtracted twice. Both carry a PARTIAL on
+asset consistency and a PARTIAL on multiplier consistency, for different reasons:
+Ambuja's depreciation base does not match its depreciation charge, while UltraTech's
+India Cements stake has an unreconciled treatment.
+
+\switchcolumn
+\ex{app_roic.png}{\textbf{Exhibit C1.} Both forecasts assume returns improve. Ambuja's
+never crosses the cost of capital on the goodwill-inclusive measure; UltraTech's
+starts above it. Source: authors' models.}
+
+\ex{app_gw.png}{\textbf{Exhibit C3.} The structural difference between the two
+companies in one number. Source: FY2025-26 annual reports.}
+
+\ex{app_gap.png}{\textbf{Exhibit C4.} Source: authors' models; NSE closes 30 March
+2026.}
+
+\begin{extab}{The two companies side by side}{Ambuja consolidated; UltraTech
+standalone core with subsidiaries added. Source: authors' models.}
+\begin{tabular}{@{}p{0.44\linewidth}rr@{}}
+\hrow \wh{} & \wh{Ambuja} & \wh{UltraTech}\\
+Classification & Difficult & Easy\\
+\arow Years of usable history & 2 & 10\\
+Explicit forecast horizon & 10 yr & 5 yr\\
+\arow Basis & Consol. & S/A core\\
+Volume FY26 (Mn.T) & 74.0 & 140.8\\
+\arow Utilisation FY26 & 67.9\% & 81.6\% \\
+EBITDA per tonne (Rs) & 886 & 1,097\\
+\arow ROIC FY26, incl. goodwill & 3.3\% & 10.8\% \\
+Goodwill \% of invested capital & 34.2\% & 8.9\% \\
+\arow WACC & 11.36\% & 11.43\% \\
+Terminal growth & 6.99\% & 6.99\% \\
+\arow Terminal ROIC & 11.9\% & 15.9\% \\
+Terminal value \% of EV & 72.3\% & 78.7\% \\
+\arow Implied terminal EV/EBITDA & 4.65x & 7.52x\\
+Traded EV/EBITDA & 17.0x & 21.1x\\
+\arow Price / book & 1.67x & 4.24x\\
+Return on equity & 3.8\% & 10.4\% \\
+\trow \textbf{Value per share (Rs)} & \textbf{99.4} & \textbf{5,024}\\
+\trow \textbf{Market price (Rs)} & \textbf{400.90} & \textbf{10,745}\\
+\trow \textbf{Downside} & \textbf{$-$75.2\%} & \textbf{$-$53.2\%}\\
+\end{tabular}
+\end{extab}
+
+\switchcolumn*
+\subsection*{A.4\quad Why two SELLs are consistent rather than contradictory}
+
+The obvious objection is that Ambuja trades \emph{below} the peer median on EV/EBITDA
+while UltraTech trades above it, so they cannot both be expensive. The steady-state
+identity resolves it. In a steady state, enterprise value over invested capital equals
+$(\text{ROIC}-g)/(\text{WACC}-g)$. Applying it to each company's own terminal return
+gives a justified EV/IC of 2.02x for UltraTech and 1.13x for Ambuja. At traded prices
+the actual figures are 3.31x and 1.66x, with invested capital measured including
+goodwill for both. So UltraTech's price is about 1.6 times what its own terminal
+return justifies, and Ambuja's about 1.5 times — and Ambuja's terminal return is
+itself the more speculative of the two, because it requires a crossing the company has
+never achieved.
+
+\begin{keybox}\boxtitle{The claim we are making}
+We are not claiming Ambuja is mispriced against its sector. We are claiming the sector
+is mispriced against the cash it generates, and that Ambuja is the member with the
+weakest returns. On today's return on capital, Ambuja's justified multiple of invested
+capital is \emph{negative}: at a 3.3\% return and 7.0\% growth every rupee reinvested
+destroys value, so no positive multiple of invested capital is warranted at all.
+\end{keybox}
+
+\subsection*{A.5\quad The known inconsistency between the two models}
+
+UltraTech holds 74.99\% of the listed India Cements and is modelled from a standalone
+core with the subsidiary block carried explicitly. Ambuja holds 50.05\% of the listed
+ACC and is modelled consolidated. The reason is data availability rather than
+principle: UltraTech publishes a ten-year standalone history and no comparable
+consolidated one, while Ambuja's consolidated statements were available and its
+standalone accounts exclude more than a third of the business. The irony is that
+UltraTech's stake is the more controlling of the two.
+
+The right resolution before submission is to consolidate both or to value both by sum
+of the parts. Until that is done this is a disclosed weakness rather than a hidden one,
+and its effect is quantified: UltraTech's omitted subsidiary block is under 10\% of
+group EBITDA, against 55\% at Ambuja.
+
+\switchcolumn
+\ex{app_evic.png}{\textbf{Exhibit C2.} The steady-state identity $EV/IC =
+(\text{ROIC}-g)/(\text{WACC}-g)$ evaluated on each company's own numbers. Ambuja's
+justified multiple on today's return is negative because its return sits below its
+growth rate. Source: authors' models.}
+
+\ex{app_mult.png}{\textbf{Exhibit C5.} The multiplier-consistency gap for both names.
+In each case the multiple our model implies is far below both the traded and the peer
+multiple, and in each case we take a documented position rather than adopt the peer
+figure. Source: authors' models; peer annual reports.}
+
+\ex{app_audit.png}{\textbf{Exhibit C6.} The five consistencies plus the ten-point
+audit checklist plus the seven Appendix 5A sanity checks, as recorded for each
+company. Source: authors' assessment.}
+
+\end{paracol}
+\clearpage
+
+% ---------------------------------------------------------------- B
+\section*{B\quad Model audit log and corrections applied}
+
+The models supplied for this report were audited independently: both were rebuilt from
+their input assumptions in Python, and every output was compared cell for cell. The
+rebuild reproduced Ambuja's published value to the paisa and UltraTech's to within
+2.5 paise, and reproduced Ambuja's sensitivity grid exactly. That agreement is what
+gave the discrepancies below their weight — where the rebuild and the workbook differ,
+the workbook contains an error.
+
+\vspace{2mm}
+{\footnotesize
+\begin{tabular}{@{}p{0.035\textwidth}p{0.17\textwidth}p{0.075\textwidth}p{0.35\textwidth}p{0.30\textwidth}@{}}
+\hrow \wh{\#} & \wh{Where} & \wh{Severity} & \wh{Finding} & \wh{Action taken}\\
+1 & UTCL Sensitivity grid & HIGH & The two-way grid discounts P\&L row 17 (depreciation) instead of row 24 (FCFF), builds its terminal value off row 14 (revenue) instead of row 21 (NOPAT), and omits the non-controlling interest from the bridge. It prints Rs 27,314--117,876 per share against a base case of Rs 5,148. & Rebuilt. Exhibit U8 is the corrected grid. Fixed in the corrected workbook.\\
+\arow 2 & UTCL Source-Data NOPAT & HIGH & Historical NOPAT is computed as EBIT $\times(1-\text{Assumptions!}C4)$, but the tax rate lives in \texttt{B4}; \texttt{C4} is empty, so NOPAT equals EBIT and the published ten-year ROIC series is pre-tax. & Corrected to \texttt{B4}. Exhibit U4 uses the after-tax series (FY26: 10.8\%, not 14.4\%).\\
+3 & Both, beta relever & HIGH & Both workbooks state Harris--Pringle constant rebalancing and discount the tax shield at $\rho$, but relever beta with the fixed-debt Hamada formula. Ambuja's formula additionally carries a sign error, computing $(1+t)$ where even Hamada needs $(1-t)$. & Relevered as $\beta_U(1+D/E)$ throughout, consistent with the stated debt policy. Effect: Ambuja Rs 98.85 $\rightarrow$ Rs 99.42; UltraTech Rs 5,148 $\rightarrow$ Rs 5,024.\\
+\arow 4 & AMB Source-Data & MED & \texttt{C32} (EBIT) is \texttt{=C29-C7} where \texttt{C29} is a blank label row, so EBIT prints $-$3,570 instead of 2,989. \texttt{C34} (effective tax rate) references the same blank cell and prints 100\%. & Repointed to \texttt{C31} and \texttt{C33}. Display-only cells; no valuation effect.\\
+5 & AMB Terminal & MED & \texttt{B21}, the implied exit EV/EBITDA, is \texttt{=B19/B20} where \texttt{B19} is empty, so it prints 0. & Repointed to \texttt{B17}. Prints 4.65x, matching the FCFF sheet.\\
+\arow 6 & AMB Relative Valuation & MED & \texttt{C48} hardcodes a DCF value of Rs 114.87 that no longer matches the live model, and the DCF-implied EV/EBITDA in \texttt{C54} is computed from it. & Replaced with a live link to the FCFF sheet.\\
+7 & Both, narrative text & MED & Substantial prose in both workbooks is stale relative to the live cells: Ambuja's Summary conclusion cites Rs 122 and Rs 151 against live values of Rs 98.85 and Rs 131.42, a WACC of 11.03\% against 11.37\%, and a sensitivity range of Rs 116--134 against a live Rs 95--108; its Dashboard cites a terminal growth of 5.0\% at 46.46\% of nominal GDP against a live 6.99\% at 65\%. UltraTech's Summary cites Rs 4,750 and a 5\% terminal growth; its Dashboard cites Rs 4,747.56. & All narrative in this report is written from the live cells. Workbook prose refreshed in the corrected versions.\\
+\arow 8 & UTCL terminal fade switch & MED & The audit log records Golden Check 6 as ``FIXED $\ldots$ switched ON by default,'' but the switch ships at 0 (off) and the Dashboard correctly records the check as a FAIL. The two statements contradict each other. & Reported as shipped: fade off, check FAILs. The faded value of Rs 4,560 is disclosed in Part II.\\
+9 & UTCL India Cements & MED & The bridge adds Rs 6,739.51 crore of investments. The balance sheet reports Rs 12,541 crore, of which India Cements is Rs 8,970 crore; the Entity Build sheet derives ``other investments'' as Rs 3,570.83 crore. None of the three tie. India Cements' operations are also already inside the forecast's subsidiary block. & Left as modelled and flagged. Adding the stake on top would double-count roughly Rs 197 per share. Recorded as an open asset-consistency item.\\
+\arow 10 & AMB Audit Log, Entity Build, Dashboard & LOW & The audit-log block, the tie-out check and the seven Golden Checks are each duplicated five times on their sheets. & De-duplicated in the corrected workbook.\\
+\end{tabular}\par}
+
+\vspace{3mm}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Correction bridge: Ambuja}{Source: authors' analysis.}
+\begin{tabular}{@{}p{0.62\linewidth}r@{}}
+\hrow \wh{Step} & \wh{Rs/share}\\
+As received (workbook) & 98.85\\
+\arow Hamada relever with correct $(1-t)$ & 99.99\\
+\trow \textbf{Harris--Pringle relever, $\beta_U(1+D/E)$} & \textbf{99.42}\\
+Items 4, 5, 6, 10 (display and staleness) & no effect\\
+\trow \textbf{Reported in this document} & \textbf{99.42}\\
+\end{tabular}
+\end{extab}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Correction bridge: UltraTech}{Source: authors' analysis.}
+\begin{tabular}{@{}p{0.62\linewidth}r@{}}
+\hrow \wh{Step} & \wh{Rs/share}\\
+As received (workbook) & 5,148.18\\
+\arow Items 1, 2 (grid and historical ROIC) & no effect on DCF\\
+\trow \textbf{Harris--Pringle relever, $\beta_U(1+D/E)$} & \textbf{5,024.02}\\
+Memo: with terminal ROIC fade applied & 4,560\\
+\trow \textbf{Reported in this document} & \textbf{5,024.02}\\
+\end{tabular}
+\end{extab}
+\end{minipage}
+
+\vspace{2mm}
+\begin{keybox}\boxtitle{The recommendation does not turn on any of this}
+Every correction above is immaterial to the conclusion. The largest moves Ambuja by
+0.6\% and UltraTech by 2.4\%, against downside of 75\% and 53\% respectively. They are
+reported in full because a valuation that cannot survive its own audit is not worth
+presenting, not because they change the answer.
+\end{keybox}
+\clearpage
+
+% ---------------------------------------------------------------- C
+\section*{C\quad The five consistencies, side by side}
+
+{\footnotesize
+\begin{tabular}{@{}p{0.028\textwidth}p{0.10\textwidth}p{0.055\textwidth}p{0.355\textwidth}p{0.055\textwidth}p{0.355\textwidth}@{}}
+\hrow \wh{\#} & \wh{Consistency} & \wh{AMB} & \wh{Ambuja: evidence and gap} & \wh{UTCL} & \wh{UltraTech: evidence and gap}\\
+1 & Assumptions & \PASS & Volume is capacity $\times$ utilisation, so growth is tied to physical assets. Capex is an explicit input anchored to the expansion plan. Terminal year forced to steady state with reinvestment $= g \times$ operating invested capital. & \PASS & Same construction. Growth requires reinvestment throughout; capex is explicit and anchored to guidance; terminal year is a forced steady state.\\
+\arow 2 & Risk & \PASS & FCFF at WACC; CCF and APV at $\rho$; FCFE at $K_e$; EVA at WACC. Constant $D/V$ rebalancing applied in unlever, relever and shield. $\rho = \text{WACC}+K_d t(D/V)$ ties. & \PASS & Identical treatment. At a 6.1\% $D/V$ the policy choice actually matters here, and it is applied consistently.\\
+3 & Asset & \PART & Other income excluded from EBITDA; cash non-operating and added back once; cash-corrected beta. \textbf{Gap:} depreciation charged at 8\% of operating fixed assets while the historical charge includes amortisation of a Rs 9,433 cr intangible balance held flat. & \PART & Same treatment of cash and beta. \textbf{Gap:} the India Cements stake is at book, the investments total does not tie to the bridge, and the stake's operations are already inside the subsidiary block.\\
+\arow 4 & Liability & \PASS & Borrowings and leases in the weights and in the bridge. Deferred tax in neither the weights nor invested capital, but deducted in the bridge. NCI deducted (worth Rs 51/share). & \PASS & Loan funds and leases in both. Deferred tax of Rs 8,506 cr in neither, consistently on both sides. NCI of Rs 4,089 cr deducted.\\
+5 & Multiplier & \PART & Implied terminal EV/EBITDA 4.65x against a peer median of 19.4x. Peer multiple solved back implies $g$ of 10.99\%, above nominal GDP of 10.76\%. Position taken; gap real. & \PART & Implied 7.52x against 19.05x. Peer multiple implies $g$ of 9.8\%, or 91\% of nominal GDP in perpetuity. Position taken; gap real.\\
+\end{tabular}\par}
+
+\vspace{4mm}
+\section*{C.2\quad The ten-point audit checklist}
+
+{\footnotesize
+\begin{tabular}{@{}p{0.028\textwidth}p{0.40\textwidth}p{0.055\textwidth}p{0.055\textwidth}p{0.36\textwidth}@{}}
+\hrow \wh{\#} & \wh{Check} & \wh{AMB} & \wh{UTCL} & \wh{Note}\\
+1 & Five methods reconcile within 0.5\% & \PASS & \PASS & Both reconcile to six decimal places, and both were reproduced independently.\\
+\arow 2 & WACC recomputes; market-value weights; circularity handled & \PASS & \PASS & Ambuja: immaterial at 0.87\% D/E. UltraTech: iterated per SSRN 413240, 1.0\% difference.\\
+3 & Debt grows at $g$ where constant $D/V$ assumed & \PASS & \PASS & Debt set to $D/V \times$ EV at every date; net new borrowing line visible on the FCFE sheet.\\
+\arow 4 & Cash and investments: one treatment throughout & \PASS & \PART & UltraTech's India Cements treatment is the open item.\\
+5 & Every liability in WACC subtracted in the bridge & \PASS & \PASS & Verified line by line in both.\\
+\arow 6 & Terminal: $g<$ WACC, built multiplicatively, reinvestment $=g/$RONIC & \PASS & \PART & $g$ built as $(1+6.5\%)(1+4.0\%)-1$ taken at 65\% in both. UltraTech's terminal ROIC does not fade.\\
+7 & Tax: marginal statutory rate & \PASS & \PASS & 25.168\% under s.115BAA in both. Ambuja's reported rate is unusable; UltraTech's 26.1\% is in line.\\
+\arow 8 & No DDT on post-FY2020 flows & \PASS & \PASS & None applied. DDT abolished with effect from FY2020-21.\\
+9 & Every input traces to the source log & \PART & \PART & Open items: Ambuja's merger terms; UltraTech's capacity, utilisation and capex guidance, and its derived standalone capacity of 172.5 Mn.T.\\
+\arow 10 & Sensitivity tables live-linked & \PASS & \FAIL & Ambuja's grid is correct and live. UltraTech's was found broken (item B1) and has been rebuilt.\\
+\end{tabular}\par}
+\clearpage
+
+% ---------------------------------------------------------------- D & E
+\section*{D\quad Cost of capital workings, both companies}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Shared inputs}{Source: RBI/FBIL Ratios and Rates release 27-Mar-2026;
+Damodaran, NYU Stern, January 2026.}
+\begin{tabular}{@{}p{0.66\linewidth}r@{}}
+\hrow \wh{Input} & \wh{Value}\\
+10-yr G-Sec par yield, w/e 20-Mar-26 & 6.85\% \\
+\arow India sovereign default spread & 1.87\% \\
+\trow Risk-free rate, default-free rupee & \textbf{4.98\%} \\
+India equity risk premium & 7.08\% \\
+\arow \quad of which mature market & 4.23\% \\
+\quad of which India country risk & 2.85\% \\
+\arow Unlevered beta, building materials & 0.900\\
+\quad number of firms in the sample & 469\\
+\arow Statutory tax rate, s.115BAA & 25.168\% \\
+Long-run real GDP growth & 6.50\% \\
+\arow Long-run inflation (RBI CPI target) & 4.00\% \\
+\trow Nominal GDP, $(1+r)(1+i)-1$ & \textbf{10.76\%} \\
+Terminal $g$ as \% of nominal GDP & 65.0\% \\
+\trow Terminal growth rate & \textbf{6.994\%} \\
+\end{tabular}
+\end{extab}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Company-specific}{Harris--Pringle Case 2 applied throughout. Source:
+company balance sheets and disclosed market capitalisations.}
+\begin{tabular}{@{}p{0.50\linewidth}rr@{}}
+\hrow \wh{} & \wh{Ambuja} & \wh{UltraTech}\\
+Borrowings + leases (Rs cr) & 866 & 20,480\\
+\arow Market capitalisation (Rs cr) & 99,095 & 316,633\\
+Market debt / equity & 0.87\% & 6.47\% \\
+\arow Debt / enterprise value & 0.87\% & 6.08\% \\
+Levered beta $\beta_U(1+D/E)$ & 0.9079 & 0.9582\\
+\arow Cost of equity, CAPM & 11.41\% & 11.76\% \\
+Pre-tax cost of debt & 8.00\% & 8.34\% \\
+\arow After-tax cost of debt & 5.99\% & 6.24\% \\
+\trow \textbf{WACC} & \textbf{11.36\%} & \textbf{11.43\%} \\
+\trow \textbf{Unlevered rate $\rho$} & \textbf{11.38\%} & \textbf{11.56\%} \\
+\arow Regression beta, 60 monthly obs. & 1.151 & 1.086\\
+$R^2$ of the regression & 0.267 & n/d\\
+\arow WACC implied by market price & 8.60\% & 9.17\% \\
+\end{tabular}
+\end{extab}
+\end{minipage}
+
+\vspace{4mm}
+\section*{E\quad Spread financial statements}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Ambuja: consolidated, as reported}{Source: FY2025-26 Integrated Annual
+Report, consolidated statements. FY2024-25 is the company's restated figure.}
+\begin{tabular}{@{}p{0.58\linewidth}rr@{}}
+\hrow \wh{Rs crore} & \wh{FY25R} & \wh{FY26}\\
+Revenue from operations & 33,989 & 40,446\\
+\arow Government grants & 1,347 & 210\\
+Revenue including grants & 35,336 & 40,656\\
+\arow Other income & 2,654 & 834\\
+Finance costs & 216 & 224\\
+\arow Depreciation and amortisation & 2,297 & 3,570\\
+PBT before exceptionals & 6,125 & 3,599\\
+\arow Exceptional items & 21 & 301\\
+Profit before tax & 6,104 & 3,299\\
+\arow Profit, owners of parent & 4,303 & 4,728\\
+Profit, non-controlling interest & 991 & 909\\
+\trow \textbf{EBITDA, uniform definition} & \textbf{5,984} & \textbf{6,559}\\
+\arow Property, plant and equipment & 25,049 & 33,801\\
+Right-of-use assets & 1,465 & 1,483\\
+\arow Capital work in progress & 9,793 & 9,085\\
+Goodwill & 10,943 & 13,546\\
+\arow Other intangible assets & 5,309 & 9,433\\
+Equity, owners & 53,579 & 59,347\\
+\arow Non-controlling interest & 10,368 & 12,499\\
+Borrowings, non-current & 14 & 45\\
+\arow Borrowings, current & 12 & 8\\
+Lease liabilities & 762 & 813\\
+\arow Cash and equivalents & 5,043 & 892\\
+Other bank balances & 1,129 & 67\\
+\arow Current investments & 1,822 & 0\\
+Deferred tax liabilities, net & 2,433 & 3,466\\
+\end{tabular}
+\end{extab}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{UltraTech: standalone ten-year highlights}{Source: FY2025-26 Integrated
+and Sustainability Report, Standalone Financial Highlights. R = restated by the
+company.}
+\begin{tabular}{@{}p{0.34\linewidth}rrrrr@{}}
+\hrow \wh{Rs crore} & \wh{FY17} & \wh{FY20} & \wh{FY23R} & \wh{FY25} & \wh{FY26}\\
+Volume (Mn.T) & 48.9 & 77.5 & 100.1 & 125.8 & 140.8\\
+\arow Revenue & 23,891 & 40,649 & 61,237 & 71,895 & 82,170\\
+Operating expenses & 18,922 & 31,997 & 50,952 & 59,599 & 66,730\\
+\arow EBITDA & 4,969 & 8,652 & 10,286 & 12,296 & 15,439\\
+Other income & 660 & 727 & 505 & 693 & 376\\
+\arow Depreciation & 1,268 & 2,455 & 2,773 & 3,739 & 4,055\\
+EBIT & 4,361 & 6,924 & 8,018 & 9,250 & 11,761\\
+\arow Interest & 571 & 1,704 & 756 & 1,465 & 1,630\\
+Profit before tax & 3,790 & 5,220 & 7,262 & 7,785 & 10,131\\
+\arow Tax expense & 1,148 & $-$236 & 2,310 & 1,504 & 2,622\\
+Net profit & 2,628 & 5,456 & 4,951 & 6,193 & 7,405\\
+\arow Net fixed assets & 24,387 & 49,486 & 63,077 & 83,764 & 89,161\\
+Investments in subs & 746 & 5,990 & 3,187 & 12,999 & 12,541\\
+\arow Liquid investments & 8,663 & 5,882 & 6,246 & 3,504 & 5,018\\
+Net working capital & $-$841 & 190 & $-$3,140 & $-$2,031 & $-$3,071\\
+\arow Net worth & 23,941 & 38,296 & 53,408 & 69,678 & 74,663\\
+Loan funds & 6,240 & 18,282 & 8,750 & 19,460 & 19,617\\
+\arow Lease liabilities & 0 & 893 & 953 & 901 & 863\\
+Deferred tax liabilities & 2,774 & 4,077 & 6,258 & 8,198 & 8,506\\
+\trow \textbf{Capital employed} & \textbf{32,955} & \textbf{61,548} & \textbf{69,369} & \textbf{98,236} & \textbf{103,649}\\
+\end{tabular}
+\end{extab}
+\end{minipage}
+
+\vspace{1mm}
+{\scriptsize\color{ash}Capital employed ties both ways in every one of the ten years:
+net worth plus loan funds plus leases plus deferred tax equals net fixed assets plus
+investments plus liquid investments plus net working capital.\par}
+\clearpage
+
+% ---------------------------------------------------------------- F
+\section*{F\quad Forecast driver tables}
+
+\subsection*{F.1\quad Ambuja Cements: ten-year explicit forecast}
+\vspace{1mm}
+{\scriptsize\ambforecast\par}
+\vspace{1mm}
+{\scriptsize\color{ash}Consolidated. Volume is capacity times utilisation. Revenue is
+volume times realisation. EBITDA is the sum of a standalone block and a subsidiary
+block, each with its own margin. NOPAT is EBIT at the statutory 25.168\%. Invested
+capital includes goodwill of Rs 22,979 crore held flat. Source: authors' model.\par}
+
+\vspace{5mm}
+\subsection*{F.2\quad UltraTech Cement: five-year explicit forecast}
+\vspace{1mm}
+{\footnotesize\utclforecast\par}
+\vspace{1mm}
+{\scriptsize\color{ash}Standalone core plus a subsidiary block. Volume is capacity
+times utilisation; EBITDA is volume times EBITDA per tonne. Invested capital is the
+consolidated operating asset base plus net working capital, and excludes the Rs 7,909
+crore of consolidated goodwill. Source: authors' model.\par}
+
+\vspace{5mm}
+\subsection*{F.3\quad Terminal year, both companies}
+\vspace{1mm}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{Ambuja terminal year}{Source: authors' model.}
+\begin{tabular}{@{}p{0.62\linewidth}r@{}}
+\hrow \wh{Line} & \wh{Value}\\
+NOPAT in the terminal year (Rs cr) & 8,908\\
+\arow Closing operating invested capital & 74,610\\
+Reinvestment $= g \times$ operating IC & 5,218\\
+\arow \textbf{Terminal FCFF} & \textbf{3,690}\\
+Implied terminal ROIC & 11.94\% \\
+\arow Implied reinvestment rate ($g/$ROIC) & 58.6\% \\
+Terminal value, Gordon (Rs cr) & 84,458\\
+\arow Implied exit EV/EBITDA & 4.65x\\
+Terminal ROIC less WACC & $+$0.58 pt\\
+\end{tabular}
+\end{extab}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{extab}{UltraTech terminal year}{Source: authors' model.}
+\begin{tabular}{@{}p{0.62\linewidth}r@{}}
+\hrow \wh{Line} & \wh{Value}\\
+NOPAT in the terminal year (Rs cr) & 17,920\\
+\arow Closing invested capital & 112,483\\
+Reinvestment $= g \times$ IC & 7,867\\
+\arow \textbf{Terminal FCFF} & \textbf{10,053}\\
+Implied terminal ROIC & 15.93\% \\
+\arow Implied reinvestment rate ($g/$ROIC) & 43.9\% \\
+Terminal value, Gordon (Rs cr) & 231,777\\
+\arow Implied exit EV/EBITDA & 7.52x\\
+Terminal ROIC less WACC & $+$4.50 pt \FAIL\\
+\end{tabular}
+\end{extab}
+\end{minipage}
+
+\vspace{4mm}
+\subsection*{F.4\quad Sensitivity grids: value per share (Rs), WACC against terminal growth}
+\vspace{1mm}
+\begin{minipage}[t]{0.44\textwidth}
+{\footnotesize\bfseries\color{navy}Ambuja Cements}\par\vspace{2pt}
+{\footnotesize\ambgrid\par}
+\vspace{2pt}{\scriptsize\color{ash}Traded price Rs 400.90. No cell reaches it.\par}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.52\textwidth}
+{\footnotesize\bfseries\color{navy}UltraTech Cement (rebuilt --- see Appendix B, item 1)}\par\vspace{2pt}
+{\footnotesize\utclgrid\par}
+\vspace{2pt}{\scriptsize\color{ash}Traded price Rs 10,745. No cell reaches it. The
+11.43\% row is the base-case WACC.\par}
+\end{minipage}
+\clearpage
+
+% ---------------------------------------------------------------- G, H
+\section*{G\quad Method equivalence: why all five agree}
+
+\begin{paracol}{2}
+The five methods are one model rearranged, and they agree only if every consistency
+holds. The mechanics are worth setting out, because the agreement is the proof that
+the model is internally sound.
+
+\textbf{FCFF at WACC} is the primary build: NOPAT plus depreciation less capex less
+the increase in net working capital, discounted at the weighted average cost of
+capital, plus a Gordon terminal value.
+
+\textbf{CCF at $\rho$} adds the interest tax shield back into the cash flow and
+discounts the whole capital cash flow at the unlevered rate. Because debt is set to
+$D/V$ times enterprise value at every date, the shield grows with the firm and
+carries the same risk as the assets, which is why $\rho$ is the correct rate.
+
+\textbf{APV at $\rho$} separates the two: unlevered enterprise value plus the present
+value of the tax shield. For Ambuja the shield is worth Rs 175 crore against an
+enterprise value of Rs 39,833 crore — which is itself a finding. Ambuja creates
+essentially no value through leverage, so any argument for the shares must rest
+entirely on operations.
+
+\textbf{FCFE at $K_e$} subtracts after-tax interest and adds net new borrowing.
+Because a constant debt ratio is assumed, net new borrowing equals $g$ times debt in
+the steady state, and the equity flows grow at the same rate as the firm. This is
+where the most common error in the course appears — discounting a growing FCFE at a
+constant $K_e$ while implicitly holding debt fixed — and the visible net borrowing
+line is what prevents it.
+
+\textbf{EVA at WACC} is opening invested capital plus the present value of future
+economic value added. It reconciles only because FCFF was defined as NOPAT less the
+change in invested capital, and because the terminal year is a true steady state.
+Both conditions are necessary; drop either and the identity breaks.
+
+\switchcolumn
+\begin{extab}{Equivalence, both companies}{Source: authors' models, independently
+reproduced.}
+\begin{tabular}{@{}p{0.26\linewidth}p{0.16\linewidth}rr@{}}
+\hrow \wh{Method} & \wh{Rate} & \wh{AMB} & \wh{UTCL}\\
+FCFF & WACC & 99.42 & 5,024\\
+\arow CCF & $\rho$ & 99.42 & 5,024\\
+APV & $\rho$ & 99.42 & 5,024\\
+\arow FCFE & $K_e$ & 99.42 & 5,024\\
+EVA & WACC & 99.42 & 5,024\\
+\trow \textbf{Max difference} & & \textbf{0.00} & \textbf{0.00}\\
+\end{tabular}
+\end{extab}
+
+\begin{extab}{APV decomposition}{The tax shield is trivial for Ambuja and small for
+UltraTech. Source: authors' models.}
+\begin{tabular}{@{}p{0.50\linewidth}rr@{}}
+\hrow \wh{Rs crore} & \wh{AMB} & \wh{UTCL}\\
+Unlevered enterprise value & 39,658 & 163,214\\
+\arow PV of interest tax shield & 175 & 4,554\\
+\trow \textbf{Enterprise value} & \textbf{39,833} & \textbf{167,767}\\
+Shield as \% of EV & 0.4\% & 2.7\% \\
+\end{tabular}
+\end{extab}
+
+\begin{okbox}\boxtitleg{What we did to check this}
+Both models were rebuilt from their input assumptions in a separate Python
+implementation that shares no code with the workbooks. The rebuild reproduced
+Ambuja's value to the paisa, UltraTech's to within 2.5 paise, Ambuja's published
+sensitivity grid cell for cell, and the EVA-to-enterprise-value identity for both. A
+model that only agrees with itself has not been checked.
+\end{okbox}
+\end{paracol}
+
+\vspace{3mm}
+\section*{H\quad Peer set and relative valuation data}
+
+\begin{minipage}[t]{0.56\textwidth}
+\begin{extab}{Peer set, TTM to June 2026 (Ambuja FY2025-26 consolidated)}{Every figure
+from the company's own annual report and disclosed market capitalisation. Source:
+company reports.}
+\begin{tabular}{@{}p{0.30\linewidth}rrrrr@{}}
+\hrow \wh{Rs crore} & \wh{Ambuja} & \wh{UTCL} & \wh{Shree} & \wh{JK Cem} & \wh{Ramco}\\
+Market cap & 99,095 & 316,633 & 83,058 & 39,252 & 21,939\\
+\arow Net debt & $-$93 & 16,444 & $-$6,157 & 5,717 & 3,644\\
+Non-controlling int. & 12,499 & 0 & 0 & 0 & 0\\
+\arow Enterprise value & 111,501 & 333,077 & 76,901 & 44,969 & 25,583\\
+EBITDA & 6,559 & 15,817 & 4,037 & 2,284 & 1,348\\
+\arow Revenue & 40,446 & 86,070 & 19,985 & 13,621 & 9,211\\
+Normalised PAT & 2,260 & 7,762 & 1,534 & 1,096 & 178\\
+\arow Net worth & 59,347 & 74,663 & 22,512 & 6,961 & 8,142\\
+Shares (crore) & 247.18 & 29.47 & 3.61 & 7.73 & 23.63\\
+\trow \textbf{EV/EBITDA} & \textbf{17.0} & \textbf{21.1} & \textbf{19.1} & \textbf{19.7} & \textbf{19.0}\\
+\arow EV/Sales & 2.76 & 3.87 & 3.85 & 3.30 & 2.78\\
+P/E, normalised & 43.9 & 40.8 & 54.2 & 35.8 & 122.9\\
+\arow P/B & 1.67 & 4.24 & 3.69 & 5.64 & 2.69\\
+ROE & 3.8\% & 10.4\% & 6.8\% & 15.7\% & 2.2\% \\
+\arow Basis of accounts & Consol. & S/A & S/A & S/A & S/A\\
+\end{tabular}
+\end{extab}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\begin{extab}{Reverse cross-check: what an exit multiple implies}{UltraTech, WACC
+11.43\%, nominal GDP 10.76\%. Source: authors' model.}
+\begin{tabular}{@{}p{0.42\linewidth}rp{0.28\linewidth}@{}}
+\hrow \wh{Exit EV/EB} & \wh{Implied $g$} & \wh{Verdict}\\
+19.05x (peer median) & 9.8\% & 91\% of GDP\\
+\arow 15.0x & 9.4\% & Implausible\\
+12.0x & 8.8\% & Implausible\\
+\arow 10.0x & 8.1\% & Stretching\\
+8.0x & 6.8\% & Arguable\\
+\arow \textbf{7.52x (our model)} & \textbf{6.99\%} & \textbf{Base case}\\
+\end{tabular}
+\end{extab}
+
+\begin{warnbox}\boxtitler{Why the peer median is rejected rather than adopted}
+A peer median EV/EBITDA of 19.4x, solved back through the steady-state identity,
+requires perpetual growth of 10.99\% for Ambuja and 9.8\% for UltraTech, against
+nominal GDP of 10.76\%. A company that grows faster than the economy forever
+eventually becomes the economy. Adopting the peer multiple would require us to
+contradict our own central argument, so we reject it and say why.
+\end{warnbox}
+\end{minipage}
+\clearpage
+
+% ---------------------------------------------------------------- I
+\section*{I\quad Source log}
+
+Every input cell in both models traces to a row below. Rows marked OPEN are items that
+must be re-sourced before submission. No data anywhere in either workbook comes from
+moneycontrol, screener.in, Yahoo Finance, investing.com, trendlyne, tijori or
+Wikipedia.
+
+\vspace{2mm}
+{\footnotesize
+\begin{tabular}{@{}p{0.028\textwidth}p{0.055\textwidth}p{0.215\textwidth}p{0.135\textwidth}p{0.37\textwidth}p{0.075\textwidth}@{}}
+\hrow \wh{\#} & \wh{Co.} & \wh{Item} & \wh{Publisher} & \wh{Location} & \wh{Accessed}\\
+1 & AMB & Consolidated P\&L and balance sheet & Ambuja Cements Ltd & Integrated Annual Report 2025-26, consolidated statements & 26-Aug-26\\
+\arow 2 & AMB & Volume 74 Mn.T, revenue Rs 40,656 cr & Ambuja Cements Ltd & Same report, Growth Trajectory highlights & 26-Aug-26\\
+3 & AMB & Capacity 109 MTPA, target 119 MTPA & Ambuja Cements Ltd & Same report, capacity disclosure & 26-Aug-26\\
+\arow 4 & AMB & Market capitalisation Rs 99,095 cr & Ambuja Cements Ltd & Same report, highlights, as at 31-Mar-2026 & 26-Aug-26\\
+5 & AMB & Holding in ACC 50.05\% & Ambuja Cements Ltd & Same report, subsidiary listing & 26-Aug-26\\
+\arow 6 & AMB & Tax note: Rs 1,179.71 cr provisions released & Ambuja Cements Ltd & Same report, note 32(ii) & 26-Aug-26\\
+7 & AMB & Duty and taxes paid under protest Rs 614.10 cr & Ambuja Cements Ltd & Same report, note 53, non-current & 26-Aug-26\\
+\arow 8 & AMB & \textbf{OPEN:} merger swap ratios and 13.7\% dilution & Ambuja filings & Reached the model through broker research. Must be re-sourced from the scheme filing. & 26-Aug-26\\
+9 & UTCL & Ten-year standalone financial highlights & UltraTech Cement Ltd & Integrated and Sustainability Report 2025-26, Standalone Financial Highlights & 26-Aug-26\\
+\arow 10 & UTCL & Standalone and consolidated statements & UltraTech Cement Ltd & Same report, pp. 227--233 & 26-Aug-26\\
+11 & UTCL & Capital work in progress Rs 7,871.47 cr & UltraTech Cement Ltd & Same report, note 02 & 26-Aug-26\\
+\arow 12 & UTCL & India Cements: 23,24,16,830 shares, Rs 8,970.17 cr, 74.99\% & UltraTech Cement Ltd & Same report, non-current investments note & 26-Aug-26\\
+13 & UTCL & Market cap Rs 316,633 cr; March 2026 NSE close Rs 10,745 & UltraTech Cement Ltd & Same report, Shareholder Information & 26-Aug-26\\
+\arow 14 & UTCL & Q1 FY2026-27 unaudited standalone results & UltraTech Cement Ltd & q1fy27results.pdf, standalone results & 26-Aug-26\\
+15 & UTCL & \textbf{OPEN:} capacity, utilisation, capex guidance, per-tonne split & UltraTech earnings call & Reached the model through a broker note relaying the call. Must be re-sourced from the transcript. & 26-Aug-26\\
+\arow 16 & UTCL & \textbf{OPEN:} standalone capacity 172.5 Mn.T & Own derivation & Consolidated 192.3 less 5.4 overseas less India Cements 14.45. Not a disclosed figure. & 26-Aug-26\\
+17 & Both & 10-year G-Sec par yield 6.85\%, w/e 20-Mar-2026 & RBI / FBIL & Ratios and Rates release dated 27-Mar-2026 & 27-Aug-26\\
+\arow 18 & Both & India ERP 7.08\%; sovereign default spread 1.87\% & Damodaran, NYU Stern & Country Default Spreads and Risk Premiums, January 2026 & 26-Aug-26\\
+19 & Both & Unlevered beta 0.90, building materials, cash-corrected & Damodaran, NYU Stern & Betas by Sector (Global), January 2026, 469 firms & 26-Aug-26\\
+\arow 20 & Both & Statutory tax rate 25.168\% & Own assumption & Section 115BAA: 22\% plus 10\% surcharge plus 4\% cess & 26-Aug-26\\
+21 & Both & Peer financials and market capitalisations & Peer annual reports & Shree Cement, JK Cement, Ramco Cements, own FY2025-26 reports & 26-Aug-26\\
+\arow 22 & Both & Price series for the beta regression & Vendor series & Supplied with an adjusted-close column, a vendor convention rather than exchange bhavcopy format. Labelled vendor-sourced. & 26-Aug-26\\
+\end{tabular}\par}
+
+\vspace{3mm}
+{\footnotesize\bfseries\color{navy}Authoritative landing pages}\par\vspace{1mm}
+{\scriptsize
+Ambuja financials: \texttt{ambujacement.com/investors/financials} \textbullet\
+UltraTech: \texttt{ultratechcement.com/investors/investor-reports} \textbullet\
+Exchange filings: \texttt{nseindia.com/companies-listing/corporate-filings-financial-results} \textbullet\
+G-Sec yields: \texttt{rbi.org.in/Scripts/BS\_ViewBulletin.aspx} \textbullet\
+ERP and default spreads: \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datacurrent.html} \textbullet\
+Sector betas: \texttt{pages.stern.nyu.edu/\textasciitilde adamodar/New\_Home\_Page/datafile/Betas.html}\par
+\vspace{1mm}
+Deep links to individual PDFs are deliberately not given: they are unstable, and
+citing a precise document URL that was not actually followed would be worse than
+citing the page that was. Each report is identified by name, year and note reference
+in the table above, which is sufficient to locate the exact figure.\par}
+\clearpage
+
+% ---------------------------------------------------------------- J, K
+\begin{paracol}{2}
+\section*{J\quad Method note and glossary}
+
+\subsection*{J.1\quad The framework applied}
+
+This report follows the theoretically consistent valuation framework taught in the
+XLRI Business Analysis and Valuation course. Its central claim is that a valuation is
+correct when it preserves five consistencies — assumptions, risk, asset, liability and
+multiplier — and that when all five hold, every discounted cash flow variant returns
+the same equity value. That equivalence is not a stylistic flourish; it is the test.
+Where methods disagree, one of the five consistencies has been broken and the model is
+wrong.
+
+Three further rules shape what follows. Relative valuation is presented after the
+discounted cash flow and never anchors it, because a multiple is the output of a
+valuation rather than its cause. Every number traces to a company annual report, an
+exchange filing, or a regulator or government source; no figure comes from a financial
+data aggregator. And where intrinsic value diverges from market price, the report names
+the catalysts that would close the gap rather than asserting that the market is wrong.
+
+\subsection*{J.2\quad Glossary}
+
+\textbf{FCFF} --- free cash flow to the firm: NOPAT plus depreciation less capital
+expenditure less the increase in net working capital. The cash available to all
+providers of capital.
+
+\textbf{NOPAT} --- net operating profit after tax: EBIT taxed at the marginal statutory
+rate, with no deduction for interest, so it measures operating performance independent
+of financing.
+
+\textbf{WACC} --- the weighted average cost of capital, at market-value weights.
+
+\textbf{$\rho$} --- the unlevered cost of capital: the return the assets would require
+if the firm carried no debt. Under constant rebalancing, $\rho = \text{WACC} + K_d
+t(D/V)$.
+
+\textbf{CCF} --- capital cash flow: FCFF plus the interest tax shield, discounted at
+$\rho$.
+
+\textbf{APV} --- adjusted present value: unlevered value plus the present value of the
+tax shield, valued separately.
+
+\textbf{FCFE} --- free cash flow to equity: FCFF less after-tax interest plus net new
+borrowing, discounted at the cost of equity.
+
+\textbf{EVA} --- economic value added: NOPAT less a capital charge of WACC on opening
+invested capital. Enterprise value equals opening invested capital plus the present
+value of all future EVA.
+
+\textbf{ROIC} --- return on invested capital: NOPAT over invested capital. Reported
+both including and excluding goodwill, because the two answer different questions.
+
+\textbf{Harris--Pringle (Case 2)} --- the debt policy in which the firm maintains a
+constant debt-to-value ratio through continuous rebalancing. Under it the tax shield
+carries asset risk and is discounted at $\rho$, and beta is relevered as
+$\beta_U(1+D/E)$ with no tax term.
+
+\switchcolumn
+\section*{K\quad Limitations and disclosures}
+
+\subsection*{K.1\quad Limitations we accept}
+
+\subsubsection{Ambuja's history is two years deep} The consolidated return trend is
+asserted from two points, one of which is restated. This is the single largest
+weakness in Part I.
+
+\subsubsection{One open sourcing item each} Ambuja's merger terms and UltraTech's
+capacity, utilisation and capex guidance reached the models through broker research,
+which our policy does not admit. Both are flagged rather than quietly used, and
+UltraTech's standalone capacity of 172.5 Mn.T is a derivation rather than a
+disclosure.
+
+\subsubsection{The two models are not on a common basis} One is consolidated and one
+is a standalone core with subsidiaries added. The reason is data availability, the
+effect is quantified in Appendix A, and the fix is to consolidate both.
+
+\subsubsection{The beta regression is weak} Ambuja's regression explains 27\% of
+variance, and the price series carries a vendor adjusted-close convention rather than
+exchange bhavcopy format. Bottom-up betas are used for both companies, and in both
+cases that choice raises the valuation rather than lowering it.
+
+\subsubsection{Both carry a multiplier PARTIAL} The implied terminal multiples sit far
+below anything cement has traded at. We have taken a documented position on that gap
+rather than resolved it, and a reader who takes the opposite view should say so
+explicitly rather than average the two answers.
+
+\subsubsection{UltraTech's terminal return does not fade} Recorded as a FAIL on Golden
+Check 6. Correcting it would lower the valuation by roughly Rs 464 per share, so the
+error runs against our own recommendation.
+
+\subsection*{K.2\quad On the use of AI assistance}
+
+AI tools were used for data gathering, for spreading and cross-checking the financial
+statements, for the independent Python re-implementation used to audit both workbooks,
+and for drafting. Every figure in this document remains human-verifiable through the
+source log in Appendix I and reproducible from the two accompanying Excel models. The
+assumptions are the authors' own judgements, and the errors found in Appendix B were
+identified during the build rather than reported by a reviewer afterwards. No source,
+transcript quote or figure has been fabricated; where an input could not be obtained
+from an authorised source it is marked as an assumption or as an open item.
+
+\subsection*{K.3\quad Basis and disclaimer}
+
+Valuation date 31 March 2026, with market data at the 30 March close — 31 March was
+not a trading day. All figures are in rupees crore unless stated. Ambuja is presented
+on a consolidated basis; UltraTech on a standalone core with subsidiary holdings added
+at the bridge. Financial year references are Indian fiscal years ending 31 March.
+
+This document was prepared for an academic valuation exercise. It is not investment
+research within the meaning of any securities regulation, not a recommendation to buy
+or sell any security, and not advice. The authors hold no position in any company
+mentioned.
+
+\begin{keybox}\boxtitle{Reproducibility}
+Every exhibit in Parts I, II and III is generated directly from the accompanying
+models. The two corrected Excel workbooks, the chart-generation scripts and the
+independent Python re-implementation used for the audit in Appendix B are delivered
+alongside this document.
+\end{keybox}
+\end{paracol}
