@@ -110,6 +110,30 @@
 \newcommand{\trow}{\rowcolor{lblue}}
 \newcommand{\wh}[1]{{\color{white}\bfseries #1}}
 
+
+% ---------------------------------------------------------------- people
+% \person{width}{file}{name}{role}
+\newcommand{\person}[4]{%
+  \begin{minipage}[t]{#1}\centering
+    \includegraphics[width=\linewidth]{fig/people/#2}\par\vspace{2.2pt}
+    {\fontsize{6.6}{7.4}\selectfont\bfseries\color{ink}#3\par}\vspace{0.8pt}
+    {\fontsize{5.5}{6.2}\selectfont\color{ash}#4\par}
+  \end{minipage}}
+
+% \product{width}{file}{name}{blurb}
+\newcommand{\product}[4]{%
+  \begin{minipage}[b]{#1}\centering
+    \includegraphics[width=\linewidth,height=26mm,keepaspectratio]{fig/products/#2}\par\vspace{2.5pt}
+    {\fontsize{6.8}{7.6}\selectfont\bfseries\color{navy}#3\par}\vspace{1pt}
+    {\fontsize{5.6}{6.5}\selectfont\color{ash}#4\par}
+  \end{minipage}}
+
+% full-width section head used on the break-out pages
+\newcommand{\fullhead}[2]{%
+  \noindent{\color{navy}\large\bfseries #1}\par\vspace{1pt}
+  {\color{navy}\rule{\textwidth}{1.0pt}}\par\vspace{1.5pt}
+  {\footnotesize\color{ash}#2\par}\vspace{4mm}}
+
 % ---------------------------------------------------------------- misc
 
 \newcommand{\up}{\color{forest}$\blacktriangle$}

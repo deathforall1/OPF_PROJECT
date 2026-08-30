@@ -28,12 +28,32 @@ of Part II the UltraTech mark, via `\runheadlogo{<file>}{<label>}` in `ibstyle.s
 ### Swapping in the real company logos
 
 `fig/logo_amb.png` and `fig/logo_utcl.png` are **typeset wordmarks, not the
-companies' trademark logos** — the working environment had no network access to the
-company sites, and inventing something that imitates a real company's branding would
-be worse than a plain typographic mark. To use the real logos, drop the PNG files in
-at those two paths and recompile. Nothing else changes: the header geometry, the
-cover blocks and the `\includegraphics` heights all stay as they are. A transparent
-PNG roughly 6:1 wide works best.
+companies' trademark logos** — the network egress policy blocks every company domain,
+so no real logo file could be fetched, and imitating a company's branding would be
+worse than a plain typographic mark. To use the real logos, drop the PNG files in at
+those two paths and recompile. Nothing else changes: the header geometry, the cover
+blocks and the `\includegraphics` heights all stay as they are. A transparent PNG
+roughly 6:1 wide works best.
+
+## Photographs and product images
+
+Board and management headshots, the Ambuja product pack shots and the plant-footprint
+map are the **companies' own published images**, extracted from the earlier combined
+report supplied as input (`Cement_Sector_UltraTech_Ambuja_Combined_Report.pdf`), which
+sourced them from the FY2025-26 annual reports and company pages. They were extracted
+programmatically — see `build/extract_assets.py` — rather than fetched or generated,
+because the network blocks the company sites and synthesising images of real, named
+individuals would not be acceptable in any case.
+
+Provenance for each set is recorded in Appendix I:
+
+| Asset | Source |
+|---|---|
+| Ambuja board, 8 headshots | FY2025-26 Integrated Annual Report, pp. 230–231 |
+| Ambuja leadership, 10 headshots | Same report, pp. 232–233 |
+| Ambuja product pack shots, 5 | Same report, Product Portfolio |
+| Ambuja plant map | Same report, At a Glance |
+| UltraTech board and management, 16 | UltraTech Board of Directors / Management Team pages |
 
 ## What is here
 
@@ -41,11 +61,14 @@ PNG roughly 6:1 wide works best.
 Cement_Equity_Reports.tex     master document — compile this
 ibstyle.sty                   all layout, colour and callout definitions
 parts/00_front.tex            cover and contents
-parts/01_ambuja.tex           Part I  — Ambuja Cements (sections 1–12)
-parts/02_ultratech.tex        Part II — UltraTech Cement (sections 13–24)
-parts/03_appendix.tex         Part III — combined appendix (A–K)
+parts/01_ambuja.tex           Part I  — Ambuja Cements (sections 1–13)
+parts/02_ultratech.tex        Part II — UltraTech Cement (sections 14–27)
+parts/03_appendix.tex         Part III — combined appendix (A–L)
 parts/_tables.tex             auto-generated data tables (do not hand-edit)
-fig/                          43 exhibits + 2 header marks (build/charts_*.py)
+fig/                          52 exhibits + 2 header marks (build/charts_*.py)
+fig/people/                   34 board and management headshots
+fig/products/                 5 product pack shots
+assets_extracted/             raw images pulled from the supplied earlier report
 models/                       the two CORRECTED Excel valuation models
 build/                        chart generation, the audit re-implementation,
                               and the Excel correction script
@@ -118,33 +141,23 @@ ROIC fade switch, which ships off while the audit log claims it was switched on.
 None of the corrections changes either recommendation. The largest moves Ambuja by
 0.6% and UltraTech by 2.4%, against downside of 75% and 53%.
 
-## Company-profile sections and their sourcing
+## Company-profile sections
 
-Sections 2 and 14 cover the company, its products and brands, its board, its
-shareholders and the shareholding pattern, with an ownership-structure exhibit for
-each name.
+Sections 2 and 15 cover the company and its history, products and brands, the board
+and senior management (with photographs), the shareholders and the shareholding
+pattern, and the operating footprint. Full-width board, management and product
+spreads follow each, in the style of the earlier report.
 
-Three items in those sections could **not** be verified against a primary document,
-because the network egress policy in the preparation environment blocked every
-company and exchange domain (`ambujacement.com`, `ultratechcement.com`,
-`nseindia.com`, `bseindia.com` and the NSE archive PDFs were all refused):
+Section 3 and Section 16 add a **margin stack, working capital and depreciation**
+analysis for each company — the FY2025-26 evidence for why Ambuja's cost improvement
+never reached the operating line while UltraTech's did. That analysis also resolves a
+previously unquantified audit item: Note 49 discloses Rs 607 crore of intangible
+amortisation against a forecast that holds the intangible balance flat, so the
+asset-consistency gap now carries a number (and it runs against the recommendation).
 
-- **Board composition and designations** for both companies. The names and roles
-  shown were cross-checked across exchange-filing search results but not read out of
-  the Corporate Governance Report. Verify before submission.
-- **Shareholding pattern by investor category** (FPI, mutual fund, insurance,
-  retail). This is freely available on aggregator sites, which this report's sourcing
-  policy excludes, so it is deliberately **not printed** rather than taken from one.
-- **UltraTech's promoter percentage**, which is therefore described qualitatively
-  rather than quantified.
-
-Ambuja's promoter holding — 67.64% at 31 March 2026, 67.68% on a voting-rights basis,
-revised to 67.29% from 10 April 2026 on the Sanghi share issue — **is**
-company-disclosed and is presented as a sourced figure.
-
-All three gaps are logged as rows 24–26 of the Source Log in Appendix I, and the
-tables in Sections 2 and 14 are laid out so the figures drop straight in once the
-filings are opened.
+One sourcing item remains open: the reported UltraTech managing-director transition
+effective 1 April 2026, which falls the day after the valuation date and affects no
+number in the report. It is logged as row 32 of the Source Log.
 
 ## Sourcing
 

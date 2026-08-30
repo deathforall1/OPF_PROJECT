@@ -34,3 +34,6 @@ Thumbs.db
 *.out
 *.toc
 *.synctex.gz
+
+# Intermediate image dumps (regenerate with build/extract_assets.py)
+equity_reports/assets_extracted/

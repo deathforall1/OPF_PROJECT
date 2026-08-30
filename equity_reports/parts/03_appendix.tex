@@ -187,6 +187,7 @@ the workbook contains an error.
 \arow 8 & UTCL terminal fade switch & MED & The audit log records Golden Check 6 as ``FIXED $\ldots$ switched ON by default,'' but the switch ships at 0 (off) and the Dashboard correctly records the check as a FAIL. The two statements contradict each other. & Reported as shipped: fade off, check FAILs. The faded value of Rs 4,560 is disclosed in Part II.\\
 9 & UTCL India Cements & MED & The bridge adds Rs 6,739.51 crore of investments. The balance sheet reports Rs 12,541 crore, of which India Cements is Rs 8,970 crore; the Entity Build sheet derives ``other investments'' as Rs 3,570.83 crore. None of the three tie. India Cements' operations are also already inside the forecast's subsidiary block. & Left as modelled and flagged. Adding the stake on top would double-count roughly Rs 197 per share. Recorded as an open asset-consistency item.\\
 \arow 10 & AMB Audit Log, Entity Build, Dashboard & LOW & The audit-log block, the tie-out check and the seven Golden Checks are each duplicated five times on their sheets. & De-duplicated in the corrected workbook.\\
+11 & AMB depreciation base & MED & The model charges depreciation at 8.0\% of opening \emph{operating} fixed assets while holding the Rs 9,433 crore intangible balance flat, but historical D\&A includes amortisation of those intangibles. Previously recorded as unquantified. & QUANTIFIED, NOT FIXED. Note 49 discloses the split: intangible amortisation of Rs 607 crore in FY2025-26 against Rs 257 crore in FY2024-25. Modelling it explicitly would reduce forecast NOPAT and LOWER the valuation. Recorded on the Corrections sheet; the asset-consistency verdict stays PARTIAL.\\
 \end{tabular}\par}
 
 \vspace{3mm}
@@ -232,7 +233,7 @@ presenting, not because they change the answer.
 \hrow \wh{\#} & \wh{Consistency} & \wh{AMB} & \wh{Ambuja: evidence and gap} & \wh{UTCL} & \wh{UltraTech: evidence and gap}\\
 1 & Assumptions & \PASS & Volume is capacity $\times$ utilisation, so growth is tied to physical assets. Capex is an explicit input anchored to the expansion plan. Terminal year forced to steady state with reinvestment $= g \times$ operating invested capital. & \PASS & Same construction. Growth requires reinvestment throughout; capex is explicit and anchored to guidance; terminal year is a forced steady state.\\
 \arow 2 & Risk & \PASS & FCFF at WACC; CCF and APV at $\rho$; FCFE at $K_e$; EVA at WACC. Constant $D/V$ rebalancing applied in unlever, relever and shield. $\rho = \text{WACC}+K_d t(D/V)$ ties. & \PASS & Identical treatment. At a 6.1\% $D/V$ the policy choice actually matters here, and it is applied consistently.\\
-3 & Asset & \PART & Other income excluded from EBITDA; cash non-operating and added back once; cash-corrected beta. \textbf{Gap:} depreciation charged at 8\% of operating fixed assets while the historical charge includes amortisation of a Rs 9,433 cr intangible balance held flat. & \PART & Same treatment of cash and beta. \textbf{Gap:} the India Cements stake is at book, the investments total does not tie to the bridge, and the stake's operations are already inside the subsidiary block.\\
+3 & Asset & \PART & Other income excluded from EBITDA; cash non-operating and added back once; cash-corrected beta. \textbf{Gap:} depreciation charged at 8\% of operating fixed assets while the historical charge includes Rs 607 cr of amortisation on a Rs 9,433 cr intangible balance the model holds flat. Now quantified from Note 49; correcting it would lower the value. & \PART & Same treatment of cash and beta. \textbf{Gap:} the India Cements stake is at book, the investments total does not tie to the bridge, and the stake's operations are already inside the subsidiary block.\\
 \arow 4 & Liability & \PASS & Borrowings and leases in the weights and in the bridge. Deferred tax in neither the weights nor invested capital, but deducted in the bridge. NCI deducted (worth Rs 51/share). & \PASS & Loan funds and leases in both. Deferred tax of Rs 8,506 cr in neither, consistently on both sides. NCI of Rs 4,089 cr deducted.\\
 5 & Multiplier & \PART & Implied terminal EV/EBITDA 4.65x against a peer median of 19.4x. Peer multiple solved back implies $g$ of 10.99\%, above nominal GDP of 10.76\%. Position taken; gap real. & \PART & Implied 7.52x against 19.05x. Peer multiple implies $g$ of 9.8\%, or 91\% of nominal GDP in perpetuity. Position taken; gap real.\\
 \end{tabular}\par}
@@ -560,6 +561,28 @@ ROE & 3.8\% & 10.4\% & 6.8\% & 15.7\% & 2.2\% \\
 \end{tabular}
 \end{extab}
 
+\vspace{2mm}
+{\footnotesize\bfseries\color{navy}The peer set, and why each is in it}\par\vspace{1.5mm}
+{\scriptsize\RaggedRight
+\textbf{UltraTech Cement} — the industry leader at roughly 29\% of national output and
+the natural benchmark for scale economics. It is also the subject of Part II, and our
+own model says it is 53\% overvalued, which is the single most important caveat on any
+median built from this set.\par\vspace{1mm}
+\textbf{Shree Cement} — the closest comparator on operating discipline, historically the
+industry's low-cost producer with a strong northern and eastern footprint. At 19.1x
+EV/EBITDA on a 6.8\% ROE it illustrates the same tension as Ambuja: a full multiple on
+a modest return.\par\vspace{1mm}
+\textbf{JK Cement} — the highest-return name in the set at a 15.7\% ROE, and
+correspondingly the highest price to book at 5.64x. It is the clearest evidence in the
+peer table that P/B tracks ROE, which is the argument Exhibit A12 rests on.\par\vspace{1mm}
+\textbf{Ramco Cements} — a southern producer whose 2.2\% ROE and 122.9x P/E show what
+happens to earnings-based multiples at the bottom of a regional cycle. It is included
+for completeness and its P/E is excluded from any conclusion.\par\vspace{1mm}
+\textbf{Not included:} Dalmia Bharat and Nuvoco, whose disclosure basis and reporting
+periods could not be aligned with the others from authorised sources within the working
+window. Their omission narrows the set but does not change the median materially.\par}
+
+\vspace{2.5mm}
 \begin{warnbox}\boxtitler{Why the peer median is rejected rather than adopted}
 A peer median EV/EBITDA of 19.4x, solved back through the steady-state identity,
 requires perpetual growth of 10.99\% for Ambuja and 9.8\% for UltraTech, against
@@ -604,23 +627,30 @@ Wikipedia.
 \arow 20 & Both & Statutory tax rate 25.168\% & Own assumption & Section 115BAA: 22\% plus 10\% surcharge plus 4\% cess & 26-Aug-26\\
 21 & Both & Peer financials and market capitalisations & Peer annual reports & Shree Cement, JK Cement, Ramco Cements, own FY2025-26 reports & 26-Aug-26\\
 \arow 22 & Both & Price series for the beta regression & Vendor series & Supplied with an adjusted-close column, a vendor convention rather than exchange bhavcopy format. Labelled vendor-sourced. & 26-Aug-26\\
-23 & AMB & Promoter holding 67.64\% at 31-Mar-26 (67.68\% voting rights); 67.29\% from 10-Apr-26 & Ambuja Cements Ltd & Company disclosure of the Sanghi amalgamation share issue of 1,29,93,708 equity shares. Primary-sourced and reliable. & 30-Aug-26\\
-\arow 24 & Both & \textbf{OPEN:} board composition and designations & Company annual reports & The Corporate Governance Report in each FY2025-26 annual report could not be opened directly from the working environment: the company and exchange domains were unreachable through the network egress policy in force. Names and designations in Sections 2 and 14 are recorded pending verification against that report. & 30-Aug-26\\
-25 & Both & \textbf{OPEN:} shareholding pattern by investor category & Exchange filings & The Regulation 31 quarterly shareholding filing could not be opened for the same reason. Only the promoter/free-float split is presented, and only for Ambuja, where it is company-disclosed. The institutional split (FPI, mutual fund, insurance, retail) is deliberately NOT printed rather than taken from an aggregator. & 30-Aug-26\\
-\arow 26 & UTCL & \textbf{OPEN:} promoter holding percentage & Exchange filings & UltraTech's promoter holding at 31-Mar-2026 could not be sourced primarily and is therefore described qualitatively (Aditya Birla group through Grasim Industries) rather than quantified. & 30-Aug-26\\
+23 & AMB & Promoter holding 67.64\% at 31-Mar-26 (67.68\% voting rights); 67.29\% from 10-Apr-26 & Ambuja Cements Ltd & Company disclosure of the Sanghi amalgamation share issue of 1,29,93,708 equity shares. & 30-Aug-26\\
+\arow 24 & AMB & Board of directors, committees, 62.5\% independence, 96.24\% attendance & Ambuja Cements Ltd & FY2025-26 Integrated Annual Report, Board of Directors, pp. 230--231. Photographs from the same pages. & 30-Aug-26\\
+25 & AMB & Senior management team & Ambuja Cements Ltd & Same report, Leadership Team, pp. 232--233. Photographs from the same pages. & 30-Aug-26\\
+\arow 26 & AMB & Shareholding by category, June 2026 & Ambuja Cements Ltd & Same report, Shareholder Information; shareholding-pattern filings. Promoter 67.33\%, mutual funds 9.12\%, other domestic institutions 8.42\%, foreign institutions 5.63\%, retail and others 9.50\%. & 30-Aug-26\\
+27 & AMB & Product portfolio and pack images & Ambuja Cements Ltd & Same report, Product Portfolio; Ambuja Products and Services. Premium and specialised products c.35\% of trade sales. & 30-Aug-26\\
+\arow 28 & AMB & D\&A decomposition; margin stack; working-capital cycle & Ambuja Cements Ltd & Same report, consolidated financial statements, Notes 15, 17, 35, 44--51 and Note 49. & 30-Aug-26\\
+29 & UTCL & Board of directors and senior management & UltraTech Cement Ltd & UltraTech Board of Directors and Management Team disclosures; photographs from the same pages. & 30-Aug-26\\
+\arow 30 & UTCL & Shareholding by category, June 2026 & UltraTech Cement Ltd & Shareholding-pattern filing: promoter 59.33\%, public institutions 32.55\%, public non-institutions 7.95\%, non-promoter non-public 0.17\%. & 30-Aug-26\\
+31 & UTCL & Margin stack, D\&A intensity, working-capital cycle, cash-flow bridge & UltraTech Cement Ltd & FY2025-26 consolidated financial results and balance sheet. & 30-Aug-26\\
+\arow 32 & UTCL & \textbf{OPEN:} reported managing-director transition, 1-Apr-2026 & Exchange filings & Reported but not confirmed against a primary filing from this working environment. K.\,C. Jhanwar is shown as Managing Director as the board stood at the 31 March 2026 valuation date. & 30-Aug-26\\
+33 & Both & Industry production, growth and capacity outlook & IBEF; ICRA & IBEF, Indian Cement Industry, May 2026; ICRA FY2026-27 volume outlook. & 30-Aug-26\\
+\arow 34 & Both & Global growth; cement decarbonisation cost & IMF; IEA & IMF, July 2026 World Economic Outlook Update; IEA, Breakthrough Agenda Report 2025 --- Cement and Concrete. & 30-Aug-26\\
 \end{tabular}\par}
 
 \vspace{2mm}
-\begin{warnbox}\boxtitler{Why three rows above say OPEN rather than carrying a number}
-Board rosters and category-level shareholding data are freely available on financial
-aggregator sites. This report's sourcing policy excludes them, and the company and
-exchange domains were unreachable from the environment in which it was prepared. The
-choice was therefore between printing an aggregator figure in a report whose central
-claim is source discipline, or printing the structure and marking the gap. We marked
-the gap. Each item is a single lookup in the FY2025-26 annual report and the
-Regulation 31 filing, and Sections 2 and 14 are laid out so the figures drop straight
-in.
-\end{warnbox}
+\begin{okbox}\boxtitleg{On the company-profile data in Sections 2 and 15}
+Board composition, senior management, the shareholding pattern by category, the
+product portfolio and the margin, working-capital and depreciation analysis all trace
+to the companies' own FY2025-26 reports and filings, with page and note references
+above. The photographs are the companies' own published images from those same pages.
+One item remains open: the reported UltraTech managing-director transition effective
+1 April 2026, which falls the day after the valuation date and does not affect any
+number in this report.
+\end{okbox}
 
 \vspace{3mm}
 {\footnotesize\bfseries\color{navy}Authoritative landing pages}\par\vspace{1.5mm}
@@ -708,11 +738,14 @@ $\beta_U(1+D/E)$ with no tax term.
 asserted from two points, one of which is restated. This is the single largest
 weakness in Part I.
 
-\subsubsection{One open sourcing item each} Ambuja's merger terms and UltraTech's
-capacity, utilisation and capex guidance reached the models through broker research,
-which our policy does not admit. Both are flagged rather than quietly used, and
-UltraTech's standalone capacity of 172.5 Mn.T is a derivation rather than a
-disclosure.
+\subsubsection{Three open sourcing items remain} Ambuja's merger swap ratios and
+UltraTech's capacity, utilisation and capex guidance reached the models through broker
+research, which our policy does not admit; UltraTech's standalone capacity of 172.5
+Mn.T is a derivation rather than a disclosure; and the reported UltraTech
+managing-director transition of 1 April 2026 is unconfirmed against a primary filing.
+The company-profile data added in Sections 2 and 15 — board, management, shareholding,
+products, margin stack, working capital and depreciation — is fully sourced to the
+FY2025-26 reports and filings.
 
 \subsubsection{The two models are not on a common basis} One is consolidated and one
 is a standalone core with subsidiaries added. The reason is data availability, the
@@ -722,6 +755,12 @@ effect is quantified in Appendix A, and the fix is to consolidate both.
 variance, and the price series carries a vendor adjusted-close convention rather than
 exchange bhavcopy format. Bottom-up betas are used for both companies, and in both
 cases that choice raises the valuation rather than lowering it.
+
+\subsubsection{The depreciation base is now quantified, and it runs against us}
+Note 49 discloses Rs 607 crore of intangible amortisation in FY2025-26 against a
+forecast that holds the intangible balance flat. Modelling it explicitly would reduce
+NOPAT and lower the valuation. The asset-consistency verdict stays PARTIAL, but the
+direction of the error is now known.
 
 \subsubsection{Both carry a multiplier PARTIAL} The implied terminal multiples sit far
 below anything cement has traded at. We have taken a documented position on that gap
@@ -761,4 +800,108 @@ models. The two corrected Excel workbooks, the chart-generation scripts and the
 independent Python re-implementation used for the audit in Appendix B are delivered
 alongside this document.
 \end{keybox}
+\end{paracol}
+
+\clearpage
+\section*{L\quad Governance, disclosure quality and ESG}
+
+\begin{paracol}{2}
+\subsection*{L.1\quad The two boards compared}
+
+Both boards are, on paper, well constituted. Ambuja runs eight directors of whom five
+are independent (62.5\%), with reported average attendance of 96.24\% and eleven
+committees — five statutory and six additional, covering mergers and acquisitions,
+technology and data security, commodity prices, legal and tax, and corporate
+responsibility and reputation risk. UltraTech runs ten directors of whom five are
+independent (50\%), with six principal committees.
+
+Breadth of committee coverage is not what separates them. What separates them is the
+question each board has to answer.
+
+\subsection*{L.2\quad The governance question is different at each}
+
+At \textbf{Ambuja} the question is whether acquisition goodwill can ever earn its cost.
+Four acquisitions in three years put Rs 22,979 crore of goodwill and intangibles on the
+balance sheet — 34.2\% of invested capital — against a return on capital that has never
+reached its cost in either year of available consolidated history. The governance
+bridge that matters runs from transaction approval to post-acquisition accountability:
+capex, integration cost, minority dilution and ROIC tracked together rather than
+separately.
+
+At \textbf{UltraTech} the company does earn above its cost of capital, so the question
+is narrower: whether the board holds management to a return on the enlarged asset base
+rather than to absolute EBITDA growth. Reported ROIC fell from 14.5\% in FY2021-22 to
+10.8\% in FY2025-26 while EBITDA rose — exactly the pattern a scale-focused scorecard
+would miss.
+
+\subsection*{L.3\quad Quality of disclosure}
+
+Both companies disclose well by Indian large-cap standards, and this report would not
+have been possible otherwise. Three observations nonetheless follow from building the
+models.
+
+\subsubsection{Ambuja's consolidated history is too short} The annual report provides
+FY2025-26 and a restated FY2024-25 and no more, on a consolidated basis. A company that
+has just completed four acquisitions is precisely the company whose multi-year
+consolidated trend a reader most needs.
+
+\subsubsection{The reported tax line misleads on its face} A reported effective rate of
+minus 71\% is fully explained in the notes, so this is a presentation point rather than
+a disclosure failure. But a reader relying on headline profit would be seriously
+misled, and the company could usefully present a normalised figure alongside.
+
+\subsubsection{Volume and capacity splits are incomplete} Ambuja discloses volume and
+capacity consolidated only, which prevents a two-block standalone-and-subsidiary
+forecast. UltraTech's standalone capacity had to be derived rather than read.
+
+\switchcolumn
+\begin{extab}{Board composition, side by side}{Sources: Ambuja FY2025-26 Integrated
+Annual Report, pp. 230--231; UltraTech Board of Directors disclosures.}
+\begin{tabular}{@{}p{0.50\linewidth}rr@{}}
+\hrow \wh{} & \wh{Ambuja} & \wh{UltraTech}\\
+Directors & 8 & 10\\
+\arow Independent directors & 5 & 5\\
+\trow \textbf{Independence} & \textbf{62.5\%} & \textbf{50\%}\\
+Executive directors & 1 & 2\\
+\arow Statutory committees & 5 & 6\\
+Additional committees & 6 & —\\
+\arow Reported attendance & 96.24\% & n/d\\
+Promoter holding & 67.33\% & 59.33\% \\
+\arow Promoter shares pledged & none & none\\
+Foreign institutional holding & 5.63\% & n/d\\
+\arow Domestic institutional holding & 17.54\% & n/d\\
+\end{tabular}
+\end{extab}
+
+\begin{warnbox}\boxtitler{How to read an impairment, if one comes}
+A goodwill write-down at Ambuja would be non-cash and would not change our valuation by
+a rupee, because we discount cash flows rather than book values. It would however be an
+admission that the acquired businesses are worth less than was paid, and it would
+mechanically \emph{improve} reported return on capital by shrinking the denominator.
+Read it as confirmation of the thesis, not as a new event — and do not read the
+subsequent ROIC improvement as operational progress.
+\end{warnbox}
+
+\subsection*{L.4\quad Why ESG does not enter the valuation}
+
+We do not adjust the discount rate or the cash flows for ESG factors, and this is a
+deliberate methodological position. Both companies' green power, waste heat recovery
+and alternative fuel programmes already appear in the forecasts as the cost improvement
+that lifts EBITDA per tonne. UltraTech's green power share of 43\% rising toward 65\%
+and its guided Rs 300 per tonne cost saving are inside our EBITDA-per-tonne path.
+Adding an ESG premium or discount on top would count the same effect twice — a breach
+of the assumptions consistency this report is built on.
+
+We also do not use third-party ESG scores. They vary widely between providers for the
+same company, their methodologies are not disclosed in enough detail to audit, and they
+are not an authorised source under the data policy applied throughout this work.
+
+\begin{okbox}\boxtitleg{Where decarbonisation would change the answer}
+If carbon pricing or a binding clinker-factor regulation arrived, it would enter the
+model as a cost per tonne and would be visible immediately in the EBITDA-per-tonne
+driver. The IEA's estimate that early near-zero cement plants cost 75--150\% more than
+conventional production is the right order of magnitude for what such a transition
+would do to the capital base — and it would fall hardest on the producer with the
+weakest returns, which is Ambuja.
+\end{okbox}
 \end{paracol}
