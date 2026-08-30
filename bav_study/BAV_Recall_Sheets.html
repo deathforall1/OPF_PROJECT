@@ -1,0 +1,873 @@
+<title>BAV Recall Sheets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --desk:#D8D4C8; --sheet:#FDFCF7; --line:#DCE6F2; --margin:#E7B4AE;
+  --ink:#1B3FA0; --ink-2:#2C4FB5; --pencil:#5A5F66;
+  --red:#B03A2E; --green:#0B6E45; --amber:#8A6116; --edge:#C9C4B6;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --desk:#16181C; --sheet:#1C1F25; --line:#262E3B; --margin:#4A2F2C;
+  --ink:#9CBBF5; --ink-2:#8FB0EE; --pencil:#9AA0AA;
+  --red:#EE8C7F; --green:#66C79C; --amber:#DCB260; --edge:#2E333B;
+}}
+:root[data-theme="dark"]{
+  --desk:#16181C; --sheet:#1C1F25; --line:#262E3B; --margin:#4A2F2C;
+  --ink:#9CBBF5; --ink-2:#8FB0EE; --pencil:#9AA0AA;
+  --red:#EE8C7F; --green:#66C79C; --amber:#DCB260; --edge:#2E333B;
+}
+*{box-sizing:border-box}
+body{background:var(--desk);margin:0;font-family:"Kalam",cursive;color:var(--ink)}
+.stack{display:flex;flex-direction:column;align-items:center;gap:22px;padding:22px 12px 60px}
+
+.sheet{
+  width:210mm; min-height:297mm; background:var(--sheet); position:relative;
+  padding:16mm 14mm 14mm 26mm; border:1px solid var(--edge);
+  box-shadow:0 2px 10px rgba(0,0,0,.16);
+  background-image:repeating-linear-gradient(to bottom,transparent,transparent 7.4mm,var(--line) 7.4mm,var(--line) 7.5mm);
+  background-position:0 16mm;
+  font-size:17px; line-height:7.5mm; overflow:hidden;
+}
+.sheet::before{content:"";position:absolute;left:20mm;top:0;bottom:0;width:1px;background:var(--margin)}
+.sheet::after{content:attr(data-pg);position:absolute;right:14mm;bottom:6mm;
+  font-size:13px;color:var(--pencil);font-family:"IBM Plex Mono",monospace}
+.hd{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1.5px solid var(--ink);padding-bottom:2px;margin-bottom:7.5mm}
+.hd h2{margin:0;font-size:25px;font-weight:700;line-height:1.2}
+.hd .tag{font-size:13px;color:var(--red);font-weight:700;letter-spacing:.04em;flex:0 0 auto;padding-left:12px}
+.sheet h3{font-size:19px;margin:6mm 0 0;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.sheet h3:first-of-type{margin-top:0}
+.sheet p{margin:0 0 3.75mm}
+.sheet ul{margin:0 0 3.75mm;padding-left:20px;list-style:none}
+.sheet li{position:relative;margin:0}
+.sheet li::before{content:"·";position:absolute;left:-14px;font-weight:700;color:var(--ink-2)}
+.sheet ol{margin:0 0 3.75mm;padding-left:22px}
+.sheet ol li::before{content:none}
+b,strong{font-weight:700}
+.red{color:var(--red);font-weight:700}
+.grn{color:var(--green);font-weight:700}
+.pen{color:var(--pencil)}
+.amb{color:var(--amber);font-weight:700}
+.box{border:1.5px solid var(--ink);border-radius:2px;padding:2mm 3mm;margin:0 0 3.75mm;
+  line-height:7.5mm;background:transparent}
+.box.r{border-color:var(--red)} .box.g{border-color:var(--green)}
+.f{font-family:"IBM Plex Mono",monospace;font-size:14px;line-height:7.5mm;
+  letter-spacing:-.01em;white-space:pre-wrap;overflow-x:auto}
+.f b{color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;line-height:7.5mm;margin:0 0 3.75mm}
+th,td{border-bottom:1px solid var(--line);padding:0 4px;text-align:left;vertical-align:top}
+th{font-weight:700;border-bottom:1.5px solid var(--ink)}
+td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5px;
+  font-variant-numeric:tabular-nums}
+.arrow{color:var(--red);font-weight:700}
+.side{position:absolute;right:6mm;width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm}
+.cover{display:flex;flex-direction:column;justify-content:center;background-image:none}
+.cover::before{content:none}
+.cover h1{font-size:52px;line-height:1.06;margin:0 0 4mm;font-weight:700}
+.cover .sub{font-size:20px;color:var(--pencil);line-height:9mm}
+.note-sm{font-size:14.5px;color:var(--pencil);line-height:7.5mm}
+@media(max-width:230mm){
+  .sheet{width:100%;min-height:auto;padding:14mm 8mm 14mm 16mm;background-size:auto}
+  .sheet::before{left:11mm}
+}
+@page{size:A4;margin:0}
+@media print{
+  body{background:#fff}
+  .stack{gap:0;padding:0}
+  .sheet{box-shadow:none;border:0;break-after:page;width:210mm;min-height:297mm}
+  .toolbar{display:none}
+}
+.toolbar{position:sticky;top:0;z-index:9;background:var(--desk);width:100%;
+  padding:10px 16px;border-bottom:1px solid var(--edge);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--pencil);
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.toolbar b{color:var(--ink)}
+</style>
+
+<div class="toolbar"><b>BAV Recall Sheets</b> · 40 sheets · print or save as PDF at A4, no scaling · one sheet per topic</div>
+<div class="stack">
+<div class="sheet cover" data-pg="1 / 40">
+<h1>BAV<br>Recall Sheets</h1>
+<div class="sub">Forty sheets. One topic each.<br>
+Business Analysis &amp; Valuation · Prof. Pitabas Mohanty<br>
+XLRI Jamshedpur · PGDM BMJ 2025–27 · Term IV</div>
+<div style="margin-top:12mm" class="sub">
+<span class="red">red</span> = a trap he has set &nbsp;·&nbsp;
+<span class="grn">green</span> = the consistency check &nbsp;·&nbsp;
+<span class="pen">grey</span> = a number worth carrying in<br><br>
+These are for the <b>second and third</b> pass, not the first.<br>
+Read the Field Manual once, then live here.</div>
+</div>
+<div class="sheet" data-pg="2 / 40"><div class="hd"><h2>The spine</h2><span class="tag">read this first</span></div>
+<div class="box"><div class="f">Value = Σ (cash flow to a claim) ÷ (1 + rate matching that claim's risk)^t</div></div>
+<p>FCF · FCFE · CCF · APV · DDM · EVA · multiples · the VC method — all the <u>same equation</u>, different definition of "cash flow to a claim". <span class="red">They must all give the same answer.</span></p>
+<h3>Four doctrines he grades on</h3>
+<ol>
+<li><b>Consistency beats accuracy.</b> "Justify the assumptions rather than trying to prove they are correct."</li>
+<li><b>Growth is never free.</b> g = ROIC × Investment Rate. Always.</li>
+<li><b>Count each asset &amp; each claim exactly once.</b> Never twice, never zero times.</li>
+<li><b>The multiple is an output</b>, never the starting point.</li>
+</ol>
+<h3>The four-question audit — run on every answer</h3>
+<div class="box g">
+1. Does my rate match my cash flow? <span class="pen">(risk)</span><br>
+2. Every asset counted once? <span class="pen">(asset)</span><br>
+3. Every claim counted once, same way in flow and bridge? <span class="pen">(liability)</span><br>
+4. Growth backed by reinvestment, implied multiple sane? <span class="pen">(assumption + multiplier)</span>
+</div>
+<p class="note-sm">Half his hard questions are <b>inconsistent by construction</b>. The mark is for spotting it, not for calculating.</p>
+</div>
+<div class="sheet" data-pg="3 / 40"><div class="hd"><h2>The statements</h2><span class="tag">ground zero</span></div>
+<h3>The P&amp;L ladder — memorise</h3>
+<div class="box"><div class="f">Revenue
+ − materials, employee cost, other opex
+= <b>EBITDA</b>
+ − depreciation &amp; amortisation
+= <b>EBIT</b>  (= net operating income)
+ − interest        ← everything ABOVE belongs to ALL capital
+= <b>PBT</b>          everything BELOW belongs to EQUITY only
+ − tax
+= <b>PAT</b>  (= net income = the E in P/E)</div></div>
+<h3>Balance sheet — the distinction that matters</h3>
+<p>Not current vs non-current. <b>Interest-bearing vs non-interest-bearing.</b><br>
+IB → goes into WACC, gets subtracted at the bridge.<br>
+NIB → sits inside working capital, not subtracted.</p>
+<h3>Depreciation</h3>
+<ul>
+<li>Non-cash. The cash left when the machine was bought.</li>
+<li>A convention, not a measurement — real value falls fastest early.</li>
+<li><span class="red">So accounting ROCE drifts up over an asset's life for no real reason. Don't over-read the trend.</span></li>
+</ul>
+<div class="box"><div class="f">Enterprise value = Debt (MV) + Equity (MV)
+Equity value    = EV − debt (+ non-op assets, − other claims)</div></div>
+</div>
+<div class="sheet" data-pg="4 / 40"><div class="hd"><h2>Time value + the two shortcuts</h2><span class="tag">ground zero</span></div>
+<div class="box"><div class="f">PV = CF_t ÷ (1+r)^t
+
+Level perpetuity     PV = C ÷ r
+Growing perpetuity   PV = C₁ ÷ (r − g)      needs r > g, always</div></div>
+<h3>Two traps inside Gordon</h3>
+<div class="box r">
+1. Numerator is <b>NEXT year's</b> flow. Given this year's → grow it: C₁ = C₀(1+g).<br>
+2. g ≥ r is not "a high valuation" — it is an <b>impossible assumption set</b>.
+</div>
+<h3>Terminal value — the two-step both students get half right</h3>
+<div class="box"><div class="f">TV at end of yr N = FCF_N × (1+g) ÷ (WACC − g)
+PV of it          = TV_N ÷ (1+WACC)^N       ← N periods, not N+1</div></div>
+<p class="red">Getting one of these right and the other wrong is the single most common arithmetic slip in the class.</p>
+<h3>Implied growth — the rearrangement (Quiz 3 engine)</h3>
+<div class="box g"><div class="f">g = (TV × WACC − FCF) ÷ (TV + FCF)</div></div>
+<h3>Real vs nominal — the tomato</h3>
+<div class="box"><div class="f">(1+nominal) = (1+real)(1+inflation)
+3% real, 6% inflation → 9.18%,  NOT 9%
+terminal g: 5% real × 5% inflation = 10.25%, NOT 10%</div></div>
+</div>
+<div class="sheet" data-pg="5 / 40"><div class="hd"><h2>Risk, CAPM, and the crack in it</h2><span class="tag">ground zero</span></div>
+<div class="box"><div class="f">σ_i² = β² σ_m²  +  σ_ε²
+total   = systematic + specific (diversifiable)</div></div>
+<p>A diversified investor kills specific risk for free ⟹ the market won't pay for it ⟹ only systematic risk is priced. That <u>is</u> CAPM.</p>
+<div class="box"><div class="f">K_e = R_f + β × (E[R_m] − R_f)</div></div>
+<p>β = 1 moves with market · β = 1.7 amplifies · β = 0.5 defensive</p>
+<h3 class="grn">The crack — remember it now, use it in Part V</h3>
+<div class="box g">
+CAPM prices only systematic risk <b>because it assumes the investor is diversified.</b><br>
+Remove that assumption — a promoter with 90% of her wealth in one private business —<br>
+and CAPM <span class="red">understates</span> what she needs.<br>
+<span class="pen">⟶ that single crack is worth a 6× swing in the Kavita case.</span>
+</div>
+<h3>His own caveats on CAPM</h3>
+<ul>
+<li>Fama–French (1992): beta doesn't explain returns.</li>
+<li>Low-risk stocks outperform (Martingale AM).</li>
+<li>Alternatives: APT (must estimate factor premia), Fama–French multi-factor (industry standard, IIMA publishes Indian data).</li>
+</ul>
+</div>
+<div class="sheet" data-pg="6 / 40"><div class="hd"><h2>The five consistencies</h2><span class="tag">★ highest yield</span></div>
+<table>
+<tr><th>#</th><th>Rule</th><th>Violation he circles</th></tr>
+<tr><td><b>1</b></td><td><b>Assumptions</b> — projections tell one story; growth needs reinvestment</td><td>15% sales growth, flat capex &amp; NWC. Terminal g = 3% with NI = 0.</td></tr>
+<tr><td><b>2</b></td><td><b>Risk</b> — rate matches the flow</td><td>FCFE at WACC. Growing firm, constant WACC, debt fixed in ₹.</td></tr>
+<tr><td><b>3</b></td><td><b>Asset</b> — each asset once</td><td>Interest income out of NOPAT but cash not added back. Adding land whose output is in revenue.</td></tr>
+<tr><td><b>4</b></td><td><b>Liability</b> — each claim once, same way in flow and bridge</td><td>Liability in WACC but not subtracted from EV.</td></tr>
+<tr><td><b>5</b></td><td><b>Multiplier</b> — the multiple is an output</td><td>Terminal g = 10% next to terminal EV/EBITDA of 4×.</td></tr>
+</table>
+<div class="box g">"Name the consistency violated" = the cheapest 5 marks in the paper.<br>
+Practise writing all five names in 30 seconds.</div>
+<h3>Absolute vs relative</h3>
+<p><b>DCF</b> = compute it yourself. "The only scientific method, in the absence of real options."<br>
+<b>Multiplier</b> = borrow the market's opinion. Valid only <u>if</u> the comparables are fairly priced — and it cannot see a whole sector being wrong.<br>
+<b>Historical cost</b> = what it cost to build. Useful for insurance, useless for value.</p>
+</div>
+<div class="sheet" data-pg="7 / 40"><div class="hd"><h2>The growth engine</h2><span class="tag">★</span></div>
+<div class="box"><div class="f">g = b × ROE          b = retention ratio = 1 − payout
+<b>g = ROIC × Investment Rate</b>     IR = Net investment ÷ NOPAT</div></div>
+<p>Retain nothing → grow 0%. Retain everything → grow at ROE. No third option.</p>
+<div class="box r">His words (Quiz 3 key): changing g directly is <b>incorrect</b> — "it is an input to the model".<br>
+Given g, ROIC and NI that don't satisfy the identity ⟹ <b>one of them is wrong.</b> Back out the consistent set.</div>
+<h3>NPVGO — growth only pays above the cost of capital</h3>
+<div class="box"><div class="f">Value = EPS₁ ÷ K_e  +  NPVGO
+ROE = K_e  ⟹  NPVGO = 0  ⟹  growth creates nothing</div></div>
+<h3>Where to invest? (his slide) — OIC ₹100m, WACC 15%, g 5%</h3>
+<table>
+<tr><th>Co</th><th class="n">ROIC</th><th class="n">Spread</th><th>Verdict</th></tr>
+<tr><td>A</td><td class="n">10%</td><td class="n">−5%</td><td class="red">growth DESTROYS value; worth &lt; 100</td></tr>
+<tr><td>B</td><td class="n">15%</td><td class="n">0</td><td>neutral; worth exactly 100</td></tr>
+<tr><td>C</td><td class="n">20%</td><td class="n">+5%</td><td class="grn">growth creates value; worth &gt; 100</td></tr>
+</table>
+<p class="grn">It's the <u>spread</u>, not the growth rate. 2% growth on a 10-pt spread beats 20% growth on a negative one.</p>
+</div>
+<div class="sheet" data-pg="8 / 40"><div class="hd"><h2>Modigliani–Miller</h2><span class="tag">Quiz 1 / 2</span></div>
+<p>Slice a pizza into 6 instead of 4 — no more pizza. Debt and equity are slices of the same cash flows.</p>
+<div class="box"><div class="f">No tax:   V_L = V_U                    (Prop I)
+          K_e = ρ + (ρ − K_d)(D/E)      (Prop II)
+
+With tax: V_L = V_U + t·D               permanent FIXED debt only
+          K_e = ρ + (ρ − K_d)(1−t)(D/E)</div></div>
+<p><b>ρ (rho)</b> = unlevered cost of equity = pure business risk = what shareholders would demand with no debt at all.</p>
+<h3>Quiz 1 Q4 — worked, with his mark scheme</h3>
+<p class="note-sm">Unlevered, EBIT 200 forever, K_e 12%, t 20%. Borrows 50, invests in a project with NPV 10.</p>
+<div class="box"><div class="f">V_U   = 200(0.8) ÷ 0.12 = 1,333.33
++ tax shield  = 50 × 0.20 =    10.00
++ CASH RAISED, still in firm =  50.00   ← <b>the one everyone forgets</b>
++ NPV of project             =  10.00
+= new EV                      1,403.33   <b>3 marks</b>
+                              1,353.33   <b>2 marks</b> (forgot the cash)
+                              1,343.33   <b>1.5 marks</b> (forgot cash + NPV)</div></div>
+<div class="box g">He pre-maps the wrong answers ⟹ <b>show every line of the build-up.</b><br>
+A visible structure with a slip earns most marks; a bare wrong number earns none.</div>
+</div>
+<div class="sheet" data-pg="9 / 40"><div class="hd"><h2>The value-driver formula</h2><span class="tag">★★ generates everything</span></div>
+<div class="box"><div class="f">P₀ = E₁(1 − g/ROE) ÷ (K_e − g)
+
+<b>P/E = (1 − g/ROE) ÷ (K_e − g)</b>
+<b>P/B = (ROE − g)   ÷ (K_e − g)</b></div></div>
+<h3>Set g = 0 and read off the exam answers</h3>
+<div class="box g"><div class="f">P/E → 1 ÷ K_e     ROE term VANISHES ⟹ P/E says NOTHING about ROE
+P/B → ROE ÷ K_e   ⟹ P/B > 1  ⟺  ROE > K_e</div></div>
+<p><b>Quiz 1 Q1:</b> at g = 0, which ratio reveals ROE &gt; required return? → <b>P/B.</b><br>
+<span class="pen">1 mark for saying P/B, 1 mark for the justification. Bare answer caps at half.</span></p>
+<p><b>Quiz 1 Q2:</b> lower P/E <u>and</u> higher P/B? → <b>Yes: low g + high ROE.</b> A mature, cash-generative, high-return business with no reinvestment runway. <span class="pen">3 marks.</span></p>
+<h3>Only three determinants of any multiple</h3>
+<div class="box">growth (g) · return quality (ROE / ROIC) · risk (K_e / WACC)<br>
+<span class="pen">Two companies at different multiples ⟹ one of these three differs, or the market is wrong about one.</span></div>
+</div>
+<div class="sheet" data-pg="10 / 40"><div class="hd"><h2>P/E, PEG, PEGY</h2><span class="tag">Quiz 1</span></div>
+<h3>P/E hygiene</h3>
+<ul>
+<li>Always <b>diluted</b> — convertibles, warrants, ESOPs are real claims.</li>
+<li>Forward &gt; trailing for value, but imports someone else's estimate.</li>
+<li><b>Normalise E:</b> strip asset-sale gains, insurance, restructuring, litigation, mark-to-market.</li>
+</ul>
+<div class="box r">Alphabet Q2 2026: reported diluted EPS <b>$9.11</b> included ~$99bn of <u>unrealised</u> gains on SpaceX + Anthropic stakes. Adjusted EPS <b>$2.85</b> — which MISSED the $2.89 consensus. A P/E on 9.11 is meaningless.</div>
+<h3>PEG</h3>
+<div class="box"><div class="f">PEG  = (P/E) ÷ g          g as a number: 20% → 20
+PEGY = (P/E) ÷ (g + dividend yield)</div></div>
+<p class="red">Why he's sceptical: P/E is <u>convex</u> in g (g sits in numerator via payout AND denominator via K_e − g), so PEG flatters high growth. And it ignores risk entirely — same PEG, different betas, not equally attractive.</p>
+<p class="pen">DMart: 75× FY22 P/E, 26% CAGR ⟹ PEG 4.4×. Defended because Walmart 5.3×, Costco 4.9×, Target 7.3×. Notice the move: a rich multiple is defended by choosing the comparison set.</p>
+</div>
+<div class="sheet" data-pg="11 / 40"><div class="hd"><h2>P/B, P/S, and multiplier consistency</h2><span class="tag">Quiz 1</span></div>
+<h3>P/B</h3>
+<div class="box"><div class="f">P/B = (ROE − g) ÷ (K_e − g)   →  at g=0: ROE ÷ K_e</div></div>
+<ul>
+<li>P/B = 1 → earns exactly K_e, creates nothing</li>
+<li>P/B &lt; 1 → market expects ROE &lt; K_e (PSU banks, struggling capital-heavy firms)</li>
+<li>P/B &gt; 1 → ROE &gt; K_e; the gap reads the spread</li>
+</ul>
+<p><b>Use it for balance-sheet businesses:</b> banks, NBFCs, insurers, oil &amp; gas, real estate — paired with ROE. Useless for asset-light IT services.</p>
+<h3>P/S — Quiz 1 Q3, his two reasons</h3>
+<div class="box r">
+1. <b>Leverage.</b> Price is an EQUITY claim; sales belong to the WHOLE firm. Same operations, different debt → different P/S. <span class="pen">1 mark</span><br>
+2. <b>Cash.</b> A cash pile lifts market cap without a rupee more revenue. <span class="pen">1 mark</span>
+</div>
+<div class="box g">The general rule, worth more than the answer:<br>
+<b>numerator and denominator must belong to the same claimants.</b><br>
+equity ↔ equity (P/EPS, P/BV) · firm ↔ firm (EV/EBITDA, EV/Sales, EV/IC)<br>
+EV/Sales is the fixed version of P/S.</div>
+</div>
+<div class="sheet" data-pg="12 / 40"><div class="hd"><h2>EV/EBITDA + choosing peers</h2><span class="tag">Quiz 1 / practical</span></div>
+<div class="box"><div class="f">EV/EBITDA = (Mkt cap + Debt − Cash) ÷ EBITDA</div></div>
+<p><b>Virtues:</b> capital-structure neutral, depreciation-policy neutral, rough cash proxy. The multiple most deals are struck on.</p>
+<p class="red"><b>Defects:</b> ignores capital intensity entirely (a steel plant and a software firm with equal EBITDA are not equally valuable); ignores working capital; and <b>Ind AS 116 broke comparability</b> — rent left opex, so EBITDA jumped for retail / aviation / cinemas with zero change in economics.</p>
+<h3>EBITTDA — 2026 (Quiz 3 Q3)</h3>
+<div class="box">
+<b>For:</b> in early AI adoption, token spend is exploratory → closer to <b>R&amp;D</b> than to COGS.<br>
+<b>Against:</b> if AI is embedded, revenue is already higher — excluding the cost breaks the <b>matching concept</b>; and it <b>encourages profligate token usage.</b><br>
+<span class="pen">one each way = 2 of 3 marks. Label them "For:" and "Against:".</span>
+</div>
+<h3>Peers &amp; adjustments</h3>
+<p>Screen on <b>business model, growth, margin, risk, size</b> — not SIC/GICS codes.<br>
+<span class="grn">Premium:</span> scalability, pricing power, intangibles, high ROCE, fixed-asset turnover, short NWC days, cash conversion.<br>
+<span class="red">Discount:</span> margin contraction, lagging growth, client concentration, promoter dependency, sunset industry.</p>
+</div>
+<div class="sheet" data-pg="13 / 40"><div class="hd"><h2>Quiz 1 decoded</h2><span class="tag">past paper</span></div>
+<table>
+<tr><th>Q</th><th>Asked</th><th class="n">Mk</th><th>Testing</th></tr>
+<tr><td>1</td><td>g = 0: P/E or P/B for ROE &gt; r?</td><td class="n">2</td><td>P/E collapses to 1/K_e</td></tr>
+<tr><td>2</td><td>Lower P/E + higher P/B possible?</td><td class="n">3</td><td>low g, high ROE</td></tr>
+<tr><td>3</td><td>2 reasons not to use P/S</td><td class="n">2</td><td>multiplier consistency</td></tr>
+<tr><td>4</td><td>Unlevered firm borrows &amp; invests → EV?</td><td class="n">3</td><td>MM + the cash stays in the firm</td></tr>
+</table>
+<div class="box g">Pattern: <b>3 conceptual, 1 numerical</b> — and the conceptual questions carry MORE total marks. Answers are 2–3 sentences. He tests whether you can name the mechanism, not write an essay.</div>
+<h3>How he marks — calibrate before writing</h3>
+<ul>
+<li><b>Justification = half the marks.</b> "1 mark for saying PB, 1 for the justification."</li>
+<li><b>Partial credit is pre-mapped</b> ⟹ show the build-up.</li>
+<li><b>Structure earns marks</b> on argue-both-sides questions.</li>
+<li><b>Conceptual answers are SHORT.</b> Causal chain, then stop.</li>
+<li><b>He concedes his own errors</b> ("Give 1 mark to all. This was a mistake.") ⟹ <span class="grn">attempt everything.</span></li>
+<li>"Ignore the circularity" means he stripped it. If he doesn't say it — <span class="red">the circularity IS the point.</span></li>
+</ul>
+</div>
+<div class="sheet" data-pg="14 / 40"><div class="hd"><h2>Accrual → cash</h2><span class="tag">Quiz 2 / 3</span></div>
+<div class="box"><div class="f">EBIT × (1−t)              = <b>NOPAT</b>
+ + depreciation &amp; amortisation
+                          = <b>Gross cash flow</b>
+ − capex
+ − increase in operating working capital
+ (+ increase in other NIBL)
+                          = <b>FREE CASH FLOW</b></div></div>
+<p><b>Why tax EBIT, not PBT?</b> FCF must be pre-financing. Taxing PBT sneaks the interest deduction into the numerator — and WACC's (1−t) already counts it. Double count.</p>
+<h3 class="red">Why is depreciation ALONE added back? (Quiz 3 Q2, 5 marks)</h3>
+<div class="box r">
+NOT "because it's non-cash" — that's half an answer.<br><br>
+<div class="f">Capex ≡ Δ Net fixed assets  +  Depreciation</div>
+Depreciation is <u>already inside</u> the capex you are about to subtract.<br>
+Adding it back to NOPAT <b>cancels</b> that. The two moves are a matched pair.
+</div>
+<h3>Operating working capital</h3>
+<div class="box"><div class="f">OWC = operating current assets − operating current liabilities
+      (inventory + receivables      (payables + other CL
+       + other receivables,          <b>EXCLUDING short-term
+       EXCLUDING surplus cash)        borrowings — they are DEBT</b>)</div></div>
+<p class="pen">Titan FY23: current liabilities ₹11,521 cr → operating CL ₹5,018 cr once ₹6,503 cr of borrowings comes out.</p>
+</div>
+<div class="sheet" data-pg="15 / 40"><div class="hd"><h2>FCF · FCFE · CCF</h2><span class="tag">★ Quiz 2</span></div>
+<p><b>The question that fixes everything: whose cash is this?</b></p>
+<table>
+<tr><th>Flow</th><th>Whose</th><th>Discount at</th><th>Gives</th></tr>
+<tr><td><b>FCF</b></td><td>everyone</td><td>WACC</td><td>EV</td></tr>
+<tr><td><b>FCFE</b></td><td>shareholders</td><td>K_e</td><td>Equity directly</td></tr>
+<tr><td><b>CCF</b></td><td>everyone + the shield</td><td><b>PRE-TAX WACC</b></td><td>EV</td></tr>
+</table>
+<div class="box"><div class="f">FCFE = PAT − net investment + net new borrowing
+CCF  = FCF + t·K_d·D
+
+WACC     = (E/V)K_e + (D/V)K_d(1−t)     ← pairs with FCF
+Pre-tax  = (E/V)K_e + (D/V)K_d          ← pairs with CCF, NO (1−t)</div></div>
+<div class="box r">The shield goes in the numerator (CCF) <b>or</b> in the rate (WACC). Never both, never neither.<br>
+Using after-tax K_d with CCF ⟹ EV too high. This is the intended failure in Quiz 2.</div>
+<h3 class="grn">The reconciliation identity — your diagnostic</h3>
+<div class="box g"><div class="f">FCFE = FCF − Interest(1−t) + Net new borrowing</div>
+9 times out of 10 the mismatch is: constant WACC (⟹ constant D/E) while debt held fixed in ₹.<br>
+Constant D/E + growth ⟹ <b>net new borrowing = g × D every year.</b></div>
+</div>
+<div class="sheet" data-pg="16 / 40"><div class="hd"><h2>OLP Limited — the benchmark</h2><span class="tag">★ memorise</span></div>
+<p class="note-sm">X = ₹100m forever · t = 20% · D = ₹100m @ K_d 10% · K_e = 20% · no non-op assets</p>
+<table>
+<tr><th>Method</th><th>Flow</th><th>Rate</th><th class="n">Value</th></tr>
+<tr><td><b>FCFE</b></td><td>(100−10)0.8 = 72</td><td>K_e 20%</td><td class="n">E = 360</td></tr>
+<tr><td><b>FCF</b></td><td>100 × 0.8 = 80</td><td>WACC 17.391%</td><td class="n">EV = 460</td></tr>
+<tr><td><b>CCF</b></td><td>80 + 0.2(10) = 82</td><td>pre-tax 17.826%</td><td class="n">EV = 460</td></tr>
+<tr><td><b>APV</b></td><td>80 at ρ, shield apart</td><td>ρ = 18.182%, VTS = D·t = 20</td><td class="n">440+20 = 460</td></tr>
+</table>
+<div class="box g">Equity = <b>360</b> under all four. EV = <b>460</b> under all four.<br>
+<b>Notice the ORDER:</b> FCFE first (needs no weights) → equity 360 → only THEN can you build the WACC weights.<br>
+That ordering is the escape from circularity.</div>
+<h3>WACC weights — why market value</h3>
+<p>Titan: book ₹230/share, trades at ₹4,629, K_e = 12%. <b>12% of what?</b> An investor who can sell at 4,629 expects 12% on 4,629.<br>
+His question: X invested ₹100 in 2002; book ₹300, market ₹1,000. Why care about market value? <span class="grn">Because ₹1,000 is what you give up by not selling — the opportunity cost.</span></p>
+</div>
+<div class="sheet" data-pg="17 / 40"><div class="hd"><h2>Quiz 2 Q1 — worked</h2><span class="tag">past paper</span></div>
+<p class="note-sm">Secured 100 @7% · unsecured 50 @8% · K_e 12% · EBIT 200 · t 30% · g 4% · NI 25</p>
+<div class="box"><div class="f">— FCFE road —
+Interest  = 100(7%) + 50(8%)              =   11
+PBT = 189 → tax 56.7 → <b>PAT = 132.3</b>
+FCFE = 132.3 − 25 + (150 × 4%)            =  113.3
+Equity = 113.3 ÷ (12% − 4%)               = <b>1,416.25</b>   2 mk
+EV = 1,416.25 + 150                       = <b>1,566.25</b>
+
+— CCF road —
+CCF = 113.3 + 11 − 6                      =  <b>118.30</b>    2 mk
+pre-tax WACC = (100/1566.25)7% + (50/1566.25)8%
+             + (1416.25/1566.25)12%       = <b>11.553%</b>   2 mk
+EV = 118.30 ÷ (11.553% − 4%)              = <b>1,566.25</b>   1 mk</div></div>
+<div class="box r">
+① pre-tax WACC uses the RAW 7% and 8% — no (1−t). After-tax here is the intended failure.<br>
+② both debts appear separately at their own costs — do not average first.<br>
+③ net new borrowing = g × total debt = 4% × 150 = 6. <b>+</b> in FCFE, <b>−</b> going back to CCF.
+</div>
+<h3>Q2 — 5 marks, three sentences</h3>
+<div class="box g">+NPV project ⟹ equity value ↑ by the NPV; debt unchanged ⟹ <b>D/E falls</b> ⟹ K_e falls (MM II) and weights shift to the cheaper source ⟹ <b>WACC falls.</b></div>
+</div>
+<div class="sheet" data-pg="18 / 40"><div class="hd"><h2>Growth, and the hidden clause</h2><span class="tag">Quiz 2</span></div>
+<div class="box"><div class="f">Net investment = capex + ΔWC − depreciation
+FCF = NOPAT − net investment</div></div>
+<div class="box r"><b>The clause hidden in "constant WACC":</b><br>
+constant WACC ⟹ constant D/E ⟹ if equity grows at g, <b>DEBT MUST GROW AT g</b><br>
+⟹ net new borrowing of g×D appears in FCFE every year.<br><br>
+Growing FCFE at a constant K_e with debt fixed in ₹ <b>cannot be right</b> — leverage would fall every year, so K_e would fall every year.<br>
+Either (a) let debt grow at g, or (b) hold debt fixed and use APV.</div>
+<h3>Terminal value</h3>
+<ul>
+<li>g bounded by <b>nominal GDP</b> of the economy it depends on. Build it multiplicatively.</li>
+<li>Explicit period runs <b>until steady state is credible</b> — longer if ROIC ≫ WACC. The <i>choice</i> is examinable.</li>
+<li><b>Cross-check both ways:</b> what EV/EBITDA does my Gordon TV imply? what g does the peer multiple imply?</li>
+<li>Report TV as % of EV. Always sensitise WACC × g.</li>
+</ul>
+<h3>Terminal reinvestment must comply</h3>
+<div class="box g"><div class="f">IR = g ÷ RONIC     Net investment = NOPAT × IR</div></div>
+</div>
+<div class="sheet" data-pg="19 / 40"><div class="hd"><h2>Circularity</h2><span class="tag">Quiz 2 / 3</span></div>
+<p>WACC needs market-value weights. Equity value is what you're solving for. The snake eats its tail.</p>
+<table>
+<tr><th></th><th>Response</th><th>Verdict</th></tr>
+<tr><td>1</td><td>Book-value weights</td><td class="red">WRONG. Never silently.</td></tr>
+<tr><td>2</td><td>Current market cap</td><td>Defensible if disclosed — but you're using the price you claim to be testing.</td></tr>
+<tr><td>3</td><td><b>Target D/E</b></td><td class="grn">Only the RATIO is needed ⟹ circularity dissolves. Best when migrating to a target.</td></tr>
+<tr><td>4</td><td><b>Iterate</b> (his SSRN 413240)</td><td class="grn">Seed → WACC → value → implied equity → feed back. Excel: iterative calc, or Goal Seek to zero.</td></tr>
+</table>
+<div class="box g"><b>The elegant escape:</b> value equity DIRECTLY with FCFE at K_e. No weights ⟹ no circularity at all.<br>
+That is exactly why his Quiz 2 key computed equity (1,416.25) first.<br>
+<span class="pen">Multiple debts at different rates + "find EV"? → FCFE road is nearly always fastest.</span></div>
+<h3>XYZ — three legitimate routes, one answer</h3>
+<p class="note-sm">₹100m @12%, ₹200m @14%, EBIT 100, t 30%, K_e 20%, g = 0</p>
+<div class="box"><div class="f">FCFE: interest 40 → PAT = 60(0.7) = 42 → Equity = 42/0.20 = <b>210</b>
+one debt as capital → different WACC, different EV — <b>same 210</b>
+both debts as capital → EV 510, subtract 300 — <b>same 210</b></div></div>
+</div>
+<div class="sheet" data-pg="20 / 40"><div class="hd"><h2>APV + preference capital</h2><span class="tag">Quiz 2</span></div>
+<div class="box"><div class="f">APV = V_unlevered + PV(tax shields) − PV(distress costs)
+
+Step 1  find ρ:  K_e = ρ + (ρ − K_d)(1−t)(D/E)   → solve
+        or       β_U = β_L ÷ [1 + (1−t)(D/E)]
+Step 2  discount FCF at ρ
+Step 3  value the shields — <b>rate depends on the DEBT POLICY</b></div></div>
+<table>
+<tr><th>Debt policy</th><th>Shield rate</th><th>Unlever with</th></tr>
+<tr><td><b>Fixed in ₹</b>, known schedule</td><td>K_d &nbsp;<span class="pen">(zero-g: VTS = D·t)</span></td><td>β_L·E / [D(1−t)+E]</td></tr>
+<tr><td><b>Constant D/V</b>, continuous (Harris–Pringle)</td><td>ρ</td><td>β_L·E / (D+E)</td></tr>
+<tr><td><b>Constant D/V</b>, annual (Miles–Ezzell)</td><td>yr 1 at K_d, then ρ</td><td>M–E adjustment</td></tr>
+</table>
+<div class="box r"><b>From class (APV lecture):</b> "Mistake — using the MM equation, based on the assumption g = 0. When you bring growth in, the <u>riskiness of the tax shield changes.</u>"<br>
+Debt grows with the firm ⟹ <b>drop the (1−t)</b> from relevering; discount the shield at ρ, not K_d.</div>
+<h3>Preference capital — leverage without the tax break</h3>
+<div class="box"><div class="f">WACC = (E/V)K_e + (D/V)K_d(1−t) + (P/V)K_p     ← <b>no (1−t) on K_p</b>
+and SUBTRACT preference at the bridge.</div></div>
+<p class="pen"><b>Use APV whenever leverage is CHANGING</b> — LBO, deleveraging plan. One constant WACC is then simply wrong. (Sampa Video: fixed debt → APV at K_d; constant D/V → WACC.)</p>
+</div>
+<div class="sheet" data-pg="21 / 40"><div class="hd"><h2>Four technical points + the −5.12</h2><span class="tag">★ Quiz 3</span></div>
+<ol>
+<li><b>Pre-tax cost of debt ≠ coupon rate.</b> It's the YTM.</li>
+<li><b>Cost of equity ≠ dividend yield.</b> Total return = yield + capital gains.</li>
+<li><b>Weights at market value</b>, not book.</li>
+<li><b>Rate must match the riskiness AND the type</b> of the flow.</li>
+</ol>
+<h3>Does the coupon-vs-YTM error matter?</h3>
+<p class="note-sm">EBIT 100, book debt 100, t 30%, K_e 20%, YTM 12%, coupon 10%, g = 0</p>
+<table>
+<tr><th></th><th class="n">coupon</th><th class="n">YTM</th></tr>
+<tr><td>MV of debt</td><td class="n">100</td><td class="n">83.33</td></tr>
+<tr><td>WACC</td><td class="n">16.87%</td><td class="n">17.57%</td></tr>
+<tr><td>EV</td><td class="n">415.00</td><td class="n">398.33</td></tr>
+<tr><td><b>Equity</b></td><td class="n"><b>315</b></td><td class="n"><b>315</b></td></tr>
+</table>
+<p class="grn">At g = 0 it does NOT matter — equity is 315 either way. The problem arrives with a decision.</p>
+<div class="box r"><b>The ₹500m project at 17% IRR</b> — clears 16.87%, fails 17.57%.
+<div class="f">Extra debt (100/415)500 = 120.48 · extra equity 379.52
+Project FCF 85 → EBIT 121.43 → new EBIT 221.43
+New interest 10 + 120.48(12%) = 24.46 → PBT 196.97 → PAT 137.88
+New equity = 137.88/0.20 = 689.40
+Put in 315 + 379.52 = 694.52   ⟹  <b>NPV = −5.12</b></div>
+The 17% project DESTROYED value ⟹ 17.57% was the true cost of capital.</div>
+</div>
+<div class="sheet" data-pg="22 / 40"><div class="hd"><h2>Cost of debt</h2><span class="tag">Quiz 3</span></div>
+<h3>The pecking order</h3>
+<ol>
+<li><b>YTM of the company's traded bonds.</b> Best — and rare: only 83 of BSE 500 borrowed from the public (FY23).</li>
+<li><b>Ask someone who knows</b> (Bloomberg, treasury).</li>
+<li><b>Credit rating + spread.</b> FIMMDA publishes annualised spreads by rating × tenor. The practical route.</li>
+<li><b>Rate the bonds yourself</b> — synthetic rating from coverage &amp; leverage.</li>
+</ol>
+<p class="pen">FIMMDA shape: AAA a few bp short-tenor → ~117bp at 15y; BBB− 450–560bp. Spreads widen with tenor, explode below investment grade.</p>
+<h3>Which tax rate in K_d(1−t)?</h3>
+<div class="box"><b>Marginal statutory.</b> "What does the next rupee of interest save?"<br>
+§115BAA = <b>25.168%</b> (22 + 10% surcharge + 4% cess) · old regime ≈ 34.94% · §115BAB ≈ 17.16%<br>
+<span class="pen">Verify from the AR tax note. Never assume.</span></div>
+<h3 class="red">Foreign currency loans</h3>
+<div class="box r">US$10,000 @ 6%, spot ₹64/$, ₹ rate 7%, $ rate 1%<br>
+Expected spot rises 64 → 85.41 over 5 years<br>
+<b>Implied rupee cost of debt = 12.30%</b>, not 6%.<br>
+The extra 6 points = expected rupee depreciation.</div>
+<div class="box"><div class="f">IRP:  Forward = Spot × (1 + r_₹) ÷ (1 + r_$)
+      80 × 1.07/1.05 = ₹81.52/$</div></div>
+</div>
+<div class="sheet" data-pg="23 / 40"><div class="hd"><h2>★ Liability consistency</h2><span class="tag">★★ highest yield</span></div>
+<table>
+<tr><th></th><th>D₁ IS a source of capital</th><th>D₀ is NOT</th></tr>
+<tr><td><b>WACC</b></td><td>include, at its own cost</td><td>exclude</td></tr>
+<tr><td><b>Cash flow</b></td><td>do NOT subtract its interest</td><td>DO subtract its interest; ADD any increase in it</td></tr>
+<tr><td><b>Bridge</b></td><td>SUBTRACT from EV</td><td>do NOT subtract</td></tr>
+</table>
+<div class="box g">Both columns are correct. <b>Mixing them is never correct.</b></div>
+<h3>Are non-interest-bearing liabilities really free?</h3>
+<p>Buy raw material on 1 year's credit, pay ₹1,100 cr; K_d = 10%. Cash price would have been ~₹1,000 cr. <b>The ₹100 cr difference is interest in disguise</b> — the supplier priced it into the invoice.<br>
+<span class="pen">Convention keeps payables in working capital, so the finance cost is buried in COGS. Say this if asked — the marks are for seeing that "non-interest-bearing" is a label, not a fact.</span></p>
+<h3 class="red">Debt-like items — the "what else do you subtract?" list</h3>
+<div class="box r">borrowings · <b>unfunded gratuity &amp; leave encashment</b> · <b>stretch creditors</b> (60-day terms run at 180 = 120 days of disguised borrowing) · non-convertible preference shares · lease liabilities · contingent liabilities <span class="pen">(impact × probability)</span> · minority interest</div>
+</div>
+<div class="sheet" data-pg="24 / 40"><div class="hd"><h2>Cash: the two treatments</h2><span class="tag">★ Quiz 3</span></div>
+<p class="note-sm">Zero growth · EBIT 100 (excl. interest income) · debt 100 @10% · cash 50 @7% · t 30% · K_e 20%</p>
+<div class="box"><div class="f">ANCHOR — value equity directly, it cannot depend on the choice:
+PBT = 100 + 3.5 − 10 = 93.5 → NI = 65.45 → <b>Equity = 327.25</b></div></div>
+<div class="two">
+<div><b>Cash = OPERATING</b>
+<div class="f">FCF = (100+3.5)0.7 = 72.45
+EV  = 327.25 + 100 = 427.25
+WACC = 16.957%
+check 72.45/16.957% ✓</div></div>
+<div><b>Cash = NON-OPERATING</b>
+<div class="f">FCF = 100 × 0.7 = 70
+EV  = 327.25+100−50 = 377.25
+WACC = 18.55%
+(effective K_d on NET debt = 13%)
+check 70/18.55% ✓</div></div>
+</div>
+<div class="box g">Two EVs, two WACCs, <b>ONE equity value: 327.25.</b><br>
+EV is not a fact about the world — it's a fact about your definition of "the enterprise".<br>
+<b>Equity value is the invariant.</b> If your two treatments disagree, something is broken.</div>
+<p><b>Deciding:</b> operating cash = the working balance the business genuinely needs. Surplus cash &amp; marketable securities = non-operating by default, especially when large. Whichever you pick — same choice in the flow, in the beta, and in the bridge.</p>
+</div>
+<div class="sheet" data-pg="25 / 40"><div class="hd"><h2>CAPM inputs: R_f and the ERP</h2><span class="tag">Quiz 3</span></div>
+<h3>Risk-free rate</h3>
+<ul>
+<li>10-year G-Sec (FBIL/RBI), as of the valuation date. Cite the print date.</li>
+<li><b>Which maturity?</b> CAPM is a one-period model, but we value perpetuities → long bond is least-bad.</li>
+<li><b>Really risk-free?</b> India has a sovereign CDS spread. Nominally default-free in ₹, not inflation-free.</li>
+</ul>
+<div class="box"><b>Yield curve not flat</b> — CFs 100,100,200; spots 5%,6%,7%
+<div class="f">Value = 347.50 → solve → <b>r = 6.52%</b>
+front-loaded (100,10,10)    → 5.49%
+back-loaded (100,100,10000) → 6.99%  ≈ the 3-yr spot</div>
+<span class="pen">A DCF is dominated by its TV ⟹ anchor at the long end.</span></div>
+<h3>Market risk premium — nobody publishes it</h3>
+<ul>
+<li><b>Historical:</b> index return − R_f over a long window. Sensitive to window &amp; arithmetic-vs-geometric.</li>
+<li><b>Implied (Damodaran):</b> solve for the rate that equates today's index level with consensus cash flows. Forward-looking. India ≈ <b>7.08%</b>.</li>
+<li><b>Convention:</b> <b>6–7%</b> in Indian practice.</li>
+</ul>
+<div class="box r">Market portfolio must be <b>broad</b> and <b>VALUE-WEIGHTED</b>.<br>
+Most indices are PRICE indices ⟹ they exclude dividends ⟹ <b>add the dividend yield back</b> or you understate the premium by the whole yield.</div>
+</div>
+<div class="sheet" data-pg="26 / 40"><div class="hd"><h2>Beta, start to finish</h2><span class="tag">★ Quiz 3</span></div>
+<div class="box"><div class="f">β = Cov(r_i, r_m) ÷ Var(r_m) = ρ × (σ_i ÷ σ_m)</div></div>
+<h3>1. Returns</h3>
+<p>Use <b>adjusted</b> prices. Adjust for dividends, bonus, splits, <b>rights</b>.<br>
+<span class="pen">RIL 2021, 1:15 rights at ₹1,257, price ₹1,435 → theoretical ex-rights = (15×1435 + 1257)/16 = <b>₹1,423.87</b>. The "0.8% fall" is an artefact, not a return.</span></p>
+<h3>2. Period &amp; frequency — two principles in tension</h3>
+<ul>
+<li>Longer = statistically better (tighter SEs)</li>
+<li><span class="red">BUT operating and financial risk must not have changed over the window</span></li>
+</ul>
+<p><b>Daily:</b> ~1,300 points over 5y, but <b>infrequent trading</b> (no trade Tuesday = fictitious return) and <b>non-synchronous trading</b> (positive serial correlation, beta biased DOWN). Thin stock → weekly/monthly.</p>
+<div class="box r">Tata Steel: β goes <b>1.348 → 1.717</b> just by switching to 60 monthly returns.<br>
+The number is a fact about the estimation choice. <b>Disclose the choice.</b></div>
+<h3>3. Unlever → median → relever</h3>
+<div class="box"><div class="f">β_U = β_L ÷ [1 + (1−t)(D/E)]        β_L = β_U × [1 + (1−t)(D/E)]</div></div>
+<p>4–6 peers · unlever each with <b>its own</b> D/E · take the <b>MEDIAN</b> · relever at target D/E.<br>
+<b>Net debt</b> usually beats gross. Net D/E can be <span class="red">negative</span> for a cash-rich firm ⟹ β_U &gt; β_L.</p>
+</div>
+<div class="sheet" data-pg="27 / 40"><div class="hd"><h2>WACC assembly + the bridge</h2><span class="tag">★ Quiz 3</span></div>
+<h3>Seven steps</h3>
+<ol>
+<li>List every claim; mark IB / not, source-of-capital / not. <b>Write it down</b> — needed twice more.</li>
+<li>K_d: YTM or rating+spread; after tax at marginal statutory.</li>
+<li>K_e: CAPM. R_f, ERP as a stated assumption, β regressed + bottom-up cross-check.</li>
+<li>Other claims (preference, leases, FX loans) at their own costs.</li>
+<li>Weights at market value; circularity by target D/E or iteration — <b>say which</b>.</li>
+<li>Blend.</li>
+<li>Sanity: is WACC between K_d(1−t) and K_e? plausible for the sector? comfortably above terminal g?</li>
+</ol>
+<h3>The bridge</h3>
+<div class="box"><div class="f">  PV(explicit FCF) + PV(terminal value)      = EV of operations
++ non-operating assets   <span class="pen">surplus cash, financial investments, vacant land,
+                         assets held for sale, non-op advances to related parties</span>
+− debt &amp; debt-like items
+− contingent liabilities  <span class="pen">impact × probability</span>
+− minority interest       <span class="pen">if consolidated</span>
+= <b>EQUITY VALUE</b></div></div>
+<div class="box r"><b>Quiz 3 Q4 — 6 of 7 were "NOT NEEDED"</b><br>
+brands ✗ · financial investments whose income is in NOI ✗ · factory land ✗ · cash (gross-debt WACC) ✗ · customer advances ✗<br>
+<b>contingent liability ✓</b> (a % of it) · the debt item — "give 1 mark to all, this was a mistake"<br><br>
+<b>Default answer = no adjustment.</b> Ask: is this asset's income already in my cash flow?</div>
+</div>
+<div class="sheet" data-pg="28 / 40"><div class="hd"><h2>Building FCF (Titan)</h2><span class="tag">Quiz 3</span></div>
+<table>
+<tr><th>Line</th><th>Built as</th></tr>
+<tr><td>Revenue</td><td>net sales, <b>restated</b> for disposals/acquisitions <span class="pen">(Walmart Intl 121→101bn = sold Asda + Seiyu; Oyo booked 22% commission, not the hotel bill)</span></td></tr>
+<tr><td>Opex</td><td>each head as % of revenue, 3–5 yrs <span class="pen">(Titan raw materials ~76%; employee cost 4.6→3.6% = operating leverage)</span></td></tr>
+<tr><td>Depreciation</td><td class="red">% of NET FIXED ASSETS — not of sales</td></tr>
+<tr><td>NOPAT</td><td class="red">historical → CASH tax rate; projections → STATUTORY rate</td></tr>
+<tr><td>Gross cash flow</td><td>NOPAT + depreciation</td></tr>
+<tr><td>Capex</td><td><b>Δ NFA + depreciation.</b> Lumpy — link to a revenue driver (stores planned, outsourcing shift)</td></tr>
+<tr><td>Gross investment</td><td>capex + ΔOWC − ΔNIBL</td></tr>
+<tr><td>FCF</td><td>gross cash flow − gross investment <span class="pen">Titan FY22 = <b>−3,160 cr</b> (WC +5,020 cr). Negative in a growth year is fine.</span></td></tr>
+</table>
+<h3>Other operating income — the 2×2</h3>
+<table>
+<tr><th></th><th>main business? YES</th><th>NO</th></tr>
+<tr><td><b>recurring? YES</b></td><td class="grn">OPERATING</td><td>non-operating</td></tr>
+<tr><td><b>recurring? NO</b></td><td class="red">IGNORE</td><td class="red">IGNORE</td></tr>
+</table>
+<p class="pen">retailer's credit-card income → operating · drug retailer selling containers → operating · investment income → depends trade vs non-trade · <b>gain on sale of assets → IGNORE</b></p>
+<p><b>Standalone vs consolidated:</b> same business &amp; geography → consolidated. Different lines / operating environments → standalone + value investments separately (his Tata Steel logic; investments were &gt;35% of value there).</p>
+</div>
+<div class="sheet" data-pg="29 / 40"><div class="hd"><h2>ROIC · EVA · growth</h2><span class="tag">★ Quiz 3 / interim</span></div>
+<div class="box"><div class="f">OIC  = net fixed assets + operating working capital
+ROIC = NOPAT_t ÷ OIC_(t−1)          ← note the LAG
+EVA  = OIC_(t−1) × (ROIC_t − WACC_t) = NOPAT − WACC·OIC_(t−1)
+<b>EV   = OIC + PV(all future EVA)</b>
+<b>g    = ROIC × Investment Rate</b>    IR = net investment ÷ NOPAT</div></div>
+<h3>EVA and FCF must agree</h3>
+<p class="note-sm">OIC₀ = 100, ROIC 20%, IR 25%, WACC 13%, terminal g 5%</p>
+<table>
+<tr><th>Yr</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4 (T)</th></tr>
+<tr><td>OIC (open)</td><td class="n">100</td><td class="n">113</td><td class="n">125</td><td class="n">135</td></tr>
+<tr><td>NOPAT</td><td class="n">20.0</td><td class="n">22.6</td><td class="n">25.0</td><td class="n">27.0</td></tr>
+<tr><td>Net inv</td><td class="n">13.0</td><td class="n">12.0</td><td class="n">10.0</td><td class="n">6.75</td></tr>
+<tr><td>FCF</td><td class="n">7.0</td><td class="n">10.6</td><td class="n">15.0</td><td class="n">20.25</td></tr>
+<tr><td>EVA</td><td class="n">7.00</td><td class="n">7.91</td><td class="n">8.75</td><td class="n">9.45</td></tr>
+</table>
+<div class="box g">Both give <b>200.32</b>. Terminal NI = (g/ROIC) × NOPAT = (5/20) × 27 = <b>6.75</b>.<br>
+Leave NI at 10 in the terminal year and they split: EVA 198.05, FCF 161.34. <span class="red">That divergence is the alarm bell.</span></div>
+<div class="box r">From class: "<b>EVA method estimates for t+1 years</b> — restate year 4 numbers."<br>
+EVA_t needs OIC_(t−1) ⟹ an N-year model needs the N+1 forecast.</div>
+</div>
+<div class="sheet" data-pg="30 / 40"><div class="hd"><h2>★ The terminal-year engine</h2><span class="tag">★★ Quiz 3 Q1</span></div>
+<p class="note-sm">Maura Lartin's terminal year: NOPAT $100m · <b>NI = $0</b> · EBITDA multiple 9× · WACC 10% · EBITDA $130m · ROIC 12%</p>
+<div class="box r"><b>The mistake:</b> net investment cannot be zero when terminal g is positive.<br>
+g = ROIC × IR, so IR = 0 forces g = 0 — but her own TV implies positive g. <span class="pen">2 marks</span></div>
+<div class="box"><div class="f">Her FCF = 100 − 0        = <b>100</b>              1 mk
+Her TV  = 9 × 130        = <b>1,170</b>            1 mk
+
+g   = (1170×0.10 − 100) ÷ (1170 + 100)
+    = 17 ÷ 1270          = <b>1.3386%</b>          1 mk
+IR  = g ÷ ROIC = 1.3386 ÷ 12    = <b>11.155%</b>   1 mk
+NI  = 100 × 11.155%      = <b>11.155</b>           2 mk
+FCF = 100 − 11.155       = <b>88.845</b>           1 mk
+<b>TV  = 88.845 × 1.013386 ÷ (0.10 − 0.013386) = 1,039.49</b>  1 mk</div></div>
+<p class="red">The naive answer overstates TV by ₹130m ≈ <b>12.5%</b> — it credits growth the company never paid for.</p>
+<h3 class="grn">The generalised engine — run on ANY terminal year</h3>
+<div class="box g">
+1. Write down every terminal quantity given.<br>
+2. Test g = ROIC × (NI ÷ NOPAT). Fails? one input is wrong.<br>
+3. Pick the most reliable <b>anchor</b> (usually the exit multiple or WACC — they come from the market).<br>
+4. Back out implied g = (TV·WACC − FCF) ÷ (TV + FCF).<br>
+5. Force the rest: IR = g/ROIC · NI = NOPAT×IR · FCF = NOPAT − NI.<br>
+6. Recompute TV with Gordon.
+</div>
+</div>
+<div class="sheet" data-pg="31 / 40"><div class="hd"><h2>The VC method</h2><span class="tag">★ interim · L16</span></div>
+<div class="box"><div class="f">1  Terminal value = exit-year earnings × comparable multiple
+2  FV of investment = Investment × (1+r)^n
+3  <b>Required % = FV of investment ÷ Terminal value</b>
+4  Post-money = Investment ÷ required %
+5  Pre-money  = Post-money − Investment
+6  New shares = Old × [% ÷ (1−%)]   Price = Investment ÷ New shares</div></div>
+<div class="box g">Cross-check every time: <b>price per share = pre-money ÷ OLD shares.</b></div>
+<h3>NewVenture — raise $5m, NI $5m in yr 5, 20× comps, r = 50%, 1m shares</h3>
+<div class="box"><div class="f">TV = 20 × 5 = <b>$100m</b>
+FV = 5 × 1.5⁵ = 5 × 7.59375 = <b>$37.97m</b>
+Required = 37.97/100 = <b>37.97%</b>
+Post = 5/0.3797 = 13.17 · Pre = <b>8.17</b>
+New shares = 1m × (0.3797/0.6203) = <b>612,100</b> → price <b>$8.17</b></div></div>
+<h3 class="red">The option pool — gross UP, never add</h3>
+<div class="box r">Management must own 15% at exit ⟹ she still needs 37.97% <u>at exit</u>, so today:
+<div class="f">37.97% ÷ (1 − 15%) = <b>44.68%</b>
+founder's 1m = 55.32% → total 1.81m → VC 0.81m → price <b>$6.19</b></div>
+Dilution is <b>multiplicative</b>, not additive. 37.97 + 15 = 52.97 is the trap.<br>
+<span class="pen">The pool is funded entirely out of the founder's pocket: $8.17 → $6.19.</span></div>
+<p class="pen">Raise $12m instead of $5m → FV 91.13 → VC takes <b>91.13%</b>, price collapses to $1.17. Raising more than you need is extraordinarily expensive.</p>
+</div>
+<div class="sheet" data-pg="32 / 40"><div class="hd"><h2>Two rounds + anti-dilution</h2><span class="tag">★ interim · L16</span></div>
+<h3>Two rounds — work BACKWARDS from the exit pie</h3>
+<p class="note-sm">R1 $5m @50% for 5y · R2 $3m at start of yr 3 @30% for 3y · mgmt 15% by yr 5</p>
+<div class="box"><div class="f">shares of the yr-5 pie:
+VC2 = 3 × 1.3³ = 6.591 → <b>6.591%</b>   VC1 → <b>37.97%</b>   mgmt <b>15%</b>   founder <b>40.44%</b>
+
+walk back, one dilution at a time:
+VC2 at round 2 = 6.591 ÷ (1−0.15) = <b>7.75%</b>
+VC1 today      = 44.68 ÷ (1−0.0775) = <b>48.43%</b>
+
+yr 0: total 1 ÷ 0.5157 = 1.939m · VC1 0.939m · price <b>$5.33</b>
+yr 2: total 1.939 ÷ 0.9225 = 2.101m · VC2 0.162m · price <b>$18.52</b>
+yr 5: total 2.101 ÷ 0.85 = 2.472m · exit price <b>$40.45</b></div></div>
+<div class="box g"><b>Exit shares first, then gross up backwards by ÷(1 − dilution).</b> Never work forwards.</div>
+<h3>Anti-dilution — A bought 10m @$1.00, founders 15m, now $5m at $15m pre</h3>
+<div class="box"><div class="f">weighted avg:  NCP = [(OB × OCP) + New$] ÷ OA</div></div>
+<table>
+<tr><th>Regime</th><th class="n">B price</th><th class="n">Founders</th><th class="n">Series A</th><th class="n">Series B</th></tr>
+<tr><td>none</td><td class="n">$0.6000</td><td class="n">45.0%</td><td class="n">30.0%</td><td class="n">25.0%</td></tr>
+<tr><td>weighted avg</td><td class="n">$0.5714</td><td class="n">42.9%</td><td class="n">32.1%</td><td class="n">25.0%</td></tr>
+<tr><td><b>full ratchet</b></td><td class="n">$0.3333</td><td class="n red">25.0%</td><td class="n">50.0%</td><td class="n">25.0%</td></tr>
+</table>
+<div class="box r"><b>Series B always gets 25%.</b> Protection does not take from the NEW investor —<br>it transfers value <b>from the founders to the earlier investor.</b></div>
+</div>
+<div class="sheet" data-pg="33 / 40"><div class="hd"><h2>Private companies — the four gaps</h2><span class="tag">interim · L17</span></div>
+<ol>
+<li><b>Financial data.</b> Different standards (Ind AS only above ₹250 cr), accounts prepared to minimise tax, not to inform.</li>
+<li><b>No market price</b> ⟹ no market cap, no return series, <b>no beta</b>, no MV weights.</li>
+<li><b>Concentrated ownership</b> ⟹ owner undiversified ⟹ CAPM's core assumption fails.</li>
+<li><b>Illiquidity.</b> You can't sell on Tuesday.</li>
+</ol>
+<p class="pen">+ his fifth: corporate governance tells you about problems that are <u>going to come</u>.</p>
+<h3>Normalising — Kavita Textiles FY2012</h3>
+<table>
+<tr><th>Item</th><th class="n">Reported</th><th class="n">Restated</th><th>Why</th></tr>
+<tr><td>Wages</td><td class="n">1.20</td><td class="n">2.16</td><td>owners draw ₹1L/mo; market ₹5L ⟹ +2×4L×12 = 0.96 cr</td></tr>
+<tr><td>S&amp;D</td><td class="n">1.50</td><td class="n">1.00</td><td>personal expenses</td></tr>
+<tr><td>Admin</td><td class="n">1.30</td><td class="n">1.00</td><td>personal expenses</td></tr>
+<tr><td><b>PAT</b></td><td class="n">6.80</td><td class="n"><b>6.60</b></td><td></td></tr>
+</table>
+<p class="pen">Checklist: owner comp above OR below market · personal expenses (cars, home office, travel, seminars) · <b>ghost employees</b> · non-recurring items · personal assets on the books. Pass-through entities: no entity-level tax ⟹ different after-tax CF and shield.</p>
+<h3>Beta with no share price</h3>
+<p>Unlever 5 peers with their own <b>net</b> D/E → <b>median</b> β_U = 0.52 → impute MV equity = 17 × ₹6.6 cr = <b>₹112.71 cr</b> → relever → β_L = 0.51 → K_e = 8.2% + 0.51(7.13%) = <b>11.84%</b></p>
+</div>
+<div class="sheet" data-pg="34 / 40"><div class="hd"><h2>The undiversified owner</h2><span class="tag">★★ interim</span></div>
+<p>CAPM prices only systematic risk. Kavita bears <b>total</b> risk. In his words, theory "simply assumes people like Kavita to be irrational."</p>
+<table>
+<tr><th>Approach</th><th class="n">K_e</th><th class="n">Equity value</th></tr>
+<tr><td>Plain CAPM (diversified)</td><td class="n">11.84%</td><td class="n">₹459.38 cr</td></tr>
+<tr><td>"double the beta"</td><td class="n">15.47%</td><td class="n">—</td></tr>
+<tr><td><b>"double the K_e"</b> (used in case)</td><td class="n">23.67%</td><td class="n"><b>₹79.15 cr</b></td></tr>
+<tr><td>Total-risk (market model)</td><td class="n">71%</td><td class="n">—</td></tr>
+</table>
+<div class="box"><div class="f">market model:  r_i,t = α + β r_m,t + ε
+               σ_i² = β²σ_m² + σ_ε²
+<b>Total beta = β ÷ ρ = β ÷ √R²</b></div>
+Non-systematic risk ≈ <b>5×</b> systematic in this sector ⟹ ~5× the premium ⟹ K_e ≈ 71%.</div>
+<div class="box r"><b>ONE judgement call → a 6× swing.</b><br>
+₹459.38 cr vs ₹79.15 cr — before illiquidity and growth are even applied.<br>
+"Biggest source of uncertainty in private valuation?" <b>The cost of equity.</b> Not the cash flows, not the DLOM.</div>
+<div class="box"><div class="f">WACC = (2/114.71)(11%)(0.75) + (112.71/114.71)(23.67%) = <b>23.95%</b>
+PV(FCF) 77.15 − debt 5 + cash 7 = <b>equity ₹79.15 cr</b></div></div>
+</div>
+<div class="sheet" data-pg="35 / 40"><div class="hd"><h2>DLOM · control · key person</h2><span class="tag">interim</span></div>
+<h3>DLOM — discount for lack of marketability</h3>
+<ul>
+<li><b>Restricted stock studies</b> — privately placed shares of listed cos: <b>20–35%</b></li>
+<li><b>Pre-IPO studies</b> — placement vs subsequent IPO: <b>30–50%</b> (narrower recently)</li>
+<li><b>Option pricing (protective put)</b> — the only <u>model</u>: a function of volatility and holding period</li>
+</ul>
+<p>Case uses a flat <b>25%</b>: 79.15 × 0.75 = <b>₹59.36 cr</b>. Sensitivity: 15% → 67.28 · 30% → 55.41. <span class="pen">≈₹12 cr swing — an order of magnitude smaller than the K_e call.</span></p>
+<h3>Control premium / minority discount</h3>
+<div class="box">Control premium <b>20–30%</b> · minority discount <b>15–25%</b><br>
+<span class="grn">A DCF on management's forecasts is a CONTROL value by default</span> — it assumes you can implement the plan. Valuing a minority stake on it without a discount overstates it.</div>
+<h3 class="red">Key person — the counter-intuitive one</h3>
+<div class="box r">"Value of the business is <b>inversely proportional</b> to the stature of the key person. The buyer buys the company <u>minus</u> the key person."<br><br>
+Mitigations: non-compete · key-man insurance · management depth · <b>earn-out / escrow tied to retention</b></div>
+<h3>Three transaction types</h3>
+<p><b>Private→private:</b> neither side diversified, illiquid, key-person bites → high K_e, full DLOM.<br>
+<b>Private→public:</b> buyer's investors ARE diversified → K_e toward CAPM, DLOM shrinks.<br>
+<b>Private→IPO:</b> DLOM gone, K_e at plain CAPM, disclosure arrives.</p>
+</div>
+<div class="sheet" data-pg="36 / 40"><div class="hd"><h2>The Kavita value ladder</h2><span class="tag">interim · memorise</span></div>
+<table>
+<tr><th>Step</th><th class="n">Equity value</th><th>What changed</th></tr>
+<tr><td>Market multiple (17× adj. earnings)</td><td class="n">112.71</td><td>imputed, only for WACC weights</td></tr>
+<tr><td>Fully diversified (K_e 11.84%)</td><td class="n">459.38</td><td>plain CAPM, no growth</td></tr>
+<tr><td><b>No-growth, undiversified + illiquid</b></td><td class="n"><b>59.36</b></td><td>K_e 23.67% and 25% DLOM</td></tr>
+<tr><td>Growth plan, pre-illiquidity (K_e 20%)</td><td class="n">345.67</td><td>new machines, new debt, new investors</td></tr>
+<tr><td>Growth plan, post-money</td><td class="n">259.25</td><td>after 25% DLOM</td></tr>
+<tr><td><b>Growth plan, pre-money</b></td><td class="n"><b>209.25</b></td><td>less ₹50 cr of new equity</td></tr>
+</table>
+<p><b>Value creation from the growth plan ≈ 3.5×</b> (209.25 vs 59.36). 30 lakh shares ⟹ <b>₹864/share</b>. New investors get ~0.06 cr shares.</p>
+<p class="pen">Round 2 mechanics: new debt ₹30 cr, net debt ₹23 cr, equity 112.71 + 50; relevered net β 0.575 → CAPM K_e 12.3%, but the case uses <b>20%</b> — new investors may be diversified, but K_e is a negative function of SIZE (Fama–French 1993). WACC = 17.52%.</p>
+<h3>IPO proceeds — three treatments</h3>
+<div class="box">taken out by owners → <b>ignore</b> · used to repay debt → <b>changes the debt ratio, so the cost of capital and firm value</b> · held as cash for planned reinvestment → <b>add to DCF value</b></div>
+<div class="box g">His closing line: sell to someone who is <b>well-diversified</b> (or whose investors are) <b>and who does not think too highly of you as a person.</b></div>
+</div>
+<div class="sheet" data-pg="37 / 40"><div class="hd"><h2>Real options — Laura Martin</h2><span class="tag">interim · case</span></div>
+<p class="note-sm">May 1999 · Cox Communications trades at <b>$37.50</b> · the sector values on EBITDA multiples · Martin: "they don't ask the right question"</p>
+<table>
+<tr><th>Method</th><th class="n">Value</th><th>Note</th></tr>
+<tr><td>ROIC target price</td><td class="n">$50.00</td><td>regression of adj. EV/avg IC on ROIC, <b>R² = 70%</b>; target multiple 1.594</td></tr>
+<tr><td>EBITDA multiple</td><td class="n">$50.00</td><td>trades 13.3×; target implies <b>20.9×</b> — translation, not evidence</td></tr>
+<tr><td><b>DCF</b></td><td class="n"><b>$54.29</b></td><td>10 yrs, terminal 13× EBITDA, WACC 9.3% (K_e = 5.12 + 1.07×4.98 = 10.5%, K_d after-tax 3.65%, D/cap 18%, t 39%)</td></tr>
+<tr><td>Private market value</td><td class="n">≈$51</td><td>control premiums on non-public assets</td></tr>
+</table>
+<h3>The stealth tier</h3>
+<p>750 MHz plant: 550 analog + 98 digital ⟹ <b>102 MHz dark = 17 channels.</b><br>
+Her objection: "companies are being hit for <b>100% of the capital spending</b> but we're only counting the <b>visible revenue streams</b>."</p>
+<div class="box"><div class="f">S = $2,500 per home passed ÷ 108 lit channels    = <b>$23.15</b>
+K = opportunity cost: $36/mo = $432/yr; 61% penetration
+    = $263/home ÷ 108 = $2.44; at 50% margin      = <b>$1.22</b>
+σ = implied vol from a 1-MONTH ATM call on Cox   = <b>50%</b>
+T = life of the cable plant                       = <b>10 yrs</b>
+r = US Treasuries                                 ≈ 5%
+→ option value <b>$22.45</b> × 17 = $381.65 − $40 capex = <b>$341.65</b> (+14%)</div></div>
+<div class="box r"><b>Criticise:</b> underlying not traded · 1-month LEVERED EQUITY vol for a 10-yr ASSET option · strike is a judgement · <b>double-counting if the DCF's TV already grows</b> · 17 options ≠ 17 × one option.</div>
+<p class="grn">A real option is worth valuing only if: <b>flexibility + uncertainty + exclusivity</b>. All three.</p>
+</div>
+<div class="sheet" data-pg="38 / 40"><div class="hd"><h2>AI in valuation</h2><span class="tag">interim · L18</span></div>
+<div class="box g"><b>Valuation theory: unchanged.</b> DCF, multiples, cost of capital, terminal value.<br>
+<b>What changes: how the inputs get built and checked.</b></div>
+<p><b>Prompts → agents.</b> 2023: single-turn, every step needs a new instruction. Now: the model plans, calls tools and data sources, checks its own output, continues. Workflow: define objective → source data → screen peers → normalise → scenarios → build &amp; validate → output.</p>
+<p><b>Where it helps:</b> peer screening by NLP + clustering (beyond static SIC/GICS); XBRL → Excel; scenarios as driver values.</p>
+<div class="box r"><b>The mistake:</b> letting it produce a number in prose.<br>
+<b>His fix:</b> "Force the model to write the Python code and show the computations for FCF."<br>
+<b>His disclosure rule:</b> "write the prompts used, the response obtained, and how the same has been used."<br>
+<span class="pen">Same for equity research reports: use them, give references, never follow the recommendations — mostly biased. Useful for industry information.</span></div>
+<h3>Driver-based revenue — don't grow last year's number</h3>
+<p><b>Anthropic:</b> billed <b>token volume × realised blended price</b>. 2026 revenue $42,560m — API &amp; cloud 72.8%, Claude Code 11.3%, enterprise 9.3%, consumer 4.2%, other 2.3%. Scenarios: bear 2,600 tn tokens @$8.75/MTok · base 3,100 @$10.00 · bull 3,600 @$10.50.<br>
+<b>Maruti:</b> domestic volume × blended realisation; SUV +44.6%, premium +28%; royalty to Suzuki 5–6% of net sales.</p>
+<div class="box r"><b>Which denominator?</b> $965bn valuation ÷ Q1 annualised $19.2bn = <b>50×</b> · H1 annualised $31bn = <b>31×</b> · run-rate $47bn = <b>20×</b>.<br>
+Run-rate annualises the LATEST period — it is not trailing revenue. Quoting a multiple without the basis is meaningless.</div>
+</div>
+<div class="sheet" data-pg="39 / 40"><div class="hd"><h2>Practical valuation + M&A</h2><span class="tag">interim · L19</span></div>
+<h3>When is a valuation legally required?</h3>
+<p><b>Income-tax:</b> shares at premium (<b>angel tax</b>), transfer (gift tax), indirect transfer of an Indian asset (<b>Vodafone</b>, §9(1)(i) retrospective), slump sale · <b>Companies Act:</b> preferential allotment, buyback, merger/demerger · <b>SEBI:</b> open offer, preferential allotment · <b>FEMA:</b> ODI, R↔NR transfers · <b>IBC:</b> liquidation · <b>Ind AS:</b> PPA, options, financial instruments</p>
+<p class="pen">Authorised: Registered Valuer (IBBI), CA, Merchant Banker, Chartered Engineer.</p>
+<h3>Three IVS approaches</h3>
+<p><b>Market</b> — CCM, CTM, PoRI · <b>Income</b> — DCF, capitalised earnings, excess earnings, relief-from-royalty, with-and-without · <b>Cost</b> — summation, replacement, reproduction</p>
+<div class="box"><div class="f">K_e = R_f + β(R_m − R_f) + <b>CSRP</b>      CSRP capped ≈ 4%, MRP 6–7%</div>
+Debt/capital, in order of preference: market values → target → industry → book<br>
+TV: Gordon · <b>H-model</b> (growth fades — use when capex is heavy) · exit multiple</div>
+<h3>Deal patterns</h3>
+<ul>
+<li><b>Packaging:</b> no DCF (seller exiting), no comps → offers at 5×. Valued on <b>NAV + goodwill of 2 yrs' PAT</b> → seller got 8×.</li>
+<li><b>Die-casting:</b> #1 with 70% share, ₹70 cr EBITDA — hard to sell. <b>Sunset industry</b> ⟹ low visibility, low TV, low multiples; ₹450 cr surplus real estate needs a demerger.</li>
+<li><b>Filtration:</b> ₹100 cr+ trapped cash — buyer takes it as <b>dividend ~36%</b>, seller as <b>capital gain ~15%</b>. Structure, not argument, closes the gap.</li>
+<li><b>Staffing auction:</b> same company → 150 / 250 / 250 / 300 / 450. <span class="grn">Value is a property of the company AND the buyer.</span></li>
+</ul>
+<div class="box r">M&amp;A construct: "EV/EBITDA of x on <b>sustainable EBITDA</b>, <b>cash-free debt-free</b>, adjusted for <b>normalised working capital</b>."<br>
+Primary = capital creation · Secondary = wealth transfer, <b>15–20% discount</b>.<br>
+<b>Never substitute EPS accretion for economic value creation.</b></div>
+</div>
+<div class="sheet" data-pg="40 / 40"><div class="hd"><h2>Quant toolkit + the night before</h2><span class="tag">★ interim</span></div>
+<div class="box"><div class="f">r_i,t = α + β r_m,t + ε      β = ρ(σ_i/σ_m)      R² = ρ²
+σ_i² = β²σ_m² + σ_ε²         <b>Total beta = β ÷ √R²</b>
+<b>t = coefficient ÷ SE</b>         df = n − k      threshold |t| ≈ 2</div></div>
+<div class="box r"><b>Test β against 1, not 0.</b> β = 1.28, SE = 0.19:<br>
+vs 0 → t = 6.74 (meaningless) · <b>vs 1 → t = 0.28/0.19 = 1.47 &lt; 2 ⟹ cannot reject β = 1</b><br>
+95% CI = 1.28 ± 2(0.19) = [0.90, 1.66] ⟹ K_e from 13.1% to 18.4%.</div>
+<p><b>Small samples:</b> 10 comps, 4 parameters ⟹ df = 6 ⟹ critical t = <b>2.45</b>, not 2. Report ADJUSTED R². And the multiples regression is circular — it assumes the sector is correctly priced.</p>
+<h3 class="red">Trap sheet — top ten</h3>
+<ol>
+<li>Adjusting things that need no adjustment (6 of 7 were "not needed")</li>
+<li>Growth with no reinvestment</li>
+<li>Dropping the (1+g), or discounting TV by N+1 periods</li>
+<li>After-tax K_d with CCF</li>
+<li>FCFE at WACC</li>
+<li>Growing FCFE with debt fixed in ₹</li>
+<li>Forgetting the borrowed cash stays in the firm</li>
+<li>Coupon as the cost of debt · book-value weights</li>
+<li>Short-term borrowings inside working capital</li>
+<li>Testing β against 0; trusting a coefficient without its t-stat</li>
+</ol>
+<div class="box g"><b>The one habit worth more than any formula:</b> when handed a set of numbers, check whether they are <u>mutually possible</u> before computing. NI = 0 with positive g · terminal g 10% with a 4× multiple · a 17% IRR project that destroys value · a P/E that reveals ROE at zero growth.<br><br>
+<b>He is not testing whether you can calculate.<br>He is testing whether you can tell when a set of assumptions cannot all be true at once.</b></div>
+</div>
+</div>
