@@ -1,22 +1,13 @@
 <title>BAV Recall Sheets</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
-  --desk:#D8D4C8; --sheet:#FDFCF7; --line:#DCE6F2; --margin:#E7B4AE;
-  --ink:#1B3FA0; --ink-2:#2C4FB5; --pencil:#5A5F66;
-  --red:#B03A2E; --green:#0B6E45; --amber:#8A6116; --edge:#C9C4B6;
-}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --desk:#16181C; --sheet:#1C1F25; --line:#262E3B; --margin:#4A2F2C;
-  --ink:#9CBBF5; --ink-2:#8FB0EE; --pencil:#9AA0AA;
-  --red:#EE8C7F; --green:#66C79C; --amber:#DCB260; --edge:#2E333B;
-}}
-:root[data-theme="dark"]{
-  --desk:#16181C; --sheet:#1C1F25; --line:#262E3B; --margin:#4A2F2C;
-  --ink:#9CBBF5; --ink-2:#8FB0EE; --pencil:#9AA0AA;
-  --red:#EE8C7F; --green:#66C79C; --amber:#DCB260; --edge:#2E333B;
+  --desk:#CFC7B0; --sheet:#F8F4E6; --line:#E0D6BC; --margin:#C99B93;
+  --ink:#1C2A33; --ink-2:#2B3B47; --pencil:#54626C;
+  --red:#8C3F30; --green:#2B564E; --amber:#9C7526; --edge:#C7BE9F;
+  --gold:#9C7526; --gold-bright:#B8912F; --paper-2:#E3DBC4;
 }
 *{box-sizing:border-box}
 body{background:var(--desk);margin:0;font-family:"Kalam",cursive;color:var(--ink)}
@@ -34,8 +25,8 @@ body{background:var(--desk);margin:0;font-family:"Kalam",cursive;color:var(--ink
 .sheet::after{content:attr(data-pg);position:absolute;right:14mm;bottom:6mm;
   font-size:13px;color:var(--pencil);font-family:"IBM Plex Mono",monospace}
 .hd{display:flex;justify-content:space-between;align-items:baseline;
-  border-bottom:1.5px solid var(--ink);padding-bottom:2px;margin-bottom:7.5mm}
-.hd h2{margin:0;font-size:25px;font-weight:700;line-height:1.2}
+  border-bottom:2px solid var(--gold);padding-bottom:2px;margin-bottom:7.5mm}
+.hd h2{margin:0;font-size:25px;font-weight:700;line-height:1.2;font-family:"Fraunces",Georgia,serif;letter-spacing:-.01em}
 .hd .tag{font-size:13px;color:var(--red);font-weight:700;letter-spacing:.04em;flex:0 0 auto;padding-left:12px}
 .sheet h3{font-size:19px;margin:6mm 0 0;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .sheet h3:first-of-type{margin-top:0}
@@ -50,23 +41,24 @@ b,strong{font-weight:700}
 .grn{color:var(--green);font-weight:700}
 .pen{color:var(--pencil)}
 .amb{color:var(--amber);font-weight:700}
-.box{border:1.5px solid var(--ink);border-radius:2px;padding:2mm 3mm;margin:0 0 3.75mm;
+.box{border:1px solid var(--edge);border-left:3px solid var(--gold);border-radius:2px;padding:2mm 3mm;margin:0 0 3.75mm;
   line-height:7.5mm;background:transparent}
-.box.r{border-color:var(--red)} .box.g{border-color:var(--green)}
+.box.r{border-left-color:var(--red)} .box.g{border-left-color:var(--green)}
 .f{font-family:"IBM Plex Mono",monospace;font-size:14px;line-height:7.5mm;
   letter-spacing:-.01em;white-space:pre-wrap;overflow-x:auto}
 .f b{color:var(--red)}
 table{width:100%;border-collapse:collapse;font-size:14.5px;line-height:7.5mm;margin:0 0 3.75mm}
 th,td{border-bottom:1px solid var(--line);padding:0 4px;text-align:left;vertical-align:top}
-th{font-weight:700;border-bottom:1.5px solid var(--ink)}
+th{font-weight:700;border-bottom:2px solid var(--gold)}
 td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5px;
   font-variant-numeric:tabular-nums}
 .arrow{color:var(--red);font-weight:700}
 .side{position:absolute;right:6mm;width:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm}
-.cover{display:flex;flex-direction:column;justify-content:center;background-image:none}
+.cover{display:block;padding-top:72mm;background-image:none}
+.cover::after{content:none}
 .cover::before{content:none}
-.cover h1{font-size:52px;line-height:1.06;margin:0 0 4mm;font-weight:700}
+.cover h1{font-size:56px;line-height:1.04;margin:0 0 4mm;font-weight:700;font-family:"Fraunces",Georgia,serif;letter-spacing:-.02em}
 .cover .sub{font-size:20px;color:var(--pencil);line-height:9mm}
 .note-sm{font-size:14.5px;color:var(--pencil);line-height:7.5mm}
 @media(max-width:230mm){
@@ -76,9 +68,16 @@ td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5p
 @page{size:A4;margin:0}
 @media print{
   body{background:#fff}
-  .stack{gap:0;padding:0}
-  .sheet{box-shadow:none;border:0;break-after:page;width:210mm;min-height:297mm}
-  .toolbar{display:none}
+  .stack{display:block;gap:0;padding:0}
+  /* Chromium reserves ~11mm of an A4 page even at margin:0, so the sheet is
+     shortened and the padding trimmed to keep the same content area. */
+  .sheet{box-shadow:none;border:0;width:210mm;
+        height:286mm;min-height:0;overflow:hidden;margin:0 auto;
+        padding:12mm 14mm 6mm 26mm}
+  .cover{padding-top:64mm}
+  .sheet::after{bottom:1.5mm}
+  .sheet + .sheet{break-before:page}
+  .toolbar{display:none!important}
 }
 .toolbar{position:sticky;top:0;z-index:9;background:var(--desk);width:100%;
   padding:10px 16px;border-bottom:1px solid var(--edge);
@@ -87,7 +86,7 @@ td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5p
 .toolbar b{color:var(--ink)}
 </style>
 
-<div class="toolbar"><b>BAV Recall Sheets</b> · 40 sheets · print or save as PDF at A4, no scaling · one sheet per topic</div>
+<div class="toolbar"><b>BAV · Recall Sheets</b> · 40 sheets · print or save as PDF at A4, no scaling · one sheet per topic</div>
 <div class="stack">
 <div class="sheet cover" data-pg="1 / 40">
 <h1>BAV<br>Recall Sheets</h1>

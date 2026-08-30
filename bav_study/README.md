@@ -25,3 +25,33 @@ Built from the Term IV Business Analysis & Valuation material in `../bav_materia
 
 Numbers are reproduced from those sources. Check anything you intend to rely on
 against the original.
+
+## Look and feel
+
+All three files use the same design system as Volume I (Multiples) and Volume II
+(DCF) in `../bav_materials/`: cream paper `#EDE7D6`, gold `#9C7526`, teal `#2B564E`,
+rust `#8C3F30`, with Fraunces / Source Sans 3 / IBM Plex Mono. The shared tokens
+live in `theme.css`, which is inlined into the two long-form pages at build time.
+
+## Regenerating the PDF
+
+`BAV_Recall_Sheets.pdf` is produced from the HTML with headless Chromium:
+
+```bash
+python3 build_notes.py
+python3 embed_fonts.py BAV_Recall_Sheets.html /tmp/sheets_embedded.html \
+  "https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+# then print /tmp/sheets_embedded.html to A4 with backgrounds on
+```
+
+`embed_fonts.py` exists because a page loaded over `file://` gets neither the
+Google Fonts stylesheet nor a charset, so it would otherwise print in fallback
+fonts with mangled punctuation.
+
+Two print quirks are handled in `build_notes.py`:
+
+- Chromium reserves roughly 11 mm of an A4 page even at `margin: 0`, so each sheet
+  is 286 mm tall with trimmed padding rather than a full 297 mm. A full-height
+  sheet silently paginates into two pages.
+- Page breaks use `.sheet + .sheet { break-before: page }` rather than
+  `break-after`, which emitted a stray blank page after the cover.
