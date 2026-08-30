@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Valuation II - DCF, Free Cash Flow & APV</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --cover:#152029;
+    --cover-2:#1E2C38;
+    --paper:#EDE7D6;
+    --paper-2:#E3DBC4;
+    --card:#F8F4E6;
+    --ink:#1C2A33;
+    --ink-soft:#54626C;
+    --rule:#C7BE9F;
+    --gold:#9C7526;
+    --gold-bright:#B8912F;
+    --teal:#2B564E;
+    --rust:#8C3F30;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Source Sans 3', -apple-system, sans-serif;
+    --mono:'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{font-family:var(--serif); color:var(--ink); margin:0 0 .4em;}
+  a{color:var(--gold);}
+  ::selection{background:var(--gold); color:var(--card);}
+
+  /* ---------- Header ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--cover);
+    color:#EDE7D6;
+    padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap:wrap;
+    border-bottom:3px solid var(--gold);
+  }
+  .topbar .brand{display:flex; align-items:baseline; gap:10px;}
+  .topbar .brand .mark{
+    font-family:var(--serif); font-weight:700; font-size:1.3rem; letter-spacing:.02em;
+  }
+  .topbar .brand .sub{font-family:var(--mono); font-size:.72rem; color:#B7AF98; letter-spacing:.06em; text-transform:uppercase;}
+  .score-panel{
+    display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:.85rem;
+  }
+  .score-panel .ledger-line{
+    display:flex; flex-direction:column; align-items:flex-end; line-height:1.2;
+  }
+  .score-panel .ledger-line .label{font-size:.65rem; color:#9AA6AE; text-transform:uppercase; letter-spacing:.08em;}
+  .score-panel .ledger-line .value{font-size:1rem; color:var(--gold-bright); font-weight:600;}
+  .progress-rail{
+    width:120px; height:6px; background:#0F1720; border-radius:3px; overflow:hidden;
+    border:1px solid #33414D;
+  }
+  .progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--gold-bright)); transition:width .4s ease;}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid; grid-template-columns:250px 1fr; align-items:start;}
+  .toc{
+    position:sticky; top:64px;
+    height:calc(100vh - 64px);
+    overflow-y:auto;
+    background:var(--cover-2);
+    color:#D8D0BB;
+    padding:18px 0 40px;
+    border-right:3px solid var(--gold);
+  }
+  .toc-title{font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:#8C9BA5; padding:0 18px 10px; border-bottom:1px solid #33414D; margin-bottom:6px;}
+  .toc a{
+    display:block; padding:8px 18px; font-size:.85rem; color:#D8D0BB; text-decoration:none;
+    border-left:3px solid transparent;
+  }
+  .toc a:hover{background:#25333F; color:#fff;}
+  .toc a.active{border-left-color:var(--gold); color:var(--gold-bright); background:#25333F;}
+  .toc a .n{font-family:var(--mono); color:#7C8B95; margin-right:8px;}
+  .toc a .check{float:right; color:var(--gold-bright); opacity:0; font-weight:700;}
+  .toc a.done .check{opacity:1;}
+
+  main{padding:0; max-width:100%;}
+  section.module{
+    padding:48px 48px 30px;
+    max-width:840px;
+    margin:0 auto;
+    border-bottom:1px dashed var(--rule);
+  }
+  section.module:last-of-type{border-bottom:none;}
+
+  .tab{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--card); background:var(--ink); padding:5px 14px; border-radius:2px 2px 0 0;
+    margin-bottom:2px;
+  }
+  .tab .num{color:var(--gold-bright); font-weight:600;}
+  h2.mod-title{font-size:2rem; border-bottom:3px solid var(--ink); padding-bottom:10px; margin-bottom:6px;}
+  .mod-tagline{color:var(--ink-soft); font-style:italic; font-family:var(--serif); font-size:1.05rem; margin-bottom:26px;}
+
+  h3{font-size:1.3rem; margin-top:34px; color:var(--teal); border-left:4px solid var(--gold); padding-left:10px;}
+  h4{font-size:1.05rem; color:var(--ink); margin-top:22px;}
+  p{margin:0 0 14px;}
+  ul,ol{margin:0 0 16px; padding-left:22px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--ink); font-weight:700;}
+  em.term{font-style:normal; font-weight:600; color:var(--teal); border-bottom:1px dotted var(--teal);}
+
+  /* fractions / formulas */
+  .formula-box{
+    background:var(--card); border:1px solid var(--rule); border-left:4px solid var(--gold);
+    padding:18px 22px; margin:18px 0; border-radius:2px; overflow-x:auto;
+  }
+  .formula-box .fname{font-family:var(--mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); margin-bottom:8px;}
+  .formula{font-family:var(--mono); font-size:1.05rem; color:var(--ink); display:flex; align-items:center; flex-wrap:wrap; gap:6px;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15;}
+  .frac .num{padding:0 6px 3px; border-bottom:1.5px solid var(--ink);}
+  .frac .den{padding:3px 6px 0;}
+
+  /* callouts */
+  .callout{
+    background:var(--card); border:1px solid var(--rule); border-radius:2px;
+    padding:16px 20px; margin:18px 0;
+  }
+  .callout.slide{border-left:4px solid var(--teal);}
+  .callout.slide .callout-tag{color:var(--teal);}
+  .callout.worked{border-left:4px solid var(--gold);}
+  .callout.worked .callout-tag{color:var(--gold);}
+  .callout.warn{border-left:4px solid var(--rust);}
+  .callout.warn .callout-tag{color:var(--rust);}
+  .callout-tag{font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; font-weight:600; margin-bottom:8px; display:block;}
+  .callout table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.88rem; margin-top:8px;}
+  .callout table td, .callout table th{border-bottom:1px solid var(--rule); padding:4px 8px; text-align:right;}
+  .callout table th{text-align:right; color:var(--ink-soft); font-weight:600;}
+  .callout table td:first-child, .callout table th:first-child{text-align:left;}
+
+  .keyline{
+    display:flex; gap:14px; background:var(--ink); color:var(--paper); padding:14px 18px; margin:20px 0;
+    align-items:flex-start; border-radius:2px;
+  }
+  .keyline .kicon{font-family:var(--serif); font-weight:700; font-size:1.3rem; color:var(--gold-bright); flex-shrink:0;}
+  .keyline p{margin:0; color:#EDE7D6;}
+
+  /* quiz */
+  .quiz-section{
+    background:var(--paper-2); border:1px solid var(--rule); border-radius:3px;
+    padding:22px 24px; margin-top:32px;
+  }
+  .quiz-section > h4{margin-top:0; display:flex; align-items:center; gap:10px;}
+  .quiz-section > h4::before{content:"?"; font-family:var(--mono); background:var(--gold); color:var(--card); width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700;}
+  .quiz-item{background:var(--card); border:1px solid var(--rule); padding:14px 16px; margin-bottom:12px; border-radius:2px;}
+  .quiz-q{font-weight:600; margin-bottom:10px;}
+  .quiz-options{display:flex; flex-direction:column; gap:6px; margin-bottom:10px;}
+  .quiz-opt{display:flex; align-items:flex-start; gap:8px; font-size:.94rem; cursor:pointer; padding:4px 6px; border-radius:2px;}
+  .quiz-opt:hover{background:var(--paper-2);}
+  .quiz-opt input{margin-top:3px;}
+  .quiz-check, .reveal-btn{
+    font-family:var(--mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em;
+    background:var(--ink); color:var(--paper); border:none; padding:7px 16px; border-radius:2px; cursor:pointer;
+  }
+  .quiz-check:hover, .reveal-btn:hover{background:var(--teal);}
+  .quiz-feedback{margin-top:10px; font-size:.92rem; padding:8px 10px; border-radius:2px; display:none;}
+  .quiz-feedback.correct{display:block; background:#E4EEE9; border-left:3px solid var(--teal); color:#1E3F38;}
+  .quiz-feedback.incorrect{display:block; background:#F3E4E0; border-left:3px solid var(--rust); color:#5F2A20;}
+  .quiz-feedback.warn{display:block; background:#F1EAD3; border-left:3px solid var(--gold); color:#5C4416;}
+
+  /* PYQ */
+  .pyq-item{background:var(--card); border:1px solid var(--rule); padding:16px 18px; margin-bottom:14px; border-radius:2px;}
+  .pyq-item .src{font-family:var(--mono); font-size:.68rem; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; display:block;}
+  .pyq-item .q{font-weight:600; margin-bottom:8px;}
+  details.answer{margin-top:8px;}
+  details.answer summary{cursor:pointer; font-family:var(--mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; color:var(--teal); font-weight:600;}
+  details.answer .ans-body{margin-top:8px; padding-top:8px; border-top:1px dashed var(--rule);}
+
+  .final-score-banner{
+    text-align:center; padding:20px; background:var(--ink); color:var(--paper); border-radius:3px; margin:24px 0; font-family:var(--mono);
+  }
+
+  code.inline{font-family:var(--mono); background:var(--paper-2); padding:1px 5px; border-radius:2px; font-size:.9em;}
+
+  .nav-buttons{display:flex; justify-content:space-between; margin-top:36px; gap:12px;}
+  .nav-buttons a{
+    font-family:var(--mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;
+    text-decoration:none; color:var(--ink); border:1.5px solid var(--ink); padding:10px 16px; border-radius:2px;
+  }
+  .nav-buttons a:hover{background:var(--ink); color:var(--paper);}
+
+  .hero{
+    background:var(--cover); color:#EDE7D6; padding:60px 48px 40px; position:relative;
+    border-bottom:4px solid var(--gold);
+  }
+  .hero .kicker{font-family:var(--mono); font-size:.78rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold-bright); margin-bottom:14px;}
+  .hero h1{color:#F5F0E1; font-size:2.6rem; max-width:680px; margin-bottom:14px;}
+  .hero p.lede{max-width:640px; color:#B7AF98; font-size:1.05rem;}
+  .hero .roadmap{display:flex; flex-wrap:wrap; gap:8px; margin-top:26px;}
+  .hero .roadmap span{
+    font-family:var(--mono); font-size:.72rem; background:#25333F; color:#D8D0BB; padding:5px 10px; border-radius:2px; border:1px solid #37454F;
+  }
+
+  table.datatable{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.82rem; margin:14px 0;}
+  table.datatable th{background:var(--ink); color:var(--paper); padding:6px 8px; text-align:right;}
+  table.datatable th:first-child, table.datatable td:first-child{text-align:left;}
+  table.datatable td{padding:6px 8px; border-bottom:1px solid var(--rule); text-align:right;}
+  table.datatable tr:nth-child(even){background:var(--card);}
+
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr;}
+    .toc{position:sticky; top:0; height:auto; max-height:44px; overflow:hidden; display:flex; overflow-x:auto; padding:8px; border-right:none; border-bottom:3px solid var(--gold); white-space:nowrap; transition:max-height .25s ease;}
+    .toc.open{max-height:70vh; flex-direction:column; overflow-y:auto;}
+    .toc a{display:inline-block; padding:8px 12px; border-left:none; border-bottom:3px solid transparent;}
+    .toc a.active{border-bottom-color:var(--gold);}
+    .toc-title{display:none;}
+    .toc-toggle{display:block !important;}
+    section.module{padding:34px 20px 20px;}
+    .hero{padding:40px 20px 30px;}
+    .hero h1{font-size:1.9rem;}
+    .topbar{padding:12px 14px;}
+  }
+  .toc-toggle{display:none; background:var(--gold); color:var(--cover); border:none; font-family:var(--mono); font-size:.7rem; text-transform:uppercase; padding:6px 10px; border-radius:2px; margin:6px 10px;}
+
+  /* ===== Volume II extensions ===== */
+  .roads{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:20px 0;}
+  .road{background:var(--card); border:1px solid var(--rule); border-top:4px solid var(--teal); border-radius:2px; padding:14px 14px 12px;}
+  .road:nth-child(2){border-top-color:var(--gold);}
+  .road:nth-child(3){border-top-color:var(--rust);}
+  .road .rtag{font-family:var(--mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:6px;}
+  .road .rname{font-family:var(--serif); font-weight:600; font-size:1rem; margin-bottom:8px; color:var(--ink);}
+  .road .rmath{font-family:var(--mono); font-size:.8rem; color:var(--teal); background:var(--paper-2); padding:6px 8px; border-radius:2px; margin-bottom:8px;}
+  .road p{font-size:.86rem; margin:0;}
+  @media(max-width:700px){.roads{grid-template-columns:1fr;}}
+
+  .vs{display:grid; grid-template-columns:1fr 1fr; gap:0; margin:20px 0; border:1px solid var(--rule); border-radius:2px; overflow:hidden;}
+  .vs > div{padding:14px 16px;}
+  .vs .vhead{font-family:var(--mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:8px;}
+  .vs .l{background:#EAF0EC; border-right:1px solid var(--rule);}
+  .vs .l .vhead{color:var(--teal);}
+  .vs .r{background:#F3EAE7;}
+  .vs .r .vhead{color:var(--rust);}
+  .vs ul{margin:0; padding-left:18px;} .vs li{font-size:.9rem;}
+  @media(max-width:640px){.vs{grid-template-columns:1fr;} .vs .l{border-right:none; border-bottom:1px solid var(--rule);}}
+
+  .ledger{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.86rem; margin:14px 0; background:var(--card); border:1px solid var(--rule);}
+  .ledger td{padding:6px 12px; border-bottom:1px solid #E4DcC2; text-align:right;}
+  .ledger td:first-child{text-align:left; color:var(--ink-soft);}
+  .ledger tr.sum td{border-top:1.5px solid var(--ink); font-weight:700; color:var(--ink);}
+  .ledger tr.grand td{border-top:2px double var(--ink); font-weight:700; color:var(--gold);}
+  .ledger .op{color:var(--rust);}
+
+  .steps{counter-reset:step; margin:18px 0; padding:0; list-style:none;}
+  .steps > li{position:relative; padding:2px 0 14px 42px; margin:0;}
+  .steps > li::before{counter-increment:step; content:counter(step); position:absolute; left:0; top:0;
+    width:28px; height:28px; background:var(--ink); color:var(--paper); font-family:var(--mono); font-weight:600;
+    border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.85rem;}
+  .steps > li::after{content:""; position:absolute; left:13px; top:30px; bottom:2px; width:2px; background:var(--rule);}
+  .steps > li:last-child::after{display:none;}
+
+  .pill{display:inline-block; font-family:var(--mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.06em;
+    padding:2px 8px; border-radius:10px; background:var(--paper-2); color:var(--ink-soft); border:1px solid var(--rule); margin:0 3px 3px 0;}
+  .answerbox{background:#EDF2EE; border:1px solid var(--rule); border-left:4px solid var(--teal); padding:14px 16px; margin:12px 0; border-radius:2px;}
+  .answerbox .atag{font-family:var(--mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--teal); font-weight:600; margin-bottom:6px; display:block;}
+  .fnote{font-size:.82rem; color:var(--ink-soft); font-style:italic;}
+  sub, sup{font-size:.72em;}
+  .bignum{font-family:var(--serif); font-size:1.6rem; color:var(--gold); font-weight:700;}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">
+    <span class="mark">BAV · Vol II</span>
+    <span class="sub">Intrinsic Value &amp; DCF</span>
+  </div>
+  <div class="score-panel">
+    <div class="ledger-line">
+      <span class="label">Quiz Score</span>
+      <span class="value" id="global-score">0 / 0</span>
+    </div>
+    <div class="progress-rail"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+</div>
+
+<button class="toc-toggle" onclick="document.querySelector('.toc').classList.toggle('open')">☰ Contents</button>
+
+<div class="layout">
+  <nav class="toc">
+    <div class="toc-title">The DCF Ledger</div>
+    <a href="#hero"><span class="n">00</span>Start here</a>
+    <a href="#m1"><span class="n">01</span>From multiples to money<span class="check">✓</span></a>
+    <a href="#m2"><span class="n">02</span>Accrual vs cash<span class="check">✓</span></a>
+    <a href="#m3"><span class="n">03</span>FCFF, FCFE &amp; CCF<span class="check">✓</span></a>
+    <a href="#m4"><span class="n">04</span>Three roads, one value<span class="check">✓</span></a>
+    <a href="#m5"><span class="n">05</span>WACC, properly<span class="check">✓</span></a>
+    <a href="#m6"><span class="n">06</span>Adding growth<span class="check">✓</span></a>
+    <a href="#m7"><span class="n">07</span>Terminal value<span class="check">✓</span></a>
+    <a href="#m8"><span class="n">08</span>The circularity problem<span class="check">✓</span></a>
+    <a href="#m9"><span class="n">09</span>APV method<span class="check">✓</span></a>
+    <a href="#m10"><span class="n">10</span>Preference &amp; the tax nuance<span class="check">✓</span></a>
+    <a href="#m11"><span class="n">11</span>PYQ bank &amp; mock<span class="check">✓</span></a>
+    <div class="toc-title" style="margin-top:10px;">From the textbook</div>
+    <a href="#m12"><span class="n">A</span>Enterprise value, done properly<span class="check">✓</span></a>
+    <a href="#m13"><span class="n">B</span>One method to rule them all<span class="check">✓</span></a>
+    <a href="#m14"><span class="n">C</span>When leverage won&rsquo;t sit still<span class="check">✓</span></a>
+    <a href="#m15"><span class="n">D</span>Getting the cost of capital right<span class="check">✓</span></a>
+  </nav>
+  <main>
+
+  <section class="hero" id="hero">
+    <div class="kicker">Business Analysis &amp; Valuation · Quiz 2 · Prof. Pitabas Mohanty</div>
+    <h1>Now we stop borrowing the market's opinion and compute the number ourselves.</h1>
+    <p class="lede">Volume I taught you relative valuation &mdash; P/E, P/B, EV/EBITDA &mdash; where you price a company by holding it up against its peers. That is fast, but it is always someone else's number in disguise. This volume builds <em>intrinsic</em> value from first principles: forecast the cash a business throws off, discount it back, and defend the figure to anyone. By the end you will value a company three different ways, break the WACC circularity, and use APV the way an M&amp;A analyst does.</p>
+    <div class="roadmap">
+      <span>Cash &gt; profit</span><span>FCFF / FCFE / CCF</span><span>3 valuation roads</span><span>WACC from scratch</span><span>Growth &amp; net investment</span><span>Terminal value</span><span>Circularity</span><span>APV</span><span>Preference capital</span><span>Every PYQ worked</span>
+    </div>
+  </section>
+  <section class="module" id="m1">
+    <span class="tab"><span class="num">01</span> Bridge</span>
+    <h2 class="mod-title">From multiples to money</h2>
+    <p class="mod-tagline">A multiple tells you what the crowd pays. DCF tells you what the thing is worth. This module rebuilds the machinery of discounting from zero.</p>
+
+    <h3>1.1 Two honest ways to price anything</h3>
+    <p>Suppose you want to price a flat. You have exactly two philosophies available, and there is no third:</p>
+    <div class="vs">
+      <div class="l">
+        <div class="vhead">Relative &mdash; Volume I</div>
+        <ul>
+          <li>Find what similar flats nearby sold for per square foot.</li>
+          <li>Multiply by your flat's square footage.</li>
+          <li>Fast, market-anchored, needs almost no forecasting.</li>
+          <li>But you have simply <em>inherited the market's price</em>. If the whole street is mispriced, so are you.</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="vhead">Absolute &mdash; Volume II</div>
+        <ul>
+          <li>Forecast the rent the flat will earn, year by year.</li>
+          <li>Discount those rents back to today at your required return.</li>
+          <li>Slow, assumption-heavy, but the number is <em>yours</em> and you can defend every input.</li>
+          <li>This is Discounted Cash Flow. It answers "what is this worth?" without asking the neighbours.</li>
+        </ul>
+      </div>
+    </div>
+    <p>Volume I lived entirely on the left. Everything from here lives on the right. The professor's phrase for the DCF philosophy: value is the <strong>cause</strong> (it comes out of the cash flows), and the multiple is merely a <strong>consequence</strong> you can back out afterwards. Relative valuation reverses that arrow &mdash; it treats the multiple as the input. Neither is "wrong," but only one lets you say a stock is mispriced.</p>
+
+    <div class="callout worked">
+      <span class="callout-tag">Why bother, if multiples are faster?</span>
+      <p>Because a multiple cannot tell you the crowd is wrong &mdash; it <em>is</em> the crowd. If Nifty trades at 22&times; earnings and you want to know whether that is expensive or cheap, no multiple can answer; you need an independent estimate of what the earnings are actually worth. That independent estimate is DCF. Every "the market is overvalued" claim, to mean anything, is secretly a DCF claim.</p>
+    </div>
+
+    <h3>1.2 The one idea underneath everything: money has a timestamp</h3>
+    <p>Ask the foundational question first, before any formula. <strong>Why is a rupee today worth more than a rupee next year?</strong> Not because of inflation (that is a separate, second reason). The deep reason: a rupee today can be <em>put to work</em>. Park it at your required return <code class="inline">r</code> and next year it is worth <code class="inline">1 + r</code> rupees. So a rupee next year must be worth less than a rupee now &mdash; specifically, it is worth whatever amount, invested today, would grow into that rupee.</p>
+    <p>Run that backwards and you have <em class="term">discounting</em>. If &#8377;1 today grows to &#8377;(1+r) next year, then &#8377;1 next year is worth <span class="frac"><span class="num">1</span><span class="den">1 + r</span></span> today. Compounding and discounting are the same machine driven in opposite directions.</p>
+    <div class="formula-box">
+      <div class="fname">Present value of a single future cash flow</div>
+      <div class="formula">PV = <span class="frac"><span class="num">C<sub>t</sub></span><span class="den">(1 + r)<sup>t</sup></span></span></div>
+    </div>
+    <p>Here <code class="inline">r</code> is your <em class="term">required return</em> &mdash; the annual return you could earn elsewhere at the same risk. It is also called the discount rate, the cost of capital, or the opportunity cost. Same thing, four names. A riskier cash flow needs a higher <code class="inline">r</code>, which shrinks its PV. That single sentence &mdash; <strong>risk enters valuation only through the discount rate</strong> &mdash; is the spine of this whole course.</p>
+
+    <h3>1.3 Two shortcuts you will use in every single problem</h3>
+    <p>A company does not throw off one cash flow; it throws off a stream, forever. Adding up an infinite discounted stream sounds impossible, but two clean formulas collapse it. Let us <em>derive</em> them rather than memorise, because a formula you have built once you never forget.</p>
+
+    <h4>The level perpetuity (no growth)</h4>
+    <p>Imagine a cash flow of <code class="inline">C</code> arriving at the end of every year, forever. Its value is:</p>
+    <div class="formula-box">
+      <div class="fname">Geometric sum</div>
+      <div class="formula">PV = <span class="frac"><span class="num">C</span><span class="den">1+r</span></span> + <span class="frac"><span class="num">C</span><span class="den">(1+r)<sup>2</sup></span></span> + <span class="frac"><span class="num">C</span><span class="den">(1+r)<sup>3</sup></span></span> + &hellip;</div>
+    </div>
+    <p>Multiply the whole thing by <code class="inline">(1+r)</code>, subtract the original from it, and every term cancels except the first. What survives is <code class="inline">PV &times; r = C</code>, so:</p>
+    <div class="formula-box">
+      <div class="fname">Value of a level perpetuity</div>
+      <div class="formula">PV = <span class="frac"><span class="num">C</span><span class="den">r</span></span></div>
+    </div>
+    <p>This is why a stable, no-growth company is worth its cash flow divided by <code class="inline">r</code>. You will meet <code class="inline">1/r</code> again dressed up as "the P/E of a zero-growth firm."</p>
+
+    <h4>The growing perpetuity (the Gordon formula)</h4>
+    <p>Now let the cash flow grow at a constant rate <code class="inline">g</code> forever: next year <code class="inline">C</code>, then <code class="inline">C(1+g)</code>, then <code class="inline">C(1+g)<sup>2</sup></code>&hellip; The same multiply-and-subtract trick gives:</p>
+    <div class="formula-box">
+      <div class="fname">Value of a growing perpetuity &mdash; Gordon Growth Model</div>
+      <div class="formula">PV = <span class="frac"><span class="num">C<sub>1</sub></span><span class="den">r &minus; g</span></span></div>
+    </div>
+    <p><code class="inline">C<sub>1</sub></code> is <strong>next year's</strong> cash flow (the first one you receive), not this year's. The intuition for <code class="inline">r-g</code>: growth partially self-funds the discounting, so the effective discount rate is only the <em>gap</em> between what you demand and what the cash flow grows at. If <code class="inline">g &ge; r</code> the formula explodes &mdash; a business that grows forever faster than you discount would be worth infinity, which is a signal your assumptions are impossible, not that the company is priceless.</p>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>Almost every valuation in this course is one of these two formulas applied to the right cash flow at the right discount rate. Ninety percent of the difficulty is <em>defining the cash flow</em> and <em>choosing the discount rate</em> consistently. That is the entire rest of the volume.</p>
+    </div>
+
+    <h3>1.4 The thing we discount is cash, not profit</h3>
+    <p>Here is the trap that catches every beginner. We just said "discount the cash flows." But when you open a company's accounts, you do not find cash flows &mdash; you find <strong>accounting profit</strong> (net income, EBIT, EPS). These are <em>not</em> the same thing, and discounting profit gives the wrong answer.</p>
+    <p>Why the mismatch? Because accounting runs on the <em class="term">accrual principle</em>: it records revenue when it is <em>earned</em> and costs when they are <em>incurred</em>, regardless of when cash actually moves. A sale on credit is "profit" today but no cash arrives for 60 days. A machine bought for &#8377;100 is cash gone today but is expensed slowly over ten years as depreciation. Profit is an opinion about performance; cash is a fact about the bank balance. <strong>Valuation runs on facts.</strong></p>
+    <div class="callout warn">
+      <span class="callout-tag">The one-line reason this module exists</span>
+      <p>We have accrual-based accounting numbers, but we need cash-based numbers to discount. Module 2 is nothing but the translation dictionary between the two &mdash; why depreciation is added back, what capex is, and what working capital does to cash.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 1</h4>
+      <div id="quiz-m1"></div>
+    </div>
+    <div class="nav-buttons"><a href="#hero">&larr; Start</a><a href="#m2">Accrual vs cash &rarr;</a></div>
+  </section>
+  <section class="module" id="m2">
+    <span class="tab"><span class="num">02</span> Foundations</span>
+    <h2 class="mod-title">Accrual vs cash: the translation problem</h2>
+    <p class="mod-tagline">The accounts give you profit. Discounting needs cash. Here is the four-line dictionary that converts one into the other &mdash; and why each line is there.</p>
+
+    <h3>2.1 Start from EBIT and walk to cash</h3>
+    <p>We begin at <em class="term">EBIT</em> (Earnings Before Interest and Tax) &mdash; the operating profit of the whole business, before we split anything between lenders and owners. Starting here (rather than at net income) is deliberate: EBIT belongs to <em>everybody</em> who funded the firm, and that neutrality matters later. Our goal: turn this accrual figure into the actual cash the business generates. Four adjustments do it.</p>
+
+    <h4>Adjustment 1 &mdash; add back depreciation</h4>
+    <p>When a company buys a &#8377;100 machine, the &#8377;100 leaves the bank <em>today</em>. But accounting refuses to call that &#8377;100 an expense today; it spreads it as depreciation of, say, &#8377;10 per year for ten years. So each year the income statement subtracts a &#8377;10 "expense" for which <strong>no cash actually leaves</strong> &mdash; the cash left years ago. Depreciation is a bookkeeping echo of a past outflow, not a present one.</p>
+    <p>Therefore, to get from profit back to cash, you must <strong>add depreciation back</strong>. You are not saying depreciation is fake; you are saying it is not <em>this year's</em> cash outflow, so it has no business reducing this year's cash figure.</p>
+
+    <h4>Adjustment 2 &mdash; subtract capital expenditure (capex)</h4>
+    <p>The flip side: the &#8377;100 the company spends buying new machines and buildings <em>this</em> year is real cash gone, but the income statement barely notices it (it will only appear slowly, as future depreciation). So cash-based valuation must <strong>subtract capex</strong> &mdash; the actual money spent on long-lived assets this year, which you find as the change in gross fixed assets on the balance sheet plus this year's depreciation.</p>
+    <div class="callout slide">
+      <span class="callout-tag">Depreciation and capex are two views of the same asset</span>
+      <p>Depreciation is the <em>accounting shadow</em> of assets bought in the past. Capex is the <em>cash reality</em> of assets bought now. We remove the shadow (add depreciation back) and insert the reality (subtract capex). In a steady, no-growth firm the two roughly cancel &mdash; the company replaces exactly what wears out &mdash; which is why "capex = depreciation" is the standard no-growth assumption you will see in every base-case problem.</p>
+    </div>
+
+    <h4>Adjustment 3 &mdash; subtract the increase in working capital</h4>
+    <p>Working capital is the cash trapped in day-to-day operations: money owed by customers (receivables) plus goods sitting in stores (inventory), minus money you owe suppliers (payables). When a growing company sells more, it must carry more inventory and wait on more receivables &mdash; cash goes <em>in</em> to fund that, even though profit looks fine. So a rise in working capital is a cash <strong>outflow</strong> and must be subtracted. In the no-growth base case, working capital does not change, so &Delta;WC = 0.</p>
+
+    <h4>Adjustment 4 &mdash; tax on operating profit, handled cleanly</h4>
+    <p>We tax EBIT as if the firm had no debt, giving <code class="inline">EBIT &times; (1&minus;t)</code>. Why pretend there is no debt? Because the tax <em>saving</em> that debt actually creates (interest is tax-deductible) is a <strong>financing</strong> benefit, and we want to keep the operating cash flow pure &mdash; free of any financing decision. We will hand that tax saving back later, deliberately, as the "tax shield." Keeping operating and financing effects in separate boxes is the single most important discipline in this volume.</p>
+
+    <h3>2.2 The result: Free Cash Flow to the Firm</h3>
+    <p>Stack the four adjustments and you have the master cash-flow definition of the course:</p>
+    <div class="formula-box">
+      <div class="fname">Free Cash Flow (to the Firm) &mdash; FCFF, a.k.a. operating cash flow</div>
+      <div class="formula">FCF = EBIT &times; (1 &minus; t) &nbsp;+&nbsp; Depreciation &nbsp;&minus;&nbsp; Capex &nbsp;&minus;&nbsp; &Delta;Working&nbsp;Capital</div>
+    </div>
+    <p>Read it as a sentence: take operating profit, tax it as if unlevered, undo the depreciation shadow, pay for this year's real asset purchases, and fund the extra cash trapped in operations. What remains is genuinely <em>free</em> &mdash; cash the firm could hand to <em>all</em> its investors (lenders and owners together) without harming operations.</p>
+
+    <div class="callout worked">
+      <span class="callout-tag">A useful compression for growth problems</span>
+      <p>Notice that <span class="pill">Capex + &Delta;WC &minus; Depreciation</span> is exactly what the course calls <strong>Net Investment</strong> &mdash; the money ploughed back into the business <em>over and above</em> replacing what wore out. So the whole FCF formula collapses to a form you will use constantly once growth appears:</p>
+      <div class="formula" style="font-family:var(--mono); margin-top:8px;">FCF = EBIT &times; (1 &minus; t) &nbsp;&minus;&nbsp; Net Investment</div>
+      <p class="fnote" style="margin-top:8px;">Net Investment = Gross Investment &minus; Depreciation, where Gross Investment = Capex + increase in working capital. When growth is zero, net investment is zero and FCF is simply EBIT&times;(1&minus;t).</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>You now have the bridge Module 1 promised: profit &rarr; cash. Every valuation from here forward discounts <em>some version</em> of this cash flow. The next question is the subtle one &mdash; <strong>whose</strong> cash is it, and therefore at what rate do we discount it? That is Module 3.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 2</h4>
+      <div id="quiz-m2"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m1">&larr; From multiples to money</a><a href="#m3">FCFF, FCFE &amp; CCF &rarr;</a></div>
+  </section>
+  <section class="module" id="m3">
+    <span class="tab"><span class="num">03</span> Core</span>
+    <h2 class="mod-title">FCFF, FCFE &amp; Capital Cash Flow</h2>
+    <p class="mod-tagline">Three cash flows, three owners, three discount rates. Get the pairing right and valuation is bookkeeping. Get it wrong and every number is garbage.</p>
+
+    <h3>3.1 The question that fixes everything: whose cash is this?</h3>
+    <p>A company is funded by two kinds of people: <strong>lenders</strong> (who get interest and their money back) and <strong>owners</strong> (who get whatever is left). A cash flow is only meaningful once you say <em>which group receives it</em>, because that group's required return is the rate you must discount at. Mismatch the cash flow and the rate and you are discounting shareholders' money at lenders' rate, or worse. This is the "consistency" rule from Volume I, now doing real work.</p>
+    <p>There are three cash flows worth naming.</p>
+
+    <h4>FCFF &mdash; Free Cash Flow to the Firm (what we built in Module 2)</h4>
+    <p>Cash available to <em>everyone</em> &mdash; lenders and owners pooled together &mdash; after operations and reinvestment. It is computed <strong>before</strong> any financing, which is why we taxed the full EBIT and ignored interest entirely. Because it belongs to all fund providers, it must be discounted at the return <em>all</em> of them collectively demand: the <em class="term">WACC</em>.</p>
+
+    <h4>FCFE &mdash; Free Cash Flow to Equity</h4>
+    <p>Cash available to <em>owners alone</em>, after the lenders have been paid and after any new borrowing has come in. Derive it from FCFF by settling with the lenders: subtract the after-tax interest they take, add back any fresh cash they lend you.</p>
+    <div class="formula-box">
+      <div class="fname">From firm cash flow to equity cash flow</div>
+      <div class="formula">FCFE = FCFF &nbsp;&minus;&nbsp; Interest &times; (1&minus;t) &nbsp;+&nbsp; Net&nbsp;Borrowing</div>
+    </div>
+    <p>Or, equivalently and more usefully, start from the bottom line. Since net profit is already <em>after</em> interest and tax, equity cash flow is simply profit, minus the slice of reinvestment the owners fund, plus the cash lenders inject:</p>
+    <div class="formula-box">
+      <div class="fname">FCFE, the practical form</div>
+      <div class="formula">FCFE = PAT &nbsp;&minus;&nbsp; Net&nbsp;Investment &nbsp;+&nbsp; Net&nbsp;Borrowing</div>
+    </div>
+    <p>Being owners-only money, FCFE is discounted at the owners' required return, the <em class="term">cost of equity K<sub>e</sub></em>. Never at WACC.</p>
+
+    <h4>CCF &mdash; Capital Cash Flow</h4>
+    <p>This one is subtle and it is where students lose marks, so slow down. When we computed FCFF we taxed the <em>whole</em> EBIT at rate <code class="inline">t</code>. But in reality the firm does <strong>not</strong> pay that much tax, because interest is tax-deductible &mdash; the government effectively refunds <code class="inline">t</code> on every rupee of interest. That refund is the <em class="term">interest tax shield</em>, worth <code class="inline">Interest &times; t</code> each year, and FCFF quietly threw it away. Capital Cash Flow puts it back:</p>
+    <div class="formula-box">
+      <div class="fname">Capital Cash Flow</div>
+      <div class="formula">CCF = FCFF &nbsp;+&nbsp; Interest &times; t &nbsp;&nbsp;=&nbsp;&nbsp; (Cash to owners) + (Cash to lenders)</div>
+    </div>
+    <p>CCF is the <em>true</em> total cash the firm hands to all its investors, tax shield included. Because that shield is now sitting inside the cash flow, you must discount CCF at a rate that does <strong>not</strong> also count the shield &mdash; the <strong>pre-tax</strong> cost of capital (a plain weighted average of K<sub>e</sub> and K<sub>d</sub>, with no <code class="inline">(1&minus;t)</code> on the debt).</p>
+
+    <h3>3.2 The one insight that ties the three together</h3>
+    <p>Look at what just happened. The interest tax shield is a real chunk of value, and it has to be counted <em>exactly once</em>. You have a choice of <em>where</em> to put it:</p>
+    <div class="vs">
+      <div class="l">
+        <div class="vhead">Put the shield in the discount rate</div>
+        <ul>
+          <li>Use <strong>FCFF</strong> (shield excluded from cash flow).</li>
+          <li>Discount at <strong>after-tax WACC</strong> &mdash; the <code>(1&minus;t)</code> on debt <em>is</em> the shield, baked into the rate.</li>
+          <li>The world's default method.</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="vhead">Put the shield in the cash flow</div>
+        <ul>
+          <li>Use <strong>CCF</strong> (shield included in cash flow).</li>
+          <li>Discount at <strong>pre-tax</strong> cost of capital &mdash; no tax term in the rate.</li>
+          <li>Cleaner when leverage changes over time.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn">
+      <span class="callout-tag">The double-counting trap</span>
+      <p>The shield goes in the cash flow <strong>or</strong> the discount rate, <em>never both and never neither</em>. Discount CCF at the after-tax WACC and you count the shield twice (over-valued). Discount FCFF at the pre-tax rate and you count it zero times (under-valued). This single mistake is the most common way to blow up a DCF, and the examiner knows it.</p>
+    </div>
+
+    <div class="callout worked">
+      <span class="callout-tag">Why is FCF so popular, if CCF is "truer"?</span>
+      <p>Two reasons the professor gives. First, FCF keeps the messy tax shield out of the cash-flow forecast, so the forecast reflects pure operating performance &mdash; easier to sanity-check. Second, WACC is the number everyone already quotes and benchmarks. CCF is arguably more honest when debt levels swing around, but FCF-at-WACC is the market standard, so we lead with it and keep CCF and APV in reserve for the hard cases.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 3</h4>
+      <div id="quiz-m3"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m2">&larr; Accrual vs cash</a><a href="#m4">Three roads, one value &rarr;</a></div>
+  </section>
+  <section class="module" id="m4">
+    <span class="tab"><span class="num">04</span> The payoff</span>
+    <h2 class="mod-title">Three roads, one value</h2>
+    <p class="mod-tagline">If your three methods do not converge on the same number, one of them is wrong. Here they converge &mdash; on the professor's own OLP example &mdash; and watching how is the whole point.</p>
+
+    <h3>4.1 The rented-flat picture, one more time</h3>
+    <p>You own a flat. You bought it partly with a bank mortgage and partly with your own savings (equity). There are two honest ways to answer "what is my <em>equity</em> in this flat worth?"</p>
+    <ul>
+      <li><strong>Value your equity directly:</strong> forecast the rent, subtract the mortgage EMI, and value the leftover stream at the return <em>you</em> demand on your own money.</li>
+      <li><strong>Value the whole flat, then subtract the loan:</strong> value the entire property as if it threw off all its rent to a single owner, discount at a <em>blended</em> rate reflecting both the bank's and your required returns, then subtract the outstanding mortgage.</li>
+    </ul>
+    <p>Both must give the same equity value &mdash; it is the <em>same flat</em>. Valuing a company is identical: value equity directly, or value the enterprise and subtract debt. The professor's instruction is blunt: "Do the same thing while valuing a business." Let us prove the roads meet.</p>
+
+    <div class="callout slide">
+      <span class="callout-tag">Meet OLP &mdash; the running example for the rest of this volume</span>
+      <table>
+        <tr><td>Expected EBIT</td><th>&#8377;250 m</th></tr>
+        <tr><td>Debt (market = book value)</td><th>&#8377;500 m</th></tr>
+        <tr><td>Cost of debt K<sub>d</sub> (= coupon)</td><th>10%</th></tr>
+        <tr><td>Cost of equity K<sub>e</sub></td><th>20%</th></tr>
+        <tr><td>Tax rate t</td><th>30%</th></tr>
+        <tr><td>Growth g</td><th>0%</th></tr>
+        <tr><td>Capex = Depreciation, &Delta;Working Capital</td><th>0</th></tr>
+      </table>
+      <p class="fnote" style="margin-top:8px;">Zero growth with capex = depreciation and &Delta;WC = 0 is the cleanest possible sandbox: net investment is zero, so cash flows are flat perpetuities and we use PV = C / r. No excess cash on the books. Interest = 10% &times; &#8377;500 m = &#8377;50 m.</p>
+    </div>
+
+    <h3>4.2 The three roads, side by side</h3>
+    <div class="roads">
+      <div class="road">
+        <div class="rtag">Road 1</div>
+        <div class="rname">Equity, directly</div>
+        <div class="rmath">Discount FCFE @ K<sub>e</sub></div>
+        <p>Value what the owners get, at the owners' rate. Then add debt to reach enterprise value.</p>
+      </div>
+      <div class="road">
+        <div class="rtag">Road 2</div>
+        <div class="rname">FCF @ WACC</div>
+        <div class="rmath">Discount FCF @ WACC</div>
+        <p>Value the whole firm at the blended after-tax rate. The market standard.</p>
+      </div>
+      <div class="road">
+        <div class="rtag">Road 3</div>
+        <div class="rname">CCF @ pre-tax rate</div>
+        <div class="rmath">Discount CCF @ pre-tax K</div>
+        <p>Value the whole firm with the tax shield inside the cash flow, at the pre-tax blended rate.</p>
+      </div>
+    </div>
+
+    <h4>Road 1 &mdash; value the equity directly</h4>
+    <p>With zero growth and no net investment or new borrowing, FCFE is just net profit.</p>
+    <table class="ledger">
+      <tr><td>EBIT</td><td>250</td></tr>
+      <tr><td>&minus; Interest (10% &times; 500)</td><td class="op">(50)</td></tr>
+      <tr class="sum"><td>Profit before tax</td><td>200</td></tr>
+      <tr><td>&minus; Tax @ 30%</td><td class="op">(60)</td></tr>
+      <tr class="sum"><td>PAT = FCFE (zero growth)</td><td>140</td></tr>
+      <tr><td>Equity value = 140 / 0.20</td><td>700</td></tr>
+      <tr><td>+ Debt</td><td>500</td></tr>
+      <tr class="grand"><td>Enterprise Value</td><td>1,200</td></tr>
+    </table>
+
+    <h4>Road 2 &mdash; value the firm with FCF at WACC</h4>
+    <p>FCF ignores financing, so we tax the whole EBIT: FCF = 250 &times; (1&minus;0.30) = <strong>175</strong>. The WACC uses market-value weights (E = 700, D = 500, V = 1,200) and puts the tax shield in the rate via the <code class="inline">(1&minus;t)</code> on debt:</p>
+    <div class="formula-box">
+      <div class="fname">WACC for OLP</div>
+      <div class="formula">WACC = <span class="frac"><span class="num">700</span><span class="den">1200</span></span>(0.20) + <span class="frac"><span class="num">500</span><span class="den">1200</span></span>(0.10)(1&minus;0.30) = 0.1167 + 0.0292 = <strong>14.583%</strong></div>
+    </div>
+    <table class="ledger">
+      <tr><td>FCF = 250 &times; 0.70</td><td>175</td></tr>
+      <tr class="grand"><td>Enterprise Value = 175 / 0.14583</td><td>1,200</td></tr>
+    </table>
+
+    <h4>Road 3 &mdash; value the firm with CCF at the pre-tax rate</h4>
+    <p>Now the tax shield rides <em>inside</em> the cash flow, so we strip the tax term <em>out</em> of the rate:</p>
+    <table class="ledger">
+      <tr><td>FCF</td><td>175</td></tr>
+      <tr><td>+ Interest tax shield (50 &times; 0.30)</td><td>15</td></tr>
+      <tr class="sum"><td>CCF</td><td>190</td></tr>
+      <tr><td>Pre-tax rate = (700/1200)(0.20) + (500/1200)(0.10)</td><td>15.833%</td></tr>
+      <tr class="grand"><td>Enterprise Value = 190 / 0.15833</td><td>1,200</td></tr>
+    </table>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>&#8377;1,200 million, three times over. Equity is &#8377;700 m every way you slice it. This convergence is not a coincidence &mdash; it is a <em>consistency check you must run on every DCF you build</em>. If two roads disagree, you have mismatched a cash flow with a rate.</p>
+    </div>
+
+    <div class="callout worked">
+      <span class="callout-tag">Quietly, we just met the star of Module 9</span>
+      <p>That pre-tax rate, <strong>15.833%</strong>, has a name: it is the <em class="term">unlevered cost of equity</em>, written <strong>&rho; (rho)</strong> &mdash; the return shareholders would demand if the firm carried <em>no debt at all</em>. It is the weighted average of K<sub>e</sub> and K<sub>d</sub> with no tax adjustment: &rho; = (K<sub>e</sub>&middot;E + K<sub>d</sub>&middot;D)/V = (0.20&middot;700 + 0.10&middot;500)/1200. Hold that number; APV is built on it, and so is the link WACC = &rho; &minus; (D/V)&middot;K<sub>d</sub>&middot;t = 0.15833 &minus; 0.0125 = 14.583%, which reproduces our WACC exactly.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 4</h4>
+      <div id="quiz-m4"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m3">&larr; FCFF, FCFE &amp; CCF</a><a href="#m5">WACC, properly &rarr;</a></div>
+  </section>
+  <section class="module" id="m5">
+    <span class="tab"><span class="num">05</span> Rates</span>
+    <h2 class="mod-title">WACC, properly understood</h2>
+    <p class="mod-tagline">Everyone can write the WACC formula. Almost no one can say why the tax term is there or why the weights must be market value. Both fall out of one idea: the discount rate is a blend of what your funders demand.</p>
+
+    <h3>5.1 Deriving the blend</h3>
+    <p>A firm is funded by lenders demanding <code class="inline">K<sub>d</sub></code> and owners demanding <code class="inline">K<sub>e</sub></code>. The firm's overall required return must be whatever it takes to keep <em>both</em> groups satisfied &mdash; a weighted average, where the weights are how much of the total capital each group put in:</p>
+    <div class="formula-box">
+      <div class="fname">Weighted Average Cost of Capital &mdash; first pass</div>
+      <div class="formula">WACC = <span class="frac"><span class="num">E</span><span class="den">V</span></span> K<sub>e</sub> + <span class="frac"><span class="num">D</span><span class="den">V</span></span> K<sub>d</sub></div>
+    </div>
+    <p>Two things are still missing, and each has a reason.</p>
+
+    <h4>Why the weights are <em>market</em> value, not book value</h4>
+    <p>You are discounting <em>future</em> cash to find <em>today's</em> worth. The weights must reflect how the firm is financed <em>today, at today's prices</em> &mdash; that is market value. Book value is a historical accounting record, often years stale, and using it silently assumes the market agrees with the accountant, which it rarely does. The professor's warning is precise: use market cap for equity, and market (not book) value for debt &mdash; though for debt the two coincide when the coupon equals the current cost of debt, which is exactly OLP's assumption.</p>
+
+    <h4>Why the debt term is multiplied by (1&minus;t)</h4>
+    <p>Because interest is tax-deductible, the government pays part of your interest bill for you. If you owe &#8377;100 of interest and the tax rate is 30%, your taxable profit falls by &#8377;100, so your tax bill falls by &#8377;30 &mdash; the interest only <em>truly</em> costs you &#8377;70. The effective, after-tax cost of debt is therefore <code class="inline">K<sub>d</sub>(1&minus;t)</code>. Baking the <code class="inline">(1&minus;t)</code> into WACC is precisely how the <strong>tax shield gets placed in the discount rate</strong> &mdash; the same shield Module 3 said you could put here <em>or</em> in the cash flow. This gives the formula you actually use:</p>
+    <div class="formula-box">
+      <div class="fname">WACC &mdash; the working formula</div>
+      <div class="formula">WACC = <span class="frac"><span class="num">E</span><span class="den">V</span></span> K<sub>e</sub> + <span class="frac"><span class="num">D</span><span class="den">V</span></span> K<sub>d</sub> (1 &minus; t)</div>
+    </div>
+
+    <h3>5.2 Linking WACC to &rho; &mdash; the bridge into APV</h3>
+    <p>Recall &rho;, the unlevered cost of equity, is the plain (no-tax) blend <code class="inline">&rho; = (E/V)K<sub>e</sub> + (D/V)K<sub>d</sub></code>. Watch what happens when we expand WACC and substitute:</p>
+    <div class="formula-box">
+      <div class="fname">Deriving the WACC&ndash;&rho; link</div>
+      <div class="formula" style="flex-direction:column; align-items:flex-start; gap:10px;">
+        <div>WACC = <span class="frac"><span class="num">D</span><span class="den">V</span></span>K<sub>d</sub> + <span class="frac"><span class="num">E</span><span class="den">V</span></span>K<sub>e</sub> &nbsp;&minus;&nbsp; <span class="frac"><span class="num">D</span><span class="den">V</span></span>K<sub>d</sub>&middot;t</div>
+        <div>= &rho; &nbsp;&minus;&nbsp; <span class="frac"><span class="num">D</span><span class="den">V</span></span> K<sub>d</sub> &middot; t</div>
+      </div>
+    </div>
+    <p>Read that: WACC is just <strong>&rho; discounted downward by the value of the tax shield per rupee of firm value</strong>. Debt does not make the firm's <em>operations</em> less risky &mdash; &rho; is fixed by the business. Debt only adds the tax subsidy, and that subsidy is the entire gap between &rho; and WACC. Check on OLP: 15.833% &minus; (500/1200)(0.10)(0.30) = 15.833% &minus; 1.25% = <strong>14.583%</strong>. Exactly our WACC.</p>
+
+    <div class="callout warn">
+      <span class="callout-tag">A subtlety that returns in Module 9 &mdash; which rate discounts the tax shield?</span>
+      <p>The formula <code class="inline">WACC = &rho; &minus; (D/V)K<sub>d</sub>t</code> quietly assumes the firm keeps its <strong>debt-to-value ratio constant</strong> &mdash; so the tax shield is as risky as the firm itself and is discounted at &rho;. If instead you assume the <strong>rupee amount of debt is fixed forever</strong> (the original Modigliani&ndash;Miller assumption from Volume I), the tax shield is as safe as the debt and is discounted at K<sub>d</sub>, giving a different link: <code class="inline">WACC = &rho;(1 &minus; t&middot;D/V)</code>. Same firm, two financing <em>policies</em>, two WACCs. Which policy you assume is not a detail &mdash; it changes the answer, and it is the heart of the APV discussion.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>You can now compute WACC, justify every piece of it, and translate freely between WACC and &rho;. That translation is the door to APV. But first we have to let the company <em>grow</em> &mdash; and growth is where students' cash flows silently break.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 5</h4>
+      <div id="quiz-m5"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m4">&larr; Three roads</a><a href="#m6">Adding growth &rarr;</a></div>
+  </section>
+  <section class="module" id="m6">
+    <span class="tab"><span class="num">06</span> Growth</span>
+    <h2 class="mod-title">Adding growth</h2>
+    <p class="mod-tagline">Growth is never free &mdash; it must be paid for with reinvestment. And the innocent act of using a constant discount rate secretly commits you to a growing pile of debt. Both facts trip up almost everyone.</p>
+
+    <h3>6.1 Growth costs money: net investment</h3>
+    <p>To sell more next year, a company must buy more machines and carry more inventory and receivables. That reinvestment is real cash leaving the business, so it must come <em>out</em> of the cash flow available to investors. The professor splits reinvestment into two ideas:</p>
+    <ul>
+      <li><strong>Gross Investment</strong> = Capex + increase in Working Capital &mdash; every rupee ploughed into long-term and operating assets.</li>
+      <li><strong>Net Investment</strong> = Gross Investment &minus; Depreciation &mdash; investment <em>over and above</em> merely replacing what wore out.</li>
+    </ul>
+    <p>Some analysts separate <em>maintenance</em> capex (needed just to stand still) from <em>growth</em> capex (needed to expand). In that language, depreciation is roughly the maintenance capex, and net investment is roughly the growth capex &mdash; the part that actually buys future growth. In the zero-growth base case, net investment was zero. Now OLP will grow at 5% and need <strong>&#8377;30 m</strong> of net investment next year, so:</p>
+    <div class="formula-box">
+      <div class="fname">FCF with growth</div>
+      <div class="formula">FCF = EBIT(1&minus;t) &minus; Net Investment &nbsp;=&nbsp; 250(0.70) &minus; 30 &nbsp;=&nbsp; 175 &minus; 30 &nbsp;=&nbsp; <strong>145</strong></div>
+    </div>
+
+    <h3>6.2 The hidden clause in "use a constant discount rate"</h3>
+    <p>Here is the idea that separates a B-plus from an A. Whenever you discount at a <em>constant</em> rate &mdash; a constant WACC or a constant K<sub>e</sub> &mdash; you are implicitly assuming the firm's <strong>debt-to-equity ratio stays constant over time</strong>. Why? Because WACC and K<sub>e</sub> both depend on D/E; the only way they can stay fixed is if D/E stays fixed.</p>
+    <p>But if equity value grows at 5% and D/E must stay constant, then <strong>debt must also grow at 5%</strong>. So each year the firm <em>borrows more</em> &mdash; specifically <code class="inline">D<sub>0</sub> &times; g = 500 &times; 5% = &#8377;25 m</code> of fresh debt next year. That new cash flows to the shareholders as part of their dividend. Read that twice: under a constant discount rate, <strong>part of the dividend is being paid out of freshly borrowed money.</strong></p>
+    <div class="callout warn">
+      <span class="callout-tag">The professor's trap, verbatim in spirit</span>
+      <p>"Do not criticise this assumption &mdash; that D/E is constant and dividends are partly paid from borrowed money &mdash; and at the same time use a constant discount rate." The two are a package. If you dislike the assumption, you must change the discount rate every single year to match the changing D/E &mdash; and then you must ask, honestly, for how many years you can realistically forecast a shifting capital structure. This is exactly the pain that motivates APV in Module 9.</p>
+    </div>
+
+    <h3>6.3 OLP with growth &mdash; all three roads, again</h3>
+    <p>Same OLP, now growing at 5% with &#8377;30 m net investment. The only new ingredient in the equity road is the &#8377;25 m of net borrowing.</p>
+    <table class="ledger">
+      <tr><td>PAT = (250 &minus; 50) &times; 0.70</td><td>140</td></tr>
+      <tr><td>&minus; Net Investment</td><td class="op">(30)</td></tr>
+      <tr><td>+ Net Borrowing (500 &times; 5%)</td><td>25</td></tr>
+      <tr class="sum"><td>FCFE</td><td>135</td></tr>
+      <tr><td>Equity = 135 / (0.20 &minus; 0.05)</td><td>900</td></tr>
+      <tr><td>+ Debt</td><td>500</td></tr>
+      <tr class="grand"><td>Enterprise Value (Road 1)</td><td>1,400</td></tr>
+    </table>
+    <p>Now confirm with the firm-level roads. With E = 900, D = 500, V = 1,400:</p>
+    <table class="ledger">
+      <tr><td colspan="2" style="text-align:left; color:var(--teal); font-weight:700;">Road 2 &mdash; FCF @ WACC</td></tr>
+      <tr><td>WACC = (900/1400)(0.20) + (500/1400)(0.10)(0.70)</td><td>15.357%</td></tr>
+      <tr><td>FCF</td><td>145</td></tr>
+      <tr class="sum"><td>EV = 145 / (0.15357 &minus; 0.05)</td><td>1,400</td></tr>
+      <tr><td colspan="2" style="text-align:left; color:var(--rust); font-weight:700; padding-top:12px;">Road 3 &mdash; CCF @ pre-tax rate</td></tr>
+      <tr><td>CCF = 145 + (50 &times; 0.30)</td><td>160</td></tr>
+      <tr><td>&rho; = (900/1400)(0.20) + (500/1400)(0.10)</td><td>16.429%</td></tr>
+      <tr class="grand"><td>EV = 160 / (0.16429 &minus; 0.05)</td><td>1,400</td></tr>
+    </table>
+
+    <div class="callout worked">
+      <span class="callout-tag">What actually changed &mdash; not just the number</span>
+      <p>Value rose from &#8377;1,200 m to &#8377;1,400 m. But say <em>why</em> in business terms, not "because g went up." Growth added value here only because the &#8377;30 m reinvested earns more than the 20% shareholders demand &mdash; the Volume I rule "growth creates value only when ROE &gt; r" is still governing everything. If OLP reinvested at a return <em>below</em> its cost of capital, adding growth would have <em>destroyed</em> value and the enterprise value would have fallen below &#8377;1,200 m. Growth is a magnifier of the sign of (ROE &minus; r), not a good in itself.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 6</h4>
+      <div id="quiz-m6"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m5">&larr; WACC, properly</a><a href="#m7">Terminal value &rarr;</a></div>
+  </section>
+  <section class="module" id="m7">
+    <span class="tab"><span class="num">07</span> Horizon</span>
+    <h2 class="mod-title">Terminal value</h2>
+    <p class="mod-tagline">You cannot forecast a company year-by-year forever. So you forecast explicitly for a while, then capture "everything after that" in a single terminal value &mdash; which quietly ends up being most of the answer.</p>
+
+    <h3>7.1 Why a two-stage model exists</h3>
+    <p>The Gordon formula assumes a <em>constant</em> growth rate forever. Real companies do not oblige: a young firm might grow 25% for five years, then settle. You cannot apply one growth rate to that. The fix is a <strong>two-stage DCF</strong>:</p>
+    <ul>
+      <li><strong>Stage 1 &mdash; explicit forecast:</strong> project FCF year by year for a horizon (typically 5&ndash;10 years) while the business is still changing, and discount each year individually.</li>
+      <li><strong>Stage 2 &mdash; terminal value:</strong> once the firm reaches a steady state &mdash; modest, constant growth &mdash; collapse all remaining cash flows into one number using Gordon, then discount that number back too.</li>
+    </ul>
+    <div class="formula-box">
+      <div class="fname">Two-stage enterprise value</div>
+      <div class="formula" style="flex-direction:column; align-items:flex-start; gap:10px;">
+        <div>EV = &sum; <span class="frac"><span class="num">FCF<sub>t</sub></span><span class="den">(1+WACC)<sup>t</sup></span></span> &nbsp;+&nbsp; <span class="frac"><span class="num">TV<sub>n</sub></span><span class="den">(1+WACC)<sup>n</sup></span></span></div>
+        <div>where &nbsp; TV<sub>n</sub> = <span class="frac"><span class="num">FCF<sub>n+1</sub></span><span class="den">WACC &minus; g</span></span></div>
+      </div>
+    </div>
+    <p class="fnote">Note the terminal value <code class="inline">TV<sub>n</sub></code> is computed <em>as at the end of year n</em>, so it still has to be discounted back n years to today. Forgetting that second discounting is a classic slip.</p>
+
+    <h3>7.2 The steady-state logic behind the terminal growth rate</h3>
+    <p>What growth rate goes into the terminal value? In steady state a company has largely run out of exceptional growth opportunities, so it reinvests little and pays most earnings out &mdash; a <strong>high payout ratio, low growth</strong>. The terminal <code class="inline">g</code> is usually capped near the long-run growth of the economy: no firm can outgrow its economy forever, or it would eventually <em>become</em> the economy. That is why terminal <code class="inline">g</code> is typically a low single-digit number, not the exciting near-term rate.</p>
+
+    <h3>7.3 The exit-multiple alternative &mdash; Volume I returns</h3>
+    <p>Instead of a Gordon terminal value, many analysts apply a <strong>peer EV/EBITDA multiple</strong> to the terminal-year EBITDA. The reasoning: by the terminal year the firm is a stable, mature business, and stable mature businesses in its sector trade at some observable multiple &mdash; so borrow it.</p>
+    <div class="formula-box">
+      <div class="fname">Terminal value via exit multiple</div>
+      <div class="formula">TV<sub>n</sub> = EBITDA<sub>n</sub> &times; (steady-state peer EV/EBITDA)</div>
+    </div>
+    <div class="callout slide">
+      <span class="callout-tag">Data point from the course material</span>
+      <p>Across a sample of stable-growth companies, the EV/EBITDA multiple ran roughly: average <strong>8.6&times;</strong>, median <strong>7.9&times;</strong>, spanning about <strong>4.1&times; to 14.3&times;</strong>. A terminal multiple picked from this kind of range is defensible precisely because the firm is assumed to have reached the steady state those peers already occupy.</p>
+    </div>
+    <div class="callout warn">
+      <span class="callout-tag">A quiet inconsistency to notice</span>
+      <p>The exit-multiple method mixes two philosophies: an <em>absolute</em> DCF for stage 1 and a <em>relative</em> multiple for stage 2. That is fine &mdash; but remember Charlie Munger's verdict on EBITDA from Volume I. EBITDA ignores capex, working capital, interest and tax, so leaning your terminal value entirely on an EBITDA multiple imports all of EBITDA's blind spots. Best practice is to compute the terminal value <em>both</em> ways (Gordon and exit multiple) and check they roughly agree.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>In most real DCFs the terminal value is 60&ndash;80% of the total enterprise value &mdash; the tail wags the dog. That is not a flaw; it reflects that most of a company's value lies in its distant, steady future. But it does mean small changes in terminal <code class="inline">g</code> or the exit multiple move the valuation a lot, so those are the assumptions to stress-test hardest.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 7</h4>
+      <div id="quiz-m7"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m6">&larr; Adding growth</a><a href="#m8">The circularity problem &rarr;</a></div>
+  </section>
+  <section class="module" id="m8">
+    <span class="tab"><span class="num">08</span> The knot</span>
+    <h2 class="mod-title">The circularity problem</h2>
+    <p class="mod-tagline">To value the firm you need WACC. To compute WACC you need the firm's value. Each input is the other's output. This is a real logical knot &mdash; and PYQ 2 asks you to untie it.</p>
+
+    <h3>8.1 Where the snake eats its tail</h3>
+    <p>Write the two facts we have built and stare at them together:</p>
+    <div class="formula-box">
+      <div class="fname">The two equations that create the loop</div>
+      <div class="formula" style="flex-direction:column; align-items:flex-start; gap:10px;">
+        <div>Enterprise Value = <span class="frac"><span class="num">FCF</span><span class="den">WACC &minus; g</span></span> &nbsp;&nbsp;&larr; needs WACC</div>
+        <div>WACC = <span class="frac"><span class="num">D</span><span class="den">V</span></span>K<sub>d</sub>(1&minus;t) + <span class="frac"><span class="num">E</span><span class="den">V</span></span>K<sub>e</sub> &nbsp;&nbsp;&larr; needs V (because E = V &minus; D and the weights are E/V, D/V)</div>
+      </div>
+    </div>
+    <p>The weights in WACC must be <em>market values</em> (Module 5), but the market value of equity is precisely what the valuation is trying to <em>produce</em>. You need the answer to compute the input that produces the answer. That is circularity, and it is genuine, not a trick of notation.</p>
+
+    <h3>8.2 The four ways practitioners deal with it</h3>
+    <ol class="steps">
+      <li><strong>Ignore it.</strong> The professor's dry observation: "Most people do this." They plug in <em>some</em> reasonable weights and move on. Crude, but often close enough because WACC is not very sensitive to small weight changes.</li>
+      <li><strong>Use market cap for equity and book value for debt to compute WACC, then ignore the mismatch</strong> between the D + E you used for the weights and the final D + E the model spits out. A pragmatic hack that works when debt is modest.</li>
+      <li><strong>Assume a target D/E ratio.</strong> Decide up front the capital structure the firm is <em>aiming</em> for &mdash; say 30% debt &mdash; and compute WACC from those <em>target</em> weights. Because the weights are now fixed by assumption, WACC is a single number and the loop is cut. This is the cleanest defensible approach and the one PYQ 2 wants you to demonstrate.</li>
+      <li><strong>Solve the two equations simultaneously.</strong> Treat V and WACC as two unknowns in two equations and solve algebraically (or iterate: guess WACC &rarr; get V &rarr; recompute weights &rarr; recompute WACC &rarr; repeat until it stops moving). This yields the internally consistent answer with no assumption imposed.</li>
+    </ol>
+
+    <div class="callout worked">
+      <span class="callout-tag">The simultaneous solution has a clean closed form (zero growth)</span>
+      <p>Set V&middot;WACC = FCF and expand the weights. The V's inside the weights cancel and the circularity <em>dissolves</em>:</p>
+      <div class="formula" style="font-family:var(--mono); margin:8px 0; flex-direction:column; align-items:flex-start; gap:6px;">
+        <div>V &middot; WACC = D&middot;K<sub>d</sub>(1&minus;t) + (V&minus;D)&middot;K<sub>e</sub> = FCF</div>
+        <div>&rArr; V = <span class="frac"><span class="num">FCF</span><span class="den">K<sub>e</sub></span></span> + D &middot; <span class="frac"><span class="num">K<sub>e</sub> &minus; K<sub>d</sub>(1&minus;t)</span><span class="den">K<sub>e</sub></span></span></div>
+      </div>
+      <p>Check on OLP base case: V = 175/0.20 + 500&middot;(0.20 &minus; 0.07)/0.20 = 875 + 325 = <strong>&#8377;1,200 m</strong>. The knot untied gives exactly the enterprise value the three roads found.</p>
+    </div>
+
+    <h3>8.3 The elegant escape: value equity directly</h3>
+    <p>The professor plants a question: "Do we face circularity while valuing equity <em>directly</em>?" The answer is <strong>no</strong> &mdash; and seeing why is deeply satisfying. When you value equity directly you discount FCFE at K<sub>e</sub>, and K<sub>e</sub> is a <em>given</em> number that does <em>not</em> require knowing V. There are no market-value weights to compute, so there is nothing circular. That is not a coincidence: notice the closed-form solution above is algebraically identical to <code class="inline">E = FCFE/K<sub>e</sub></code> plus debt. <strong>The equity road was the untangled version of the WACC road all along.</strong></p>
+    <div class="callout warn">
+      <span class="callout-tag">The honest caveat</span>
+      <p>Equity-direct escapes circularity only if K<sub>e</sub> is genuinely given. If instead you must <em>derive</em> K<sub>e</sub> by re-levering a beta &mdash; and re-levering needs D/E, which needs E &mdash; the loop quietly returns through the back door. In this course K<sub>e</sub> is handed to you, so the equity road is clean. In practice, the target-D/E assumption (route 3) is what keeps re-levering from reintroducing the circle.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>You can now state the circularity precisely and untie it four ways. Route 3 (target D/E) is your answer to PYQ 2's approach question. But there is a fifth, more elegant escape from the whole tangle &mdash; refuse to blend the rates at all, value the unlevered firm, and add the debt benefit separately. That is APV.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 8</h4>
+      <div id="quiz-m8"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m7">&larr; Terminal value</a><a href="#m9">APV method &rarr;</a></div>
+  </section>
+  <section class="module" id="m9">
+    <span class="tab"><span class="num">09</span> The method</span>
+    <h2 class="mod-title">Adjusted Present Value (APV)</h2>
+    <p class="mod-tagline">Stop blending operating and financing risk into one muddy rate. Value the business as if it had no debt, then add the value the debt creates &mdash; separately, transparently, one piece at a time.</p>
+
+    <h3>9.1 The idea, and when you reach for it</h3>
+    <p>WACC bundles everything &mdash; business risk, tax shield, capital structure &mdash; into a single rate, and we saw that bundle create a circularity and hide a financing assumption. APV takes the opposite stance: <strong>unbundle</strong>. Value the firm in two clean, separately-defensible pieces:</p>
+    <div class="formula-box">
+      <div class="fname">The APV identity</div>
+      <div class="formula">V<sub>L</sub> = V<sub>U</sub> + Value of the Tax Shield</div>
+    </div>
+    <p>where <code class="inline">V<sub>U</sub></code> is the value of the firm as if it were <em>entirely equity-financed</em> (pure business value, no debt), and the tax shield is the extra value the deductibility of interest bolts on top. This is a direct descendant of Volume I's Modigliani&ndash;Miller-with-tax result, <code class="inline">V<sub>L</sub> = V<sub>U</sub> + tD</code> &mdash; APV is that identity turned into a working valuation procedure.</p>
+
+    <div class="callout slide">
+      <span class="callout-tag">Why APV earns its keep &mdash; two real cases from the course</span>
+      <p><strong>Case 1 &mdash; Tata Tea &amp; Tetley (2001).</strong> Tata acquired Tetley for &pound;271 m, of which &pound;205 m was <em>debt</em> raised specifically for the deal, to be paid down on a schedule. When debt is being deliberately repaid year by year, the D/E ratio is <em>changing constantly</em> &mdash; so a constant WACC is simply wrong. APV handles a bespoke debt schedule effortlessly: value the target unlevered, then add the PV of each year's specific tax shield.</p>
+      <p><strong>Case 2 &mdash; the Nano subsidy.</strong> Gujarat lent Tata Motors &#8377;419.54 crore at <em>0.1%</em> to site the Nano plant at Sanand. That below-market rate is a financing gift worth real money &mdash; but it has nothing to do with the plant's operating value. APV is built to price exactly this: value the project on its own merits, then add the PV of the interest saving as a separate financing benefit. The professor's rule: <em>"APV is recommended whenever debt &mdash; or a change in it &mdash; causes problems."</em></p>
+    </div>
+
+    <h3>9.2 Step one: the unlevered cost of equity, &rho;</h3>
+    <p>To value the unlevered firm you need the rate an all-equity version of it would be discounted at &mdash; the <em class="term">unlevered cost of equity &rho;</em>. It is a property of the <em>business</em>, not its financing. Three routes reach it; they are the same idea in three costumes.</p>
+    <ol class="steps">
+      <li><strong>Unlever the beta, then use CAPM.</strong> Strip the leverage out of the equity beta to get the asset (unlevered) beta, then price it:
+        <div class="formula" style="font-family:var(--mono); margin:8px 0 6px;">&beta;<sub>U</sub> = &beta;<sub>L</sub> / [1 + (1&minus;t)(D/E)] &nbsp;&nbsp;&rarr;&nbsp;&nbsp; &rho; = r<sub>f</sub> + &beta;<sub>U</sub> &times; MRP</div>
+        Use this when you have a beta but no clean K<sub>e</sub>.
+      </li>
+      <li><strong>Back it out of K<sub>e</sub>.</strong> The relevering relationship links the two directly; solve it for &rho;:
+        <div class="formula" style="font-family:var(--mono); margin:8px 0 6px;">K<sub>e</sub> = &rho; + (&rho; &minus; K<sub>d</sub>)(D/E)</div>
+      </li>
+      <li><strong>Back it out of WACC</strong>, if you already have WACC, via the link from Module 5.</li>
+    </ol>
+    <p>In practice, when you are handed K<sub>e</sub>, K<sub>d</sub> and the capital structure, the fastest correct route is the market-value blend &mdash; which is exactly the pre-tax cost of capital (the CCF rate) you already met in Module 4:</p>
+    <div class="formula-box">
+      <div class="fname">&rho; as the market-value blend (the professor's working formula)</div>
+      <div class="formula">&rho; = <span class="frac"><span class="num">K<sub>e</sub> + K<sub>d</sub>(D/E)</span><span class="den">1 + (D/E)</span></span> = <span class="frac"><span class="num">K<sub>e</sub>&middot;E + K<sub>d</sub>&middot;D</span><span class="den">V</span></span></div>
+    </div>
+    <p>For OLP: &rho; = (0.20&middot;700 + 0.10&middot;500)/1200 = <strong>15.833%</strong> &mdash; the very number Module 4 flagged. It reproduces K<sub>e</sub> when re-levered: 15.833% + (15.833% &minus; 10%)(500/700) = 20%. &#10003;</p>
+
+    <h3>9.3 Step two: value the unlevered firm, then add the shield</h3>
+    <p>With &rho; in hand, valuing OLP by APV is two Gordon formulas. Take the zero-growth base case (FCF = 175, annual interest tax shield = 50 &times; 30% = 15):</p>
+    <table class="ledger">
+      <tr><td>Unlevered value V<sub>U</sub> = FCF / &rho; = 175 / 0.15833</td><td>1,105.3</td></tr>
+      <tr><td>Value of tax shield = 15 / 0.15833</td><td>94.7</td></tr>
+      <tr class="grand"><td>Levered value V<sub>L</sub> = V<sub>U</sub> + VTS</td><td>1,200</td></tr>
+    </table>
+    <p>&#8377;1,200 m &mdash; identical to all three roads in Module 4. APV is not a different answer; it is the <em>same</em> answer, decomposed so you can see where value comes from: about &#8377;1,105 m of pure business, about &#8377;95 m of tax subsidy.</p>
+
+    <h3>9.4 The fork in the road: how risky is the tax shield?</h3>
+    <p>Now the deep point, the one the professor circles repeatedly and the one that makes APV subtle. To discount the tax shield you must pick a rate, and that rate depends on <strong>how safe the future tax shields are</strong> &mdash; which depends on your assumption about future <em>debt</em>. There are two canonical assumptions, and they give <em>different</em> shield values:</p>
+    <div class="vs">
+      <div class="l">
+        <div class="vhead">Debt held constant (classic MM)</div>
+        <ul>
+          <li>The rupee amount of debt is fixed forever.</li>
+          <li>So the tax shield is as safe as the debt &rarr; discount it at <strong>K<sub>d</sub></strong>.</li>
+          <li>For a perpetuity: VTS = (D&middot;K<sub>d</sub>&middot;t)/K<sub>d</sub> = <strong>D&middot;t</strong> = 500&times;0.30 = 150.</li>
+          <li>Gives WACC = &rho;(1 &minus; t&middot;D/V).</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="vhead">D/E ratio held constant (rebalancing)</div>
+        <ul>
+          <li>Debt grows with the firm to keep D/E fixed.</li>
+          <li>So the shield is as risky as the firm &rarr; discount it at <strong>&rho;</strong>.</li>
+          <li>VTS = (Interest&middot;t)/(&rho;&minus;g) = 15/0.15833 = <strong>94.7</strong>.</li>
+          <li>Gives WACC = &rho; &minus; (D/V)K<sub>d</sub>&middot;t.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-tag">"But both gave 1,200 &mdash; how can VTS be both 150 and 94.7?" (resolve this before moving on)</span>
+      <p>Excellent objection, and here is the resolution. At <em>zero growth with debt sitting at a fixed &#8377;500 m</em>, the two assumptions physically <strong>coincide</strong> &mdash; the debt is constant <em>and</em> the D/E ratio is constant, because nothing is moving. When the assumptions coincide, they must give the same firm value, &#8377;1,200 m, and they do. The apparent conflict is only in the <em>decomposition</em>: MM splits 1,200 as 1,050 unlevered + 150 shield (using a true unlevered &rho; of 16.67%); rebalancing splits it as 1,105 + 95 (using the blended &rho; of 15.83%). From the outside &mdash; observing only K<sub>e</sub>, WACC and total value &mdash; you literally <em>cannot tell the two apart</em> at zero growth. They are observationally identical. The difference only becomes real, and only starts to change the total value, once the firm <strong>grows</strong> or its <strong>debt schedule changes</strong> &mdash; which is precisely when APV becomes indispensable.</p>
+    </div>
+
+    <div class="callout worked">
+      <span class="callout-tag">The "two equations" insight, stated plainly</span>
+      <p>Look at the identity <code class="inline">FCF/(WACC&minus;g) = FCF/(&rho;&minus;g) + VTS</code>. It contains two unknowns you care about &mdash; WACC and VTS &mdash; but it is <em>one</em> equation. You therefore <strong>cannot solve for both independently</strong>. You must <em>assume</em> a financing policy (which fixes the tax-shield discount rate and hence VTS), and only then does WACC follow &mdash; or vice versa. This is the same lesson as the circularity module wearing different clothes: valuation with leverage always requires one financing assumption to be imposed by hand. There is no assumption-free answer.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>You can now run APV end to end: find &rho;, value the unlevered firm, add the tax shield under a stated financing policy, and reconcile against WACC. This is exactly the machinery PYQ 1 demands &mdash; a growing OLP valued by APV. We will execute that PYQ fully in Module 11. First, two remaining pieces of the syllabus: preference capital and the US partial-shield nuance.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 9</h4>
+      <div id="quiz-m9"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m8">&larr; Circularity</a><a href="#m10">Preference &amp; tax nuance &rarr;</a></div>
+  </section>
+  <section class="module" id="m10">
+    <span class="tab"><span class="num">10</span> Edge cases</span>
+    <h2 class="mod-title">Preference capital &amp; the tax nuance</h2>
+    <p class="mod-tagline">Preference shares look like a third kind of funding, but through the tax-shield lens they are just debt with the one magic ingredient removed. And the US caps the shield entirely, forcing an "adjusted" tax rate.</p>
+
+    <h3>10.1 Preference capital: leverage without the tax break</h3>
+    <p>Preference (preferred) shareholders sit between lenders and owners: they receive a fixed dividend before common shareholders, but rank behind lenders. The single fact that governs their valuation treatment:</p>
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>Preferred dividends are <strong>not tax-deductible</strong>. Unlike interest, they are paid out of after-tax profit, so preference capital creates <em>no tax shield</em>. That one difference cascades through every formula.</p>
+    </div>
+    <p>Two consequences follow immediately:</p>
+    <ul>
+      <li><strong>FCFE changes:</strong> equity cash flow is now measured <em>after</em> the preferred dividend, because common shareholders only get what is left once preference has been served. FCFE = Net Income &minus; Preferred Dividend (&minus; net investment + net borrowing, as before).</li>
+      <li><strong>FCF does not change:</strong> free cash flow to the firm is computed <em>before</em> any financing, so it is blind to whether financing is debt, preference, or common. The preferred dividend, like interest, is a financing outflow &mdash; it simply happens not to carry a shield. In the cost of capital, the preference term gets <em>no</em> <code class="inline">(1&minus;t)</code> adjustment.</li>
+    </ul>
+
+    <h4>Worked example &mdash; debt and preference together (zero growth)</h4>
+    <p>OLP-style firm: EBIT = 250, Debt = 500 (K<sub>d</sub> 10%), Preference = 500 (K<sub>p</sub> 15%), K<sub>e</sub> = 20%, t = 30%, no net investment.</p>
+    <table class="ledger">
+      <tr><td>EBIT</td><td>250</td></tr>
+      <tr><td>&minus; Interest (500&times;10%)</td><td class="op">(50)</td></tr>
+      <tr><td>&minus; Tax @ 30% on (250&minus;50)</td><td class="op">(60)</td></tr>
+      <tr class="sum"><td>Net Income</td><td>140</td></tr>
+      <tr><td>&minus; Preferred dividend (500&times;15%)</td><td class="op">(75)</td></tr>
+      <tr class="sum"><td>FCFE (to common)</td><td>65</td></tr>
+      <tr><td>Common equity = 65 / 0.20</td><td>325</td></tr>
+    </table>
+    <p>Now the cost of capital &mdash; note the preference term carries <strong>no</strong> tax adjustment, the debt term does. With V = 325 + 500 + 500 = 1,325:</p>
+    <div class="formula-box">
+      <div class="fname">Cost of capital with preference</div>
+      <div class="formula" style="font-size:.92rem;">= <span class="frac"><span class="num">325</span><span class="den">1325</span></span>(0.20) + <span class="frac"><span class="num">500</span><span class="den">1325</span></span>(0.15) + <span class="frac"><span class="num">500</span><span class="den">1325</span></span>(0.10)(1&minus;0.30) = 13.21%</div>
+    </div>
+    <table class="ledger">
+      <tr><td>FCF = 250 &times; 0.70</td><td>175</td></tr>
+      <tr class="grand"><td>Enterprise Value = 175 / 0.1321</td><td>1,325</td></tr>
+    </table>
+
+    <h3>10.2 PYQ 2, alternative part &mdash; valuing an equity-plus-preference firm by APV</h3>
+    <p>One PYQ 2 option asks: a company has <em>only</em> equity and preference capital (no debt) &mdash; value it by APV. This is a beautiful question because APV makes the answer almost obvious once you see it. Reason it through rather than reaching for a formula:</p>
+    <ol class="steps">
+      <li><strong>Value the firm as unlevered.</strong> V<sub>U</sub> = FCF / (&rho; &minus; g), where &rho; is the firm's asset return &mdash; the market-value blend of the common-equity and preference costs (no tax term, since neither carries a shield): &rho; = (K<sub>e</sub>&middot;E + K<sub>p</sub>&middot;P) / V.</li>
+      <li><strong>Add the financing benefit.</strong> For debt this was the tax shield. Preference has <em>no</em> tax shield, so the benefit is <strong>zero</strong>. Therefore V<sub>L</sub> = V<sub>U</sub> + 0 = V<sub>U</sub>. <em>Preference does not change the firm's value at all</em> &mdash; it only reslices the pie.</li>
+      <li><strong>Carve out common equity.</strong> Value of common equity = V<sub>U</sub> &minus; Value of preference, where Value of preference = Preferred dividend / (K<sub>p</sub> &minus; g).</li>
+    </ol>
+    <div class="answerbox">
+      <span class="atag">The clean numeric illustration (no debt, zero growth)</span>
+      <p>EBIT = 250, t = 30%, Preference = 500 @ K<sub>p</sub> 15% (dividend 75), K<sub>e</sub> = 20%. No interest, so Net Income = 250&times;0.70 = 175; FCFE = 175 &minus; 75 = 100.</p>
+      <p style="font-family:var(--mono); font-size:.86rem; margin:6px 0;">
+      Common equity = 100 / 0.20 = 500 &nbsp;|&nbsp; Preference = 75 / 0.15 = 500 &nbsp;|&nbsp; EV = 1,000<br>
+      APV check: &rho; = (0.20&times;500 + 0.15&times;500)/1000 = 17.5% &rarr; V<sub>U</sub> = FCF/&rho; = 175/0.175 = 1,000; VTS = 0; V<sub>L</sub> = 1,000 &#10003;<br>
+      Common equity via APV = V<sub>U</sub> &minus; Preference = 1,000 &minus; 500 = 500 &#10003;
+      </p>
+      <p class="fnote">The lesson APV makes visible: because preference carries no tax shield, the firm is worth exactly its unlevered value, and adding preference simply transfers claims from common holders to preferred holders without creating or destroying enterprise value.</p>
+    </div>
+
+    <h3>10.3 The US wrinkle: when the shield is only partial</h3>
+    <p>Everything so far assumed interest is <em>fully</em> deductible. Since the US Tax Cuts and Jobs Act (2017), it is not: business interest deductions are capped at 30% of adjusted taxable income (from 2024, roughly 30% of EBIT). Interest above the cap is disallowed this year (carried forward), so the firm gets <strong>less</strong> shield than the full <code class="inline">Interest &times; t</code>. The fix is an <em class="term">adjusted tax rate</em> that captures the shield the firm <em>actually</em> gets:</p>
+    <div class="formula-box">
+      <div class="fname">Adjusted tax rate for a partial shield</div>
+      <div class="formula">adj&nbsp;t = <span class="frac"><span class="num">Tax<sub>Unlevered</sub> &minus; Tax<sub>Levered</sub></span><span class="den">Interest</span></span></div>
+    </div>
+    <p>where Tax<sub>U</sub> = EBIT&times;t (tax if all-equity) and Tax<sub>L</sub> = the actual tax paid. Worked on the notes' example &mdash; Revenue $10m, Opex $6m, Depreciation $1m, Debt $20m at 10% (Interest $2m), t = 21%, K<sub>e</sub> = 20%:</p>
+    <table class="ledger">
+      <tr><td>EBIT (10 &minus; 6 &minus; 1)</td><td>3.000</td></tr>
+      <tr><td>Deductible interest (cap = 30% of EBIT)</td><td>0.900</td></tr>
+      <tr><td>Actual interest paid</td><td>2.000</td></tr>
+      <tr><td>Taxable income (3 &minus; 0.9)</td><td>2.100</td></tr>
+      <tr><td>Tax @ 21%</td><td>0.441</td></tr>
+      <tr class="sum"><td>Net income (3 &minus; 2 &minus; 0.441)</td><td>0.559</td></tr>
+      <tr><td>Adjusted tax rate = (3&times;0.21 &minus; 0.441)/2</td><td>9.45%</td></tr>
+    </table>
+    <p>With the adjusted rate, the three roads still reconcile. FCF = PAT + Interest&times;(1&minus;adj&nbsp;t) = 0.559 + 2&times;(1&minus;0.0945) = <strong>$2.37m</strong>; the modified WACC uses <code class="inline">K<sub>d</sub>(1&minus;adj&nbsp;t)</code>, giving 10.397%; and EV = 2.37 / 0.10397 = <strong>$22.795m</strong> &mdash; matching the equity-plus-debt build-up (equity 0.559/0.20 = 2.795, plus debt 20). The machinery is untouched; only the tax rate is swapped for the one that reflects the shield actually received.</p>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Module 10</h4>
+      <div id="quiz-m10"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m9">&larr; APV method</a><a href="#m11">PYQ bank &amp; mock &rarr;</a></div>
+  </section>
+  <section class="module" id="m11">
+    <span class="tab"><span class="num">11</span> Exam</span>
+    <h2 class="mod-title">PYQ bank &amp; mock test</h2>
+    <p class="mod-tagline">The professor's own past questions, worked in full &mdash; attempt each one before you reveal the solution. Then fresh practice, then a 15-question mock across the whole volume.</p>
+
+    <h3>11.1 Previous-year questions, fully worked</h3>
+    <p class="fnote">Try each on paper first. The reasoning matters more than the final rupee figure &mdash; if you can reconstruct the <em>method</em>, the numbers follow.</p>
+
+    <div class="pyq-item">
+      <span class="src">PYQ 1 &middot; Prof. Mohanty &middot; APV with growth</span>
+      <p class="q">Using the APV method, value OLP if it grows at a constant 4% indefinitely, requires net investment of &#8377;30 m at the end of Year 1, and has borrowed &#8377;400 m. Given K<sub>d</sub> = 8%, K<sub>e</sub> = 15%, tax = 20%, and EBIT = &#8377;150 m (in Year 1).</p>
+      <details class="answer">
+        <summary>Reveal full worked solution</summary>
+        <div class="ans-body">
+          <p><strong>Read the situation first.</strong> APV needs three ingredients: the unlevered rate &rho;, the free cash flow, and the value of the tax shield. But &rho; needs the D/E ratio, and D/E needs the equity value we are solving for &mdash; circularity. The clean escape (exactly as OLP was taught) is to <strong>value the equity directly first</strong> (no weights needed, so no circularity), then decompose the result into V<sub>U</sub> + VTS. Assumption throughout: the firm rebalances to a <em>constant D/E</em> (implied by "grows at a constant rate"), so debt grows at 4% and the tax shield is discounted at &rho;.</p>
+          <p style="margin-top:10px;"><strong>Step 1 &mdash; the pieces.</strong> Interest = 400 &times; 8% = &#8377;32 m.</p>
+          <table class="ledger">
+            <tr><td>PAT = (EBIT &minus; Interest)(1&minus;t) = (150 &minus; 32)(0.80)</td><td>94.4</td></tr>
+            <tr><td>&minus; Net Investment</td><td class="op">(30)</td></tr>
+            <tr><td>+ Net Borrowing (D&times;g = 400&times;4%)</td><td>16</td></tr>
+            <tr class="sum"><td>FCFE (Year 1)</td><td>80.4</td></tr>
+          </table>
+          <p><strong>Step 2 &mdash; equity, then enterprise value.</strong></p>
+          <table class="ledger">
+            <tr><td>Equity E = 80.4 / (K<sub>e</sub> &minus; g) = 80.4 / (0.15 &minus; 0.04)</td><td>730.9</td></tr>
+            <tr><td>+ Debt</td><td>400</td></tr>
+            <tr class="grand"><td>Enterprise Value</td><td>1,130.9</td></tr>
+          </table>
+          <p><strong>Step 3 &mdash; the APV decomposition (what the question actually asks to show).</strong> Now that E is known, compute &rho; and split the value:</p>
+          <table class="ledger">
+            <tr><td>&rho; = (K<sub>e</sub>&middot;E + K<sub>d</sub>&middot;D)/V = (0.15&times;730.9 + 0.08&times;400)/1130.9</td><td>12.52%</td></tr>
+            <tr><td>FCF = EBIT(1&minus;t) &minus; Net Inv = 150&times;0.80 &minus; 30</td><td>90</td></tr>
+            <tr><td>V<sub>U</sub> = FCF / (&rho; &minus; g) = 90 / (0.1252 &minus; 0.04)</td><td>1,055.9</td></tr>
+            <tr><td>Tax shield (Yr 1) = Interest&times;t = 32&times;0.20</td><td>6.4</td></tr>
+            <tr><td>VTS = 6.4 / (&rho; &minus; g)</td><td>75.1</td></tr>
+            <tr class="grand"><td>V<sub>L</sub> = V<sub>U</sub> + VTS</td><td>1,131</td></tr>
+          </table>
+          <p><strong>Answer:</strong> Enterprise value <span class="bignum">&#8776; &#8377;1,131 m</span>, of which pure business value V<sub>U</sub> &#8776; &#8377;1,056 m and the interest tax shield &#8776; &#8377;75 m; equity &#8776; &#8377;731 m.</p>
+          <p class="fnote" style="margin-top:8px;"><strong>Cross-check (always do this):</strong> WACC = &rho; &minus; (D/V)K<sub>d</sub>t = 0.1252 &minus; (400/1131)(0.08)(0.20) = 11.96%; EV = FCF/(WACC&minus;g) = 90/(0.1196&minus;0.04) = &#8377;1,131 m. The APV and WACC roads agree &mdash; the decomposition is consistent.</p>
+          <p class="fnote"><strong>If the examiner instead intends debt held constant at &#8377;400 m (classic MM):</strong> then the shield is safe and VTS = D&middot;t = &#8377;80 m &mdash; but &rho; can no longer be pinned down from the given K<sub>e</sub> without first finding E, so the constant-D/E reading above is the only fully-specified one. State your financing assumption explicitly and you cannot be marked wrong for the fork.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">PYQ 2 (option A) &middot; the circularity approach</span>
+      <p class="q">The circularity problem arises because WACC depends on the firm's value through its D/E ratio. Show how you would find both the enterprise value and the implied WACC when you assume a target market-value D/E ratio. (No numbers required &mdash; show the approach.)</p>
+      <details class="answer">
+        <summary>Reveal the solution approach</summary>
+        <div class="ans-body">
+          <p><strong>Why there is a problem.</strong> WACC = (D/V)K<sub>d</sub>(1&minus;t) + (E/V)K<sub>e</sub> needs market-value weights, but E is the output of EV = FCF/(WACC&minus;g). Value depends on WACC; WACC depends on value.</p>
+          <p style="margin-top:10px;"><strong>The escape &mdash; impose the ratio, do not derive it.</strong> If you <em>assume</em> a target market-value ratio D/E (equivalently target weights w<sub>d</sub> and w<sub>e</sub> = 1&minus;w<sub>d</sub>), the weights become fixed constants that no longer depend on V. The loop is cut. Procedure:</p>
+          <ol class="steps">
+            <li>From the target D/E, fix the weights: w<sub>d</sub> = D/(D+E), w<sub>e</sub> = E/(D+E). If K<sub>e</sub> must be re-levered, re-lever it at this same target D/E &mdash; still a fixed number.</li>
+            <li>Compute WACC once, directly: WACC = w<sub>e</sub>K<sub>e</sub> + w<sub>d</sub>K<sub>d</sub>(1&minus;t). It is now a single number, independent of V.</li>
+            <li>Compute enterprise value: EV = FCF<sub>1</sub> / (WACC &minus; g).</li>
+            <li>Recover the value split consistent with the target: E = w<sub>e</sub>&middot;EV, D = w<sub>d</sub>&middot;EV. By construction these reproduce the assumed D/E, so the result is internally consistent.</li>
+          </ol>
+          <p><strong>The alternative &mdash; solve the two equations simultaneously.</strong> Keep D known and treat V and WACC as unknowns in the pair {V = FCF/(WACC&minus;g); WACC = (D/V)K<sub>d</sub>(1&minus;t) + ((V&minus;D)/V)K<sub>e</sub>}. Substituting the second into the first, the V inside the weights cancels and you get one linear equation in V:</p>
+          <div class="formula" style="font-family:var(--mono); margin:8px 0; font-size:.9rem;">V = <span class="frac"><span class="num">FCF + D&middot;[K<sub>e</sub> &minus; K<sub>d</sub>(1&minus;t)]</span><span class="den">K<sub>e</sub> &minus; g</span></span> &nbsp;&rarr; solve for V, then back out WACC = FCF/V + g</div>
+          <p>Either method delivers both the enterprise value and the implied WACC without ever needing the answer in advance. The first imposes a policy; the second lets the numbers settle themselves. In an exam, present the target-D/E procedure as the main approach and mention the simultaneous solution as the exact alternative.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">PYQ 2 (option B) &middot; equity + preference via APV</span>
+      <p class="q">Assume a company has only equity and preference capital in its structure. How can one value this company using the APV method?</p>
+      <details class="answer">
+        <summary>Reveal the solution approach</summary>
+        <div class="ans-body">
+          <p>This is worked in full in <a href="#m10">Module 10.2</a>. The key move: preference carries <strong>no tax shield</strong>, so APV's financing-benefit term is zero and V<sub>L</sub> = V<sub>U</sub>.</p>
+          <ol class="steps">
+            <li>Compute FCF = EBIT(1&minus;t) &minus; Net Investment (unchanged &mdash; FCF is pre-financing and ignores preference entirely).</li>
+            <li>Find &rho; as the market-value blend of the equity and preference costs, with <em>no</em> tax term: &rho; = (K<sub>e</sub>&middot;E + K<sub>p</sub>&middot;P)/V.</li>
+            <li>V<sub>U</sub> = FCF/(&rho; &minus; g). Since preference gives no shield, the financing benefit = 0, so <strong>V<sub>L</sub> = V<sub>U</sub></strong> &mdash; preference does not change enterprise value, it only reslices claims.</li>
+            <li>Value of common equity = V<sub>U</sub> &minus; Value of preference, where preference = Preferred dividend/(K<sub>p</sub> &minus; g).</li>
+          </ol>
+          <p><strong>Numeric anchor (no debt, zero growth):</strong> EBIT 250, t 30%, Pref 500 @ 15% (div 75), K<sub>e</sub> 20%. FCFE = 175 &minus; 75 = 100 &rarr; common equity 100/0.20 = 500; preference 75/0.15 = 500; EV = 1,000. APV: &rho; = (0.20&times;500 + 0.15&times;500)/1000 = 17.5%, V<sub>U</sub> = 175/0.175 = 1,000 = V<sub>L</sub>; common equity = 1,000 &minus; 500 = 500. Consistent.</p>
+        </div>
+      </details>
+    </div>
+
+    <h3>11.2 Fresh practice &mdash; attempt, then check</h3>
+    <p class="fnote">New numbers, same machinery. Do them cold to prove the method has actually stuck.</p>
+
+    <div class="pyq-item">
+      <span class="src">Practice A &middot; the three roads (zero growth)</span>
+      <p class="q">A firm has EBIT = &#8377;400 m, debt = &#8377;1,000 m at K<sub>d</sub> = 9%, K<sub>e</sub> = 18%, tax = 25%, zero growth, capex = depreciation, &Delta;WC = 0. Find the enterprise value by all three roads.</p>
+      <details class="answer">
+        <summary>Reveal solution</summary>
+        <div class="ans-body">
+          <p>Interest = 90. <strong>Road 1:</strong> PAT = (400&minus;90)(0.75) = 232.5 = FCFE; E = 232.5/0.18 = 1,291.7; EV = 1,291.7 + 1,000 = <strong>2,291.7</strong>. <strong>Road 2:</strong> FCF = 400&times;0.75 = 300; WACC = (1291.7/2291.7)(0.18) + (1000/2291.7)(0.09)(0.75) = 0.10146 + 0.02945 = 13.09%; EV = 300/0.1309 = <strong>2,291.7</strong>. <strong>Road 3:</strong> CCF = 300 + 90&times;0.25 = 322.5; pre-tax rate &rho; = (1291.7/2291.7)(0.18) + (1000/2291.7)(0.09) = 0.10146 + 0.03927 = 14.073%; EV = 322.5/0.14073 = <strong>2,291.7</strong>. All three agree. &#10003;</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Practice B &middot; APV with growth</span>
+      <p class="q">Value a firm by APV: EBIT = &#8377;200 m (Year 1), grows 3% forever, net investment = &#8377;20 m, debt = &#8377;600 m at K<sub>d</sub> = 7%, K<sub>e</sub> = 14%, tax = 25%. Assume constant D/E.</p>
+      <details class="answer">
+        <summary>Reveal solution</summary>
+        <div class="ans-body">
+          <p>Interest = 42. PAT = (200&minus;42)(0.75) = 118.5. Net borrowing = 600&times;3% = 18. FCFE = 118.5 &minus; 20 + 18 = 116.5. E = 116.5/(0.14&minus;0.03) = 1,059.1. EV = 1,059.1 + 600 = <strong>1,659.1</strong>. Decompose: &rho; = (0.14&times;1059.1 + 0.07&times;600)/1659.1 = (148.27+42)/1659.1 = 11.47%. FCF = 200&times;0.75 &minus; 20 = 130. V<sub>U</sub> = 130/(0.1147&minus;0.03) = 1,534.8. VTS = (42&times;0.25)/(0.1147&minus;0.03) = 10.5/0.0847 = 124.0. V<sub>L</sub> = 1,534.8 + 124.0 = <strong>1,658.8</strong> (&#8776; 1,659, rounding). &#10003;</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Practice C &middot; conceptual</span>
+      <p class="q">You value a firm's FCF at its after-tax WACC and get &#8377;900 m. A colleague values the same firm's CCF at the same after-tax WACC and gets &#8377;930 m. Who is right, and what did the other do wrong?</p>
+      <details class="answer">
+        <summary>Reveal solution</summary>
+        <div class="ans-body">
+          <p>You are right (&#8377;900 m). CCF already contains the interest tax shield <em>inside the cash flow</em>; the after-tax WACC also contains the shield <em>inside the rate</em> (via the (1&minus;t) on debt). Your colleague counted the shield <strong>twice</strong>, inflating the value. CCF must be discounted at the <em>pre-tax</em> cost of capital; only FCF pairs with the after-tax WACC. This is the single most common DCF error.</p>
+        </div>
+      </details>
+    </div>
+
+    <h3>11.3 Mock test &mdash; 15 questions across the whole volume</h3>
+    <div class="quiz-section">
+      <h4>Final Mock Test</h4>
+      <div id="quiz-mock"></div>
+    </div>
+
+    <div class="final-score-banner">
+      <div style="font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:#9AA6AE;">Volume II complete</div>
+      <div style="font-size:1.4rem; color:var(--gold-bright); margin-top:6px;">You can now build an intrinsic valuation and defend every input.</div>
+      <div style="font-size:.85rem; margin-top:8px; color:#B7AF98;">Cash over profit &middot; three roads that must converge &middot; WACC from scratch &middot; the circularity untied &middot; APV under a stated financing policy.</div>
+    </div>
+
+    <div class="nav-buttons"><a href="#m10">&larr; Preference &amp; tax nuance</a><a href="#m12">From the textbook: deeper cuts &rarr;</a></div>
+  </section>
+
+
+  <section class="module" id="m12">
+    <span class="tab"><span class="num">A</span> From the text</span>
+    <h2 class="mod-title">Enterprise value, done properly</h2>
+    <p class="mod-tagline">The three roads gave you "debt + equity." The textbook is fussier: enterprise value is what it would actually <em>cost you to buy the operating business</em> &mdash; which means stripping out anything you could sell the next morning without touching the business at all.</p>
+
+    <h3>A.1 What you actually pay: the flat, again</h3>
+    <p>Return to a flat, because the professor's own analogy is the cleanest way in. Suppose a flat costs <strong>&#8377;50 lakh</strong>. You put in &#8377;10 lakh of your own savings (equity) and borrow &#8377;40 lakh from the bank (debt). You now own an asset worth &#8377;50 lakh, financed 40 debt + 10 equity. So far the whole &#8377;50 lakh looks like the "value" of the flat.</p>
+    <p>But the flat comes with <strong>furniture worth &#8377;8 lakh</strong> that you could sell in the open market tomorrow, without affecting the flat one bit. So what did it <em>really</em> cost you to own the flat? &#8377;50 lakh out, &#8377;8 lakh recoverable &rarr; an effective cost of <strong>&#8377;42 lakh</strong>. That &#8377;42 lakh &mdash; not the &#8377;50 lakh &mdash; is the analogue of a company's enterprise value.</p>
+    <div class="formula-box">
+      <div class="fname">Enterprise value, the careful definition</div>
+      <div class="formula">EV = Mkt value of Debt + Mkt value of Equity &minus; Cash &minus; Marketable securities &amp; other non-operating investments</div>
+    </div>
+    <p>Equivalently: EV = (what it costs to buy every claim on the firm) &minus; (everything inside the firm you could immediately dispose of without harming operations). The three roads in <a href="#m4">Module 4</a> quietly assumed there were no such disposable assets &mdash; so their "D + E" already <em>was</em> the enterprise value. This module is what changes when that assumption fails.</p>
+
+    <h3>A.2 Tata Steel, March 2012 &mdash; the full subtraction</h3>
+    <p>The professor works this with real numbers. In March 2012 Tata Steel's market capitalisation was about &#8377;36,000 crore and it carried about &#8377;24,000 crore of debt. Buy every share and repay every rupee of debt and it would cost roughly:</p>
+    <table class="ledger">
+      <tr><td>Market capitalisation (equity)</td><td>36,000</td></tr>
+      <tr><td>+ Debt</td><td>24,000</td></tr>
+      <tr class="sum"><td>Cost to acquire every claim</td><td>60,000</td></tr>
+      <tr><td>&minus; Cash</td><td class="op">(31)</td></tr>
+      <tr><td>&minus; Fixed deposits</td><td class="op">(3,900)</td></tr>
+      <tr><td>&minus; Non-trade (non-operating) investments</td><td class="op">(2,000)</td></tr>
+      <tr class="grand"><td>Enterprise value of the operating business</td><td>&#8776; 54,069</td></tr>
+    </table>
+    <p>The subtle line is the investments. Tata Steel held about &#8377;50,000 crore of investments &mdash; but roughly <strong>&#8377;48,000 crore of those were <em>trade</em> investments</strong>: strategic stakes in group and operating companies, not idle assets you can dump in the market. Only the remaining &#8377;2,000 crore of non-trade investments are freely disposable, so only they come out. Sell the &#8377;48,000 crore of strategic holdings and you are no longer buying the same business.</p>
+    <div class="callout worked">
+      <span class="callout-tag">The one judgement call: is the cash really disposable?</span>
+      <p>The &#8377;54,069 crore figure assumes the firm can run even if its cash falls to zero. That is rarely quite true &mdash; a business needs some working cash to operate. If you decide Tata Steel genuinely <em>needs</em> its &#8377;31 crore of cash to run, that cash is an operating asset, not a disposable one, and you would not subtract it (the EV shifts by exactly that cash amount). In practice most analysts treat the entire cash balance as non-operating and subtract it &mdash; but the honest answer is that <em>the treatment of cash is an assumption you must state</em>, exactly like the financing assumptions in <a href="#m9">Module 9</a>. There is no assumption-free enterprise value.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>Enterprise value is the price of the <em>operating engine</em>, not the whole balance sheet. Add up every claim (debt + equity), then hand yourself back anything you could liquidate on day one &mdash; cash, marketable securities, non-operating investments. What remains is what the business is actually worth.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Appendix A</h4>
+      <div id="quiz-m12"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m11">&larr; PYQ bank &amp; mock</a><a href="#m13">One method to rule them all &rarr;</a></div>
+  </section>
+
+  <section class="module" id="m13">
+    <span class="tab"><span class="num">B</span> From the text</span>
+    <h2 class="mod-title">One method to rule them all</h2>
+    <p class="mod-tagline">FCF and CCF are not rival methods. The textbook shows they are two settings of a single dial &mdash; and that you may set the dial <em>anywhere</em> and still get the same value, provided you count the tax shield exactly once.</p>
+
+    <h3>B.1 The identity underneath everything</h3>
+    <p>Start from an accounting fact that is true for any firm, no valuation involved. Net operating profit after tax can be sliced two ways:</p>
+    <div class="formula-box">
+      <div class="fname">The unifying identity</div>
+      <div class="formula">EBIT(1&minus;t) = (PBT + I)(1&minus;t) = PAT + I(1&minus;t)</div>
+    </div>
+    <p>Read left to right: since PBT = EBIT &minus; I, the term (PBT + I)(1&minus;t) is just EBIT(1&minus;t); and expanding PAT = PBT(1&minus;t) gives PAT + I(1&minus;t). Nothing has been assumed &mdash; it is algebra. But it is the hinge on which every method turns, because it says the firm's operating cash (left side) equals the shareholders' cash plus the after-tax cost of the debt (right side).</p>
+
+    <h3>B.2 The generalised formula &mdash; a "fictitious tax rate" you may choose freely</h3>
+    <p>Here is the professor's payoff. Any zero-growth firm can be valued by</p>
+    <div class="formula-box">
+      <div class="fname">The generalised valuation formula</div>
+      <div class="formula">V = <span class="frac"><span class="num">PAT + I(1 &minus; t&#7522;)</span><span class="den">K<sub>e</sub>&middot;(E/V) + K<sub>d</sub>(1 &minus; t&#7522;)&middot;(D/V)</span></span></div>
+    </div>
+    <p>where <code class="inline">t&#7522;</code> is a <em class="term">fictitious tax rate</em> &mdash; a dial you may set to <em>any</em> value you like. (PAT itself is always computed at the firm's <em>real</em> tax rate; the dial only appears on the interest term, top and bottom.) The remarkable claim: <strong>the value V does not depend on t&#7522; at all.</strong> Turn the dial to 0, to 30%, to 50% &mdash; the same enterprise value falls out every time, because the t&#7522; in the numerator and the t&#7522; in the denominator cancel in the algebra. The tax shield is being accounted for once; t&#7522; merely chooses <em>where</em> you park it.</p>
+
+    <h3>B.3 The two famous settings are just two clicks of the dial</h3>
+    <p>Two values of t&#7522; have names you already know:</p>
+    <table class="ledger">
+      <tr class="sum"><td>Set the fictitious tax rate to&hellip;</td><td>&hellip;and the generalised formula becomes</td></tr>
+      <tr><td>t&#7522; = the statutory rate t</td><td>the <strong>FCF approach</strong> (numerator = EBIT(1&minus;t) = FCF; rate = after-tax WACC)</td></tr>
+      <tr><td>t&#7522; = 0</td><td>the <strong>CCF approach</strong> (numerator = PAT + I = CCF; rate = pre-tax &rho;)</td></tr>
+    </table>
+    <p>That is the whole secret of <a href="#m3">Module 3</a> and <a href="#m4">Module 4</a> in one line: FCF puts the tax shield <em>in the rate</em> (the (1&minus;t) on debt), CCF puts it <em>in the cash flow</em> (the +I&middot;t), and both are the same firm seen from two settings of one dial. The <a href="#m4">three roads</a> converge for the same reason the dial is free to turn.</p>
+
+    <h3>B.4 Watch the dial spin on OLP &mdash; and never move the answer</h3>
+    <p>Take the OLP base case you know cold (EBIT 250, D 500 @ K<sub>d</sub> 10% &rarr; I = 50, K<sub>e</sub> 20%, t 30%; PAT = 140, E = 700, V = 1,200). Turn the dial to three different fictitious tax rates:</p>
+    <table class="ledger">
+      <tr class="sum"><td>Fictitious t&#7522;</td><td>Numerator&nbsp;&divide;&nbsp;rate</td><td>V</td></tr>
+      <tr><td>0 &nbsp;<span class="fnote" style="display:inline;">(&rarr; CCF)</span></td><td>190 &divide; 0.15833</td><td>1,200</td></tr>
+      <tr><td>30% <span class="fnote" style="display:inline;">(&rarr; FCF)</span></td><td>175 &divide; 0.14583</td><td>1,200</td></tr>
+      <tr><td>50% <span class="fnote" style="display:inline;">(arbitrary)</span></td><td>165 &divide; 0.13750</td><td>1,200</td></tr>
+    </table>
+    <p>Look at what the two named rows are: the t&#7522; = 0 row uses rate <strong>0.15833</strong> &mdash; that is exactly the pre-tax &rho; the CCF road produced. The t&#7522; = 30% row uses rate <strong>0.14583</strong> &mdash; exactly the after-tax WACC the FCF road produced. <strong>The WACC and the &rho; you computed back in Modules 4&ndash;5 are not two different things; they are two points on this one continuum.</strong> The arbitrary 50% row proves the point: 165 &divide; 0.1375 = 1,200 as well. The firm is worth &#8377;1,200 m no matter where you set the dial &mdash; the only sin is counting the shield <em>twice</em> (or zero times) by mismatching numerator and rate.</p>
+    <div class="callout slide">
+      <span class="callout-tag">The book runs the same trick on its own OLP</span>
+      <p>In the text, Prof. Mohanty values his version of OLP (EBIT 100, D 100, t 20%) with a deliberately absurd fictitious rate of <strong>50%</strong>: numerator PAT + I(1&minus;0.5) = 72 + 5 = &#8377;77 m; rate = 0.2(360/460) + 0.1(0.5)(100/460) = 0.1674; value = 77 &divide; 0.1674 = <strong>&#8377;460 m</strong> &mdash; identical to the &#8377;460 m the FCF and CCF approaches give. The fictitious rate has no theoretical meaning; it is a lever that exposes <em>why</em> the methods must agree.</p>
+    </div>
+
+    <div class="callout worked">
+      <span class="callout-tag">Bonus technique &mdash; untangling circularity with Goal Seek</span>
+      <p><a href="#m8">Module 8</a> broke the circularity with algebra; the book also shows the brute-force spreadsheet route, worth knowing for the exam. Take OLP with FCF = 80 and debt = 100. <em>Guess</em> an equity value &mdash; say &#8377;1,000 m. Then WACC = 0.2(1000/1100) + 0.1(0.8)(100/1100) = <strong>18.91%</strong>, implied EV = 80 &divide; 0.1891 = &#8377;423.08 m, implied equity = 423.08 &minus; 100 = &#8377;323.08 m &mdash; a gap of &minus;&#8377;676.92 m against your &#8377;1,000 m guess. Ask Excel's <em>Goal Seek</em> to drive that gap to zero by changing the equity cell, and it settles on <strong>&#8377;360 m</strong> (check: WACC 17.39%, EV &#8377;460 m, equity &#8377;360 m &mdash; self-consistent). Same destination as the closed form; a good sanity tool when the algebra gets messy.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Appendix B</h4>
+      <div id="quiz-m13"></div>
+    </div>
+    <div class="nav-buttons"><a href="#m12">&larr; Enterprise value, done properly</a><a href="#m14">When leverage won't sit still &rarr;</a></div>
+  </section>
+
+  <section class="module" id="m14">
+    <span class="tab"><span class="num">C</span> From the text</span>
+    <h2 class="mod-title">When leverage won't sit still</h2>
+    <p class="mod-tagline">Module 9 gave you two financing policies. The textbook gives three, a master table of every formula each one implies, and a proper worked valuation where the debt is paid down year by year &mdash; the LBO case where a constant WACC is simply illegal.</p>
+
+    <h3>C.1 Three financing policies, not two</h3>
+    <p>Everything hinges on one question: <em>how does the firm's debt behave in the future?</em> Your answer fixes how safe the tax shields are, and therefore the rate you discount them at. There are three canonical answers:</p>
+    <ol class="steps">
+      <li><strong>Case 1 &mdash; the rupee value of debt is held constant.</strong> Classic Modigliani&ndash;Miller. Debt is a fixed number of rupees forever, so the shield is as safe as the debt &rarr; discount it at K<sub>d</sub>.</li>
+      <li><strong>Case 2 &mdash; the D/E ratio is held constant, rebalanced continuously.</strong> Debt grows with the firm, so the shield is as risky as the firm &rarr; discount it at &rho;. This is the working assumption behind the FCF/WACC approach.</li>
+      <li><strong>Case 3 &mdash; the D/E ratio is held constant, but rebalanced only once a year.</strong> A hybrid (Miles&ndash;Ezzell): the <em>first</em> year's shield is already known (this year's debt is known), so discount it at K<sub>d</sub>; every later shield is risky, so discount at &rho;.</li>
+    </ol>
+
+    <h3>C.2 The master table (Taggart 1991; Cooper&ndash;Nyborg 2006)</h3>
+    <p>This single grid is worth committing to memory &mdash; it is the professor's reference table, and it tells you every formula that changes when you change the financing story. (&rho; = unlevered cost of equity; &beta;<sub>U</sub> = unlevered beta; g = growth rate.)</p>
+    <table class="ledger compact">
+      <tr class="sum"><td></td><td>Case 1 &mdash; rupee debt constant</td><td>Case 2 &mdash; D/E constant (continuous)</td><td>Case 3 &mdash; D/E constant (annual)</td></tr>
+      <tr><td>Tax shield discounted at</td><td>K<sub>d</sub></td><td>&rho;</td><td>K<sub>d</sub> in Yr 1, then &rho;</td></tr>
+      <tr><td>Value of tax shield</td><td>D&middot;t</td><td><span class="frac"><span class="num">D&middot;K<sub>d</sub>&middot;t</span><span class="den">&rho; &minus; g</span></span></td><td><span class="frac"><span class="num">D&middot;K<sub>d</sub>&middot;t</span><span class="den">&rho; &minus; g</span></span> &times; <span class="frac"><span class="num">1 + &rho;</span><span class="den">1 + K<sub>d</sub></span></span></td></tr>
+      <tr><td>Cost of equity K<sub>e</sub></td><td>&rho; + (&rho;&minus;K<sub>d</sub>)(1&minus;t)(D/E)</td><td>&rho; + (&rho;&minus;K<sub>d</sub>)(D/E)</td><td>&rho; + [&rho; &minus; K<sub>d</sub>(1 + t&middot;<span class="frac"><span class="num">&rho;&minus;K<sub>d</sub></span><span class="den">1+K<sub>d</sub></span></span>)](D/E)</td></tr>
+      <tr><td>Levered beta (debt &beta; = 0)</td><td>&beta;<sub>U</sub>[1 + (1&minus;t)(D/E)]</td><td>&beta;<sub>U</sub>(1 + D/E)</td><td>&beta;<sub>U</sub>(1 + D/E)&middot;<span class="frac"><span class="num">1 + K<sub>d</sub>(1&minus;t&middot;D/V)</span><span class="den">1 + K<sub>d</sub></span></span></td></tr>
+      <tr><td>Cost of capital (WACC)</td><td>&rho;(1 &minus; t&middot;D/V)</td><td>&rho; &minus; K<sub>d</sub>&middot;t&middot;(D/V)</td><td>&rho; &minus; K<sub>d</sub>&middot;t&middot;(D/V)&middot;<span class="frac"><span class="num">1+&rho;</span><span class="den">1+K<sub>d</sub></span></span></td></tr>
+    </table>
+    <p>Notice how <a href="#m9">Module 9</a>'s two-way fork sits inside this: the "debt constant" column is Case 1 (VTS = D&middot;t; for OLP, 500&times;0.30 = 150), and the "rebalancing" column is Case 2 (VTS = D&middot;K<sub>d</sub>&middot;t/(&rho;&minus;g); WACC = &rho; &minus; (D/V)K<sub>d</sub>t = 14.583% for OLP). Case 3 is the realistic middle &mdash; the same formulas nudged by the factor (1+&rho;)/(1+K<sub>d</sub>).</p>
+
+    <h3>C.3 MJ Limited &mdash; APV when the debt is being paid off</h3>
+    <p>Now the case that makes APV indispensable, worked in full. MJ Limited owes &#8377;100 m today and, by agreement with its bank, <strong>repays &#8377;20 m every year until the debt is gone at the end of Year 5</strong>; thereafter it is an all-equity firm. Because the rupee debt is a known, declining schedule, discount each tax shield at K<sub>d</sub> (Case 1 logic). Inputs: K<sub>d</sub> = 10%, t = 20%, &rho; = 15%, terminal growth 5%.</p>
+    <table class="ledger compact">
+      <tr class="sum"><td>Year</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+      <tr><td>Debt (start of year)</td><td>100</td><td>80</td><td>60</td><td>40</td><td>20</td></tr>
+      <tr><td>Interest = 10% &times; debt</td><td>10</td><td>8</td><td>6</td><td>4</td><td>2</td></tr>
+      <tr><td>Interest tax shield = I &times; 20%</td><td>2.0</td><td>1.6</td><td>1.2</td><td>0.8</td><td>0.4</td></tr>
+      <tr><td>EBIT</td><td>100</td><td>105</td><td>110</td><td>115</td><td>120</td></tr>
+      <tr><td>&minus; Net investment</td><td class="op">(10)</td><td class="op">(12)</td><td class="op">(14)</td><td class="op">(16)</td><td class="op">(18)</td></tr>
+      <tr><td>FCF = EBIT(1&minus;t) &minus; Net inv</td><td>70</td><td>72</td><td>74</td><td>76</td><td>78</td></tr>
+    </table>
+    <p>Now assemble the value in the APV shape &mdash; unlevered business first, financing benefit second:</p>
+    <table class="ledger">
+      <tr><td>PV of the five tax shields, discounted at K<sub>d</sub> = 10%</td><td>4.84</td></tr>
+      <tr><td>Terminal unlevered value at Yr 5 = 78(1.05)/(0.15&minus;0.05) = 81.9/0.10</td><td>819</td></tr>
+      <tr><td>Unlevered value V<sub>U</sub> = PV of FCF (Yr 1&ndash;5) + PV of terminal, all at &rho; = 15%</td><td>653.39</td></tr>
+      <tr><td>+ Value of tax shields (VTS)</td><td>4.84</td></tr>
+      <tr class="grand"><td>Levered value V<sub>L</sub> = V<sub>U</sub> + VTS (APV)</td><td>658.23</td></tr>
+      <tr><td>&minus; Debt today</td><td class="op">(100)</td></tr>
+      <tr class="sum"><td>Value of equity</td><td>558.23</td></tr>
+    </table>
+    <p>The book then re-values the same firm two more ways &mdash; discounting FCF at a <em>year-specific</em> WACC and FCFE at a year-specific K<sub>e</sub> &mdash; and lands on the same &#8377;658.23 m / &#8377;558.23 m. The tell-tale sign of the changing leverage: those year-by-year rates <em>drift</em>. WACC climbs 14.66% &rarr; 15.00% and K<sub>e</sub> falls 15.85% &rarr; 15.00% as the debt is retired, both converging on &rho; = 15% once the firm is debt-free. <strong>No single constant WACC could ever reproduce this</strong> &mdash; which is exactly why you reach for APV.</p>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>Whenever the debt <em>schedule</em> is the point &mdash; an LBO grinding its loan down, an acquisition financed with debt on a fixed repayment plan (Tata&ndash;Tetley), a bank redemption agreement &mdash; the constant-ratio assumption behind WACC is false, and APV is the honest tool: value the business unlevered, then add the present value of each year's specific financing benefit.</p>
+    </div>
+
+    <h3>C.4 Practice from the source text</h3>
+    <p class="fnote">Prof. Mohanty's own end-of-chapter questions, reworded. Attempt each before revealing the line of attack.</p>
+
+    <div class="pyq-item">
+      <span class="src">Textbook Q &middot; preference, two roads</span>
+      <p class="q">OLP has issued 12% preference shares worth &#8377;100 m and has zero growth. Value the company by both the CCF and the FCF approaches, and show the two give the same answer.</p>
+      <details class="answer">
+        <summary>Reveal the line of attack</summary>
+        <div class="ans-body">
+          <p>Preferred dividend = 12% &times; 100 = &#8377;12 m, and it carries <strong>no tax shield</strong> (paid from after-tax profit). So preference never touches FCF (which is pre-financing) &mdash; it only reduces the cash reaching <em>common</em> shareholders. FCFE = PAT &minus; preferred dividend. Build &rho; as the no-tax market blend of K<sub>e</sub>, K<sub>d</sub> and K<sub>p</sub>; the CCF numerator adds back interest (with its shield) but <em>not</em> the preferred dividend. Both roads land on the same enterprise value because, as Appendix B showed, the shield is counted once either way. See <a href="#m10">Module 10</a> for the preference mechanics in full.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Textbook Q &middot; growth without new debt</span>
+      <p class="q">OLP grows at 5% but does <em>not</em> intend to raise any fresh debt. Its levered beta is 1. Value it by APV &mdash; and explain the difficulty the "no new borrowing" assumption creates.</p>
+      <details class="answer">
+        <summary>Reveal the line of attack</summary>
+        <div class="ans-body">
+          <p>Here is the trap. If equity grows at 5% every year but the rupee debt is frozen, the <strong>D/E ratio falls year after year</strong>. Falling leverage means K<sub>e</sub> and the cost of capital are <em>not constant</em> &mdash; so the tidy constant-rate Gordon formulas (which assume constant D/E) do not strictly apply. This is precisely Case 1 territory (rupee debt constant), and it is why APV shines: value the growing unlevered firm at &rho;, then add the PV of the shield on the <em>fixed</em> debt schedule separately. You cannot use a single WACC, because there isn't one.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Textbook Q &middot; conceptual</span>
+      <p class="q">Why is a levered firm's unlevered cost of capital &rho; different from its cost of equity K<sub>e</sub>?</p>
+      <details class="answer">
+        <summary>Reveal the line of attack</summary>
+        <div class="ans-body">
+          <p>K<sub>e</sub> is the return equity holders demand once debt sits ahead of them &mdash; it carries <em>business risk plus financing risk</em>. &rho; is the return the same business would carry with <em>no</em> debt &mdash; business risk only. Leverage magnifies equity's risk, so K<sub>e</sub> &gt; &rho; whenever there is debt, linked by K<sub>e</sub> = &rho; + (&rho; &minus; K<sub>d</sub>)(D/E). Strip the debt and the two collapse into one. (This is the MM Proposition II relationship you met in Volume I, now doing real work.)</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Textbook Q &middot; the cash debate</span>
+      <p class="q">Some analysts define enterprise value as D + E &plusmn; cash. When does subtracting the closing cash make sense, and when would you not?</p>
+      <details class="answer">
+        <summary>Reveal the line of attack</summary>
+        <div class="ans-body">
+          <p><strong>Subtract</strong> cash when it is genuinely <em>non-operating</em> &mdash; idle balances you could pay out tomorrow without harming the business (the usual analyst default, as in the Tata Steel calc in Appendix A). <strong>Do not subtract</strong> the portion the business truly needs to operate &mdash; the minimum working cash is an operating asset, part of the engine you are buying, not a disposable one. The honest version subtracts only <em>surplus</em> cash. As always, state the assumption; there is no single correct treatment.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="pyq-item">
+      <span class="src">Textbook Q &middot; project appraisal</span>
+      <p class="q">In project appraisal we assume the entire NPV is distributed to shareholders immediately. Why is that assumption harmless?</p>
+      <details class="answer">
+        <summary>Reveal the line of attack</summary>
+        <div class="ans-body">
+          <p>Value is created the moment a positive-NPV project is accepted, not when the cash is handed out. Whether the firm pays that value out now or reinvests it, the present value to shareholders is unchanged &mdash; because any reinvestment at the required rate of return is itself zero-NPV. So "distribute it all immediately" is a harmless bookkeeping convenience: it changes the <em>timing</em> of cash to shareholders, never its present value. (Stretch version: prove, for a firm growing at constant g, that unlevered cash flow must be discounted at WACC &mdash; not &rho; &mdash; to recover enterprise value, using V<sub>L</sub> = V<sub>U</sub> + VTS.)</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Appendix C</h4>
+      <div id="quiz-m14"></div>
+    </div>
+
+    <div class="final-score-banner">
+      <div style="font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:#9AA6AE;">Straight from Prof. Mohanty's text</div>
+      <div style="font-size:1.4rem; color:var(--gold-bright); margin-top:6px;">Enterprise value done right &middot; one dial, every method &middot; APV when leverage moves.</div>
+      <div style="font-size:.85rem; margin-top:8px; color:#B7AF98;">The deeper cuts reward a second pass &mdash; they are where the exam's harder marks hide.</div>
+    </div>
+
+    <div class="nav-buttons"><a href="#m13">&larr; One method to rule them all</a><a href="#m15">Getting the cost of capital right &rarr;</a></div>
+  </section>
+
+
+  <section class="module" id="m15">
+    <span class="tab"><span class="num">D</span> From the text</span>
+    <h2 class="mod-title">Getting the cost of capital right</h2>
+    <p class="mod-tagline">The cash flows get all the attention, but the discount rate is where most valuations quietly go wrong. Prof. Mohanty's four technical points, one governing discipline, and the two cases the earlier modules never combined.</p>
+
+    <h3>D.1 Four technical points about the cost of capital</h3>
+    <p>The professor flags four mistakes as the ones that silently wreck a WACC. He notes all four are in the book &mdash; learn them as a checklist.</p>
+    <ol class="steps">
+      <li><strong>The pre-tax cost of debt is the YTM, not the coupon rate.</strong> The coupon is fixed at issue and lives on the book; the <em>yield to maturity</em> is what the market demands for that debt <em>today</em>. They coincide only when the bond trades at par &mdash; which is exactly the condition under which market value of debt equals book value. Whenever a bond trades above or below par, use its market yield, not its coupon.</li>
+      <li><strong>The cost of equity is dividend yield <em>plus</em> capital gains, not the dividend yield alone.</strong> K<sub>e</sub> is the shareholder's <em>total</em> expected return. A low-dividend, high-growth stock does not have a "cheap" cost of equity &mdash; most of its return is expected as price appreciation, and that counts.</li>
+      <li><strong>The weights must be market-value, not book-value.</strong> Titan's book value per share was around &#8377;230 while it traded near &#8377;4,629; shareholders expect their ~12% return on the &#8377;4,629 they could actually sell at, not on the book figure. Even a promoter should care about market value, because market value is the price at which the shares actually change hands.</li>
+      <li><strong>The discount rate must match the riskiness of the cash flow.</strong> This is the big one, and it gets its own section below.</li>
+    </ol>
+
+    <h3>D.2 Match the discount rate to the cash flow</h3>
+    <p>A discount rate is not a property of <em>who is doing the discounting</em> &mdash; it is a property of <em>the cash flow being discounted</em>. Three ways this bites:</p>
+    <div class="vs">
+      <div class="l">
+        <div class="vhead">Match the risk (acquirer vs target)</div>
+        <ul>
+          <li>An acquirer with a 12% WACC is buying a riskier target whose cash flows warrant 15%.</li>
+          <li>Discount the <strong>target's</strong> cash flows at <strong>15%</strong> &mdash; the rate that matches <em>their</em> risk &mdash; not at the acquirer's 12%.</li>
+          <li>Discounting riskier cash flows at a lower rate <em>overstates</em> value. "Riskier cash flows at lower rates" is the classic error.</li>
+          <li>A project that returns exactly your cost of capital is zero-NPV &mdash; the share price does not move.</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="vhead">Match the currency &amp; the inflation basis</div>
+        <ul>
+          <li><strong>Currency:</strong> rupee cash flows &rarr; a rupee cost of capital; dollar cash flows &rarr; a dollar cost of capital. To value Emirates' USD cash flows you need a <em>USD</em> cost of capital &mdash; convert, don't mix.</li>
+          <li><strong>Inflation:</strong> nominal cash flows &rarr; nominal rate; real &rarr; real.</li>
+          <li>If you forecast revenue growth, &Delta;Revenue must carry both &Delta;Price (inflation) and &Delta;Quantity &mdash; a nominal forecast paired with a nominal rate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>D.3 Where the cost of equity actually comes from</h3>
+    <p>K<sub>e</sub> is not a single opaque number &mdash; it is three risks stacked on top of one another. For OLP (r<sub>f</sub> = 5%, MRP = 10%, &beta;<sub>U</sub> = 1.167, D/E = 5/7, t = 30%):</p>
+    <table class="ledger">
+      <tr><td>Market risk (time value) &mdash; r<sub>f</sub></td><td>5.00%</td></tr>
+      <tr><td>+ Business risk &mdash; &beta;<sub>U</sub> &times; MRP = 1.167 &times; 10%</td><td>11.67%</td></tr>
+      <tr class="sum"><td>= &rho;, the unlevered cost of equity (business, unlevered)</td><td>16.67%</td></tr>
+      <tr><td>+ Financing risk &mdash; (&rho; &minus; K<sub>d</sub>)(D/E)(1&minus;t)</td><td>3.33%</td></tr>
+      <tr class="grand"><td>= K<sub>e</sub>, the levered cost of equity</td><td>20.00%</td></tr>
+    </table>
+    <p>The first two rows are &rho; &mdash; the return the <em>business</em> carries, debt or no debt. The last row is the premium leverage bolts on. Strip the debt and the 3.33% vanishes, collapsing K<sub>e</sub> back to &rho;. This is the same &rho; = 16.67% and the same K<sub>e</sub> = 20% from <a href="#m9">Module 9</a>, now shown as a stack &mdash; a clean way to <em>see</em> why K<sub>e</sub> &gt; &rho; whenever there is debt.</p>
+
+    <h3>D.4 The case the earlier modules never combined: growth <em>and</em> preference <em>and</em> debt</h3>
+    <p>Module 6 grew a firm with debt; Module 10 added preference at zero growth. Put all three together &mdash; growth, debt, <em>and</em> preference &mdash; and one principle governs everything:</p>
+    <div class="callout slide">
+      <span class="callout-tag">The governing principle</span>
+      <p>Whatever sits inside your cost of capital, <strong>its ratio must stay constant</strong> for a single discount rate to be legitimate. With debt, equity <em>and</em> preference in the mix, keeping WACC constant means holding <strong>D : E : P all constant</strong> &mdash; which forces you to raise fresh debt <em>and</em> fresh preference each year (and distribute them), exactly as Module 6 raised fresh debt to hold D/E.</p>
+    </div>
+    <p>OLP grows 5%, with debt &#8377;500 m (K<sub>d</sub> 10%), preference &#8377;500 m (K<sub>p</sub> 15%), K<sub>e</sub> 20%, t 30%, net investment &#8377;30 m. To hold every ratio constant you raise 5% &times; 500 = &#8377;25 m of new debt and &#8377;25 m of new preference, and pass them to common holders:</p>
+    <table class="ledger">
+      <tr><td>PAT = (250 &minus; 50)(1&minus;0.30)</td><td>140</td></tr>
+      <tr><td>&minus; Net investment</td><td class="op">(30)</td></tr>
+      <tr><td>&minus; Preference dividend (500 &times; 15%)</td><td class="op">(75)</td></tr>
+      <tr><td>+ New debt raised (500 &times; 5%)</td><td>25</td></tr>
+      <tr><td>+ New preference raised (500 &times; 5%)</td><td>25</td></tr>
+      <tr class="sum"><td>FCFE to common</td><td>85</td></tr>
+      <tr><td>Common equity = 85 / (20% &minus; 5%)</td><td>566.67</td></tr>
+      <tr><td>+ Debt + Preference (500 + 500)</td><td>1,000</td></tr>
+      <tr class="grand"><td>Enterprise value</td><td>1,566.67</td></tr>
+    </table>
+    <p><strong>Cross-check the WACC way.</strong> FCF = 250(1&minus;0.30) &minus; 30 = 145; WACC = <sup>566.67</sup>&frasl;<sub>1566.67</sub>(20%) + <sup>500</sup>&frasl;<sub>1566.67</sub>(15%) + <sup>500</sup>&frasl;<sub>1566.67</sub>(10%&times;0.70) = 14.26%; EV = 145 / (0.1426 &minus; 0.05) = &#8377;1,566.67 m. The two roads agree, because every financing ratio was held fixed. Miss that &mdash; leave preference out of the "keep constant" rule &mdash; and the WACC and FCFE answers split apart, the tell-tale sign of a mismatch.</p>
+
+    <div class="callout worked">
+      <span class="callout-tag">Footnote &mdash; when the payout itself is taxed (Dividend Distribution Tax)</span>
+      <p>If a dividend-distribution tax applies, handing shareholders &#8377;1 actually costs the firm &#8377;1 &times; (1 + DDT). So the <em>effective</em> cost of a payout rises: at a 10% DDT, a 15% preference dividend really costs 15% &times; 1.10 = <strong>16.5%</strong>, and you gross the figure up before valuing (to deliver value 100 you must service 100 &times; 1.1). India abolished DDT in 2020, so this is now largely historical &mdash; but the mechanic recurs anywhere the act of paying out is itself taxed, and the professor works it as Example 2 in the text.</p>
+    </div>
+
+    <div class="keyline">
+      <span class="kicon">&#9670;</span>
+      <p>Get the four points right (YTM not coupon; total return not dividend yield; market-value weights; match the risk), match the rate to the cash flow's risk, currency and inflation, and keep <em>every</em> financing ratio constant when you grow. Do that, and the roads always meet. This is the discipline that separates a defensible valuation from a plausible-looking one.</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>Check yourself: Appendix D</h4>
+      <div id="quiz-m15"></div>
+    </div>
+
+    <div class="final-score-banner">
+      <div style="font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:#9AA6AE;">Volume II &mdash; complete, with the textbook's deeper cuts</div>
+      <div style="font-size:1.4rem; color:var(--gold-bright); margin-top:6px;">You can build an intrinsic value, defend every input, and get the discount rate right.</div>
+      <div style="font-size:.85rem; margin-top:8px; color:#B7AF98;">Cash over profit &middot; three roads that converge &middot; one dial behind every method &middot; APV when leverage moves &middot; a cost of capital that matches its cash flow.</div>
+    </div>
+
+    <div class="nav-buttons"><a href="#m14">&larr; When leverage won't sit still</a><a href="#hero">Back to top &uarr;</a></div>
+  </section>
+
+  </main>
+</div>
+<script>
+/* ===== QUIZ ENGINE (shared with Volume I) ===== */
+let totalQuestions = 0;
+let correctAnswered = new Set();
+function renderQuiz(containerId, questions){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  totalQuestions += questions.length;
+  let html = '';
+  questions.forEach((q, i) => {
+    const qid = containerId + '-' + i;
+    // Deterministically shuffle options so the correct answer isn't always in the same slot
+    if(!q._shuffled){
+      let seed = 0; for(let k=0;k<qid.length;k++){ seed = (seed*31 + qid.charCodeAt(k)) >>> 0; }
+      const rand = () => { seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ (t>>>15), t | 1); t ^= t + Math.imul(t ^ (t>>>7), t | 61); return ((t ^ (t>>>14)) >>> 0) / 4294967296; };
+      const order = q.options.map((o,idx)=>idx);
+      for(let a=order.length-1;a>0;a--){ const b=Math.floor(rand()*(a+1)); const tmp=order[a]; order[a]=order[b]; order[b]=tmp; }
+      q.options = order.map(idx=>q.options[idx]);
+      q.answer = order.indexOf(q.answer);
+      q._shuffled = true;
+    }
+    html += '<div class="quiz-item" data-qid="' + qid + '">';
+    html += '<p class="quiz-q">' + (i+1) + '. ' + q.q + '</p>';
+    html += '<div class="quiz-options">';
+    q.options.forEach((opt, j) => {
+      html += '<label class="quiz-opt"><input type="radio" name="' + qid + '" value="' + j + '"><span>' + opt + '</span></label>';
+    });
+    html += '</div>';
+    html += '<button class="quiz-check" onclick="checkAnswer(\'' + containerId + '\', ' + i + ', \'' + qid + '\')">Check answer</button>';
+    html += '<p class="quiz-feedback" id="fb-' + qid + '"></p>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  container._questions = questions;
+  updateGlobalScore();
+}
+function checkAnswer(containerId, i, qid){
+  const container = document.getElementById(containerId);
+  const q = container._questions[i];
+  const selected = document.querySelector('input[name="' + qid + '"]:checked');
+  const fb = document.getElementById('fb-' + qid);
+  if(!selected){ fb.textContent = 'Pick an option first.'; fb.className = 'quiz-feedback warn'; return; }
+  const val = parseInt(selected.value, 10);
+  if(val === q.answer){
+    fb.innerHTML = '<strong>Correct.</strong> ' + q.explain;
+    fb.className = 'quiz-feedback correct';
+    document.querySelectorAll('input[name="' + qid + '"]').forEach(inp => inp.disabled = true);
+    if(!correctAnswered.has(qid)){ correctAnswered.add(qid); updateGlobalScore(); markModuleProgress(containerId); }
+  } else {
+    fb.innerHTML = '<strong>Not quite.</strong> ' + q.explain;
+    fb.className = 'quiz-feedback incorrect';
+  }
+}
+function updateGlobalScore(){
+  document.getElementById('global-score').textContent = correctAnswered.size + ' / ' + totalQuestions;
+  const pct = totalQuestions === 0 ? 0 : (correctAnswered.size / totalQuestions) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+function markModuleProgress(containerId){
+  const modId = containerId.replace('quiz-', '').split('-')[0];
+  const container = document.getElementById(containerId);
+  if(!container || !container._questions) return;
+  let allDone = true;
+  container._questions.forEach((q,i) => { if(!correctAnswered.has(containerId+'-'+i)) allDone = false; });
+  if(allDone){ const link = document.querySelector('.toc a[href="#' + modId + '"]'); if(link) link.classList.add('done'); }
+}
+
+/* ===== QUIZ DATA ===== */
+const qm1 = [
+  {q:"Why can a relative (multiples) valuation never tell you that the market is overvalued?", options:["Because multiples are illegal to use for indices","Because a multiple is the market's own price in disguise, so it cannot disagree with itself","Because multiples only work for private companies","Because the P/E ratio is always fixed by regulators"], answer:1, explain:"A multiple is derived from market prices, so 'the market is expensive' can only be judged by an independent estimate of worth &mdash; a DCF. Every overvaluation claim is secretly a DCF claim."},
+  {q:"In the Gordon growing-perpetuity formula PV = C&#8321;/(r&minus;g), which cash flow sits in the numerator?", options:["This year's cash flow C&#8320;","Next year's cash flow C&#8321; (the first one you receive)","The average of all future cash flows","The terminal-year cash flow"], answer:1, explain:"C&#8321; is the first cash flow you actually receive, one period from now. Using this year's figure by mistake understates the value by a factor of (1+g)."},
+  {q:"A stable business pays a level &#8377;50 m perpetuity and your required return is 10%. What is it worth?", options:["&#8377;50 m","&#8377;250 m","&#8377;500 m","&#8377;5,000 m"], answer:2, explain:"Level perpetuity: PV = C/r = 50/0.10 = &#8377;500 m. This is the same 1/r that reappears as 'the P/E of a zero-growth firm'."},
+  {q:"Why must we discount cash flows rather than accounting profit?", options:["Profit is always larger than cash, so it overstates value","Accounting uses the accrual principle, recording revenue/costs when earned/incurred rather than when cash moves; valuation needs the cash facts","Cash flows are easier to forecast than profit","There is no real difference; either works"], answer:1, explain:"Accrual accounting records events when earned/incurred, not when cash actually moves (credit sales, depreciation). Value is built on the bank balance, which is cash."}
+];
+renderQuiz('quiz-m1', qm1);
+
+const qm2 = [
+  {q:"Why is depreciation added back when converting profit to cash?", options:["Because depreciation increases the tax bill","Because it is a non-cash expense &mdash; the accounting echo of cash that left in a prior year, not a cash outflow this year","Because depreciation is always equal to capex","Because it represents cash received from customers"], answer:1, explain:"The cash for the asset left the business when it was bought. Depreciation just spreads that past outflow across years, so it should not reduce this year's cash figure."},
+  {q:"Which is the correct free-cash-flow (to the firm) formula?", options:["Net Income + Interest &minus; Dividends","EBIT&times;(1&minus;t) + Depreciation &minus; Capex &minus; &Delta;Working Capital","EBIT &minus; Tax &minus; Interest","Revenue &minus; Opex &minus; Tax"], answer:1, explain:"Tax EBIT as if unlevered, undo the depreciation shadow, pay for real capex, and fund the extra cash trapped in working capital."},
+  {q:"How is Net Investment defined?", options:["Capex + Depreciation","Capex + increase in Working Capital &minus; Depreciation","Depreciation &minus; Capex","EBIT &minus; Capex"], answer:1, explain:"Net Investment = Gross Investment (capex + &Delta;WC) &minus; Depreciation &mdash; the reinvestment over and above merely replacing what wore out. FCF = EBIT(1&minus;t) &minus; Net Investment."},
+  {q:"In the zero-growth base case (capex = depreciation, &Delta;WC = 0), FCF simplifies to:", options:["Zero","EBIT &times; (1&minus;t)","Net Income","EBIT + Depreciation"], answer:1, explain:"Net investment is zero, so FCF = EBIT(1&minus;t). This is exactly OLP's base-case cash flow of 250&times;0.70 = 175."}
+];
+renderQuiz('quiz-m2', qm2);
+
+const qm3 = [
+  {q:"At what rate is FCFE (free cash flow to equity) discounted?", options:["WACC","The cost of equity K&#8337;","The pre-tax cost of capital","The cost of debt K&#8332;"], answer:1, explain:"FCFE is owners-only money, so it must be discounted at the owners' required return, K&#8337; &mdash; never at WACC."},
+  {q:"Capital Cash Flow (CCF) equals:", options:["FCF &minus; Interest tax shield","FCF + Interest tax shield","FCFE &minus; Net borrowing","EBIT &times; (1&minus;t)"], answer:1, explain:"FCF taxed the whole EBIT and threw away the interest tax shield. CCF puts it back: CCF = FCF + Interest&times;t = cash to owners + cash to lenders."},
+  {q:"What happens if you discount CCF at the after-tax WACC?", options:["You get the correct enterprise value","You count the interest tax shield twice, over-valuing the firm","You count the shield zero times, under-valuing the firm","Nothing &mdash; it is a valid method"], answer:1, explain:"CCF already has the shield inside the cash flow; the after-tax WACC has it inside the rate. Using both double-counts. CCF pairs with the pre-tax rate only."},
+  {q:"FCFF (free cash flow to the firm) belongs to whom, and so is discounted at what rate?", options:["Equity only; K&#8337;","All fund providers (lenders + owners); WACC","Lenders only; K&#8332;","Preferred holders only; K&#8346;"], answer:1, explain:"FCFF is computed before financing and belongs to everyone who funded the firm, so it is discounted at the blended rate they collectively demand &mdash; WACC."}
+];
+renderQuiz('quiz-m3', qm3);
+
+const qm4 = [
+  {q:"For OLP (EBIT 250, interest 50, tax 30%, zero growth), what is FCFE via the equity road?", options:["175","140","250","190"], answer:1, explain:"PAT = (250&minus;50)(1&minus;0.30) = 200&times;0.70 = 140. With zero growth and no net borrowing, FCFE = PAT = 140."},
+  {q:"What is the point of computing enterprise value three different ways?", options:["To pad out the answer for extra marks","As a consistency check &mdash; if the roads disagree, you have mismatched a cash flow with a discount rate","Because each road values a different company","The three roads always give different answers by design"], answer:1, explain:"All three should converge (OLP: &#8377;1,200 m every way). Divergence is a red flag that a cash flow and rate have been mismatched."},
+  {q:"The pre-tax discount rate 15.833% used for OLP's CCF is also known as:", options:["The after-tax WACC","The unlevered cost of equity, &rho;","The cost of debt","The risk-free rate"], answer:1, explain:"&rho; = (K&#8337;&middot;E + K&#8332;&middot;D)/V = (0.20&middot;700 + 0.10&middot;500)/1200 = 15.833% &mdash; the return an all-equity OLP would carry. APV is built on it."},
+  {q:"What is OLP's equity value in the zero-growth base case?", options:["&#8377;500 m","&#8377;700 m","&#8377;1,200 m","&#8377;175 m"], answer:1, explain:"Equity = FCFE/K&#8337; = 140/0.20 = &#8377;700 m, identical across all three roads. Enterprise value = 700 + 500 debt = &#8377;1,200 m."}
+];
+renderQuiz('quiz-m4', qm4);
+
+const qm5 = [
+  {q:"Why is the debt term in WACC multiplied by (1&minus;t)?", options:["To account for bankruptcy risk","Because interest is tax-deductible, so the effective after-tax cost of debt is K&#8332;(1&minus;t) &mdash; this is how the tax shield enters the rate","Because debt is riskier than equity","To convert book values to market values"], answer:1, explain:"Interest reduces taxable profit, so the government refunds t of every interest rupee. The true cost of debt is K&#8332;(1&minus;t), and baking it into WACC places the tax shield in the discount rate."},
+  {q:"The weights in WACC should be based on:", options:["Book values from the balance sheet","Market values, because we are discounting future cash to today's worth at today's financing","Whatever gives the highest valuation","The original amounts raised at IPO"], answer:1, explain:"Discounting is a present-value exercise, so weights must reflect today's market financing. Book value is a stale accounting record."},
+  {q:"Using WACC = &rho; &minus; (D/V)K&#8332;t, what does this tell you about the gap between &rho; and WACC?", options:["The gap is caused by bankruptcy costs","The entire gap is the value of the interest tax shield per rupee of firm value","There is no gap; &rho; always equals WACC","The gap is the equity risk premium"], answer:1, explain:"Debt does not change the firm's operating risk (&rho; is fixed by the business). Debt only adds the tax subsidy, which is exactly the &rho;-to-WACC gap."},
+  {q:"What is OLP's WACC (E=700, D=500, K&#8337;=20%, K&#8332;=10%, t=30%)?", options:["15.833%","14.583%","13.208%","20%"], answer:1, explain:"WACC = (700/1200)(0.20) + (500/1200)(0.10)(0.70) = 0.1167 + 0.0292 = 14.583%. Equivalently &rho; &minus; (D/V)K&#8332;t = 15.833% &minus; 1.25%."}
+];
+renderQuiz('quiz-m5', qm5);
+
+const qm6 = [
+  {q:"Using a constant discount rate (constant WACC or K&#8337;) secretly assumes what about capital structure?", options:["That debt is zero","That the debt-to-equity ratio stays constant over time","That the firm never pays dividends","That the tax rate is zero"], answer:1, explain:"WACC and K&#8337; both depend on D/E, so they can only stay constant if D/E stays constant &mdash; which for a growing firm means debt must grow too."},
+  {q:"If OLP's debt is &#8377;500 m and it grows at 5% with constant D/E, how much fresh debt is borrowed next year (net borrowing)?", options:["&#8377;0","&#8377;25 m","&#8377;50 m","&#8377;500 m"], answer:1, explain:"To keep D/E constant while equity grows 5%, debt must also grow 5%: net borrowing = 500&times;5% = &#8377;25 m. Part of the dividend is thus paid from borrowed money."},
+  {q:"OLP with growth: PAT 140, net investment 30, net borrowing 25. What is FCFE?", options:["110","135","165","140"], answer:1, explain:"FCFE = PAT &minus; Net Investment + Net Borrowing = 140 &minus; 30 + 25 = 135. Equity = 135/(0.20&minus;0.05) = &#8377;900 m."},
+  {q:"Adding growth raised OLP's value from &#8377;1,200 m to &#8377;1,400 m. The deep reason is:", options:["Growth always creates value","The &#8377;30 m reinvested earns more than the 20% shareholders demand (ROE &gt; r), so growth is value-accretive here","The tax rate fell","Debt was repaid"], answer:1, explain:"Growth magnifies the sign of (ROE &minus; r). Here reinvestment beats the cost of capital, so growth adds value. If ROE &lt; r, growth would have destroyed value."}
+];
+renderQuiz('quiz-m6', qm6);
+
+const qm7 = [
+  {q:"A terminal value TV&#8345; computed with the Gordon formula is dated as at the end of year n. What must you then do with it?", options:["Nothing &mdash; it is already in today's money","Discount it back n years to today","Multiply it by the growth rate","Add it directly to year-1 FCF"], answer:1, explain:"TV&#8345; sits at the end of year n, so it still needs discounting back n periods. Forgetting this second discounting is a classic error."},
+  {q:"The terminal (steady-state) growth rate is usually capped near:", options:["The firm's near-term growth rate","The long-run growth rate of the economy","The cost of equity","Zero, always"], answer:1, explain:"No firm can outgrow its economy forever, or it would eventually become the economy. Terminal g is a low single-digit number near long-run GDP growth."},
+  {q:"The exit-multiple method computes terminal value as:", options:["FCF&#8345;&#8330;&#8321; / (WACC &minus; g)","Terminal-year EBITDA &times; a steady-state peer EV/EBITDA multiple","Book value &times; ROE","Revenue &times; net margin"], answer:1, explain:"It borrows a peer EV/EBITDA multiple appropriate for the mature steady state and applies it to terminal-year EBITDA &mdash; mixing an absolute stage 1 with a relative stage 2."},
+  {q:"In a typical DCF, the terminal value is what share of total enterprise value?", options:["Under 10%","Around 60&ndash;80% &mdash; the tail wags the dog","Exactly 50%","It is always negligible"], answer:1, explain:"Most of a company's value lies in its distant steady future, so terminal value dominates. That is why terminal g and the exit multiple are the assumptions to stress-test hardest."}
+];
+renderQuiz('quiz-m7', qm7);
+
+const qm8 = [
+  {q:"What creates the circularity in a WACC-based valuation?", options:["The growth rate is unknown","WACC needs market-value weights (E/V, D/V), but the market value of equity is precisely the valuation's output","The tax rate changes each year","Cash flows are hard to forecast"], answer:1, explain:"Value = FCF/(WACC&minus;g) needs WACC; WACC needs E/V; E/V needs V. Each input is the other's output."},
+  {q:"How does assuming a target D/E ratio break the circularity?", options:["It eliminates debt from the firm","It fixes the weights as constants independent of V, so WACC becomes a single number computed once","It sets the growth rate to zero","It converts the firm to all-equity"], answer:1, explain:"With target weights imposed by assumption, WACC no longer depends on the output V, so the loop is cut and value follows directly."},
+  {q:"Why does valuing equity directly avoid the circularity entirely?", options:["Because FCFE is always larger than FCF","Because you discount at K&#8337;, a given number that does not require knowing V &mdash; there are no market-value weights to compute","Because equity has no risk","Because debt is ignored"], answer:1, explain:"The equity road needs only K&#8337; (given), not weights, so nothing is circular. It is algebraically the untangled version of the WACC road (given K&#8337;)."},
+  {q:"The closed-form simultaneous solution for zero growth is V = FCF/K&#8337; + D&middot;[K&#8337;&minus;K&#8332;(1&minus;t)]/K&#8337;. For OLP (FCF 175, D 500, K&#8337; 20%, K&#8332; 10%, t 30%) this gives:", options:["&#8377;875 m","&#8377;1,200 m","&#8377;700 m","&#8377;1,105 m"], answer:1, explain:"175/0.20 + 500(0.20&minus;0.07)/0.20 = 875 + 325 = &#8377;1,200 m &mdash; the same enterprise value the three roads found. The knot, untied."}
+];
+renderQuiz('quiz-m8', qm8);
+
+const qm9 = [
+  {q:"The APV identity states that levered firm value equals:", options:["V&#8340; &minus; the tax shield","V&#8340; (unlevered value) + the value of the tax shield","FCF / WACC only","Book value + retained earnings"], answer:1, explain:"V&#8331; = V&#8340; + Value of Tax Shield. Value the business as if all-equity, then add the value the debt's tax deductibility creates."},
+  {q:"The unlevered cost of equity &rho; is best described as:", options:["A property of the firm's financing that changes with leverage","A property of the business itself &mdash; the return an all-equity version of the firm would carry, independent of capital structure","Always equal to the cost of debt","The risk-free rate plus the tax rate"], answer:1, explain:"&rho; reflects operating/business risk only. Debt does not change &rho;; it only adds the tax shield. That is why APV separates the two."},
+  {q:"At what rate is the interest tax shield discounted, and on what does it depend?", options:["Always at K&#8332;, regardless of assumptions","It depends on the financing policy: at K&#8332; if the rupee debt is held constant (MM), or at &rho; if the D/E ratio is held constant (rebalancing)","Always at K&#8337;","Always at the risk-free rate"], answer:1, explain:"Fixed rupee debt makes the shield as safe as the debt (discount at K&#8332;, VTS = D&middot;t). Constant D/E makes the shield as risky as the firm (discount at &rho;). You must state which."},
+  {q:"When is APV especially preferred over WACC?", options:["When the firm has no debt","When the debt level or D/E ratio changes over time &mdash; e.g. an LBO paying down debt on a schedule, or a subsidised loan","When growth is exactly zero","When the tax rate is 100%"], answer:1, explain:"A changing debt schedule makes a constant WACC wrong. APV handles bespoke, year-by-year financing benefits cleanly &mdash; hence its use in the Tata&ndash;Tetley acquisition and the Nano subsidised loan."}
+];
+renderQuiz('quiz-m9', qm9);
+
+const qm10 = [
+  {q:"Why does preference capital create no tax shield?", options:["Because preferred dividends are paid before interest","Because preferred dividends are not tax-deductible &mdash; they are paid out of after-tax profit, unlike interest","Because preference shares have no fixed dividend","Because preference ranks ahead of debt"], answer:1, explain:"Interest is deductible and shields tax; preferred dividends are paid from post-tax profit, so they carry no shield. In the cost of capital the preference term gets no (1&minus;t)."},
+  {q:"When preference capital is present, FCFE is measured:", options:["Before the preferred dividend","After the preferred dividend, since common shareholders only receive what remains","Ignoring the preferred dividend entirely","Same as FCF"], answer:1, explain:"Common holders get what is left after preference is served, so FCFE = Net Income &minus; Preferred Dividend (then &minus; net investment + net borrowing). Note FCF itself is unchanged &mdash; it is pre-financing."},
+  {q:"Valuing an equity-plus-preference firm (no debt) by APV, what is V&#8331;?", options:["V&#8340; + Preference value","V&#8340; itself, because preference provides no tax shield (financing benefit = 0)","V&#8340; &minus; Preference value","Zero"], answer:1, explain:"No tax shield means the APV financing-benefit term is zero, so V&#8331; = V&#8340;. Preference does not change enterprise value; common equity = V&#8340; &minus; value of preference."},
+  {q:"Under the US partial-shield rules, the adjusted tax rate is computed as:", options:["EBIT &times; statutory rate","(Tax&#8325;&#8345;&#8356;&#8319;&#8323;&#8322;&#8322;&#8323;&#8324; &minus; Tax&#8323;&#8319;&#8323;&#8322;&#8322;&#8323;&#8324;) / Interest","Interest / EBIT","Statutory rate &times; (1 &minus; growth)"], answer:1, explain:"adj t = (Tax if all-equity &minus; actual tax) / Interest. It captures the shield the firm actually receives when interest deductibility is capped, and then plugs into a modified WACC via K&#8332;(1&minus;adj t)."}
+];
+renderQuiz('quiz-m10', qm10);
+
+const qmock = [
+  {q:"The single most important discipline separating operating value from financing value in this volume is:", options:["Always using book-value weights","Keeping operating cash flows free of financing effects, and handing the tax shield back deliberately and separately","Never using growth rates","Discounting everything at the risk-free rate"], answer:1, explain:"FCF is computed pre-financing (tax the full EBIT); the financing benefit (tax shield) is added back on purpose, either in the rate (WACC) or the cash flow (CCF) or separately (APV)."},
+  {q:"A firm's FCF at after-tax WACC gives &#8377;800 m; its CCF at the same after-tax WACC gives &#8377;830 m. Which is right?", options:["The CCF value, &#8377;830 m","The FCF value, &#8377;800 m &mdash; the CCF calc double-counted the tax shield","Both are wrong","They should be averaged"], answer:1, explain:"CCF contains the shield in the cash flow AND the after-tax WACC contains it in the rate &mdash; double counting. CCF must use the pre-tax rate; FCF pairs with after-tax WACC."},
+  {q:"For a zero-growth firm with EBIT 300, interest 40, tax 25%, the FCFE (equity road) is:", options:["195","225","260","300"], answer:0, explain:"PAT = (300&minus;40)(0.75) = 260&times;0.75 = 195 = FCFE (zero growth). Equity = 195/K&#8337;."},
+  {q:"WACC = &rho; &minus; (D/V)K&#8332;t. If &rho; = 16%, D/V = 40%, K&#8332; = 10%, t = 25%, then WACC is:", options:["16%","15%","14%","10%"], answer:1, explain:"WACC = 0.16 &minus; (0.40)(0.10)(0.25) = 0.16 &minus; 0.01 = 15%."},
+  {q:"Under a constant discount rate for a growing firm, the debt must:", options:["Stay fixed in rupee terms","Grow at the same rate as the firm, to keep D/E constant","Fall to zero over time","Double every year"], answer:1, explain:"A constant WACC/K&#8337; requires constant D/E; for a growing firm that forces debt to grow at the same rate g."},
+  {q:"The interest tax shield on &#8377;500 m of permanent debt at K&#8332; = 10%, t = 30%, discounted the MM way (at K&#8332;), is worth:", options:["&#8377;15 m","&#8377;50 m","&#8377;150 m","&#8377;500 m"], answer:2, explain:"Annual shield = 500&times;10%&times;30% = &#8377;15 m; as a perpetuity at K&#8332;: 15/0.10 = &#8377;150 m = D&times;t. This is the classic MM tax-shield value under fixed debt."},
+  {q:"Which method escapes the WACC circularity by never computing market-value weights?", options:["FCF at WACC","Valuing equity directly at K&#8337;","EV/EBITDA","P/B multiple"], answer:1, explain:"The equity road discounts FCFE at a given K&#8337;, needing no weights, so nothing is circular. It is algebraically the untangled WACC road."},
+  {q:"To break the circularity by assuming a target D/E ratio, you would:", options:["Iterate forever without a solution","Fix the weights from the target, compute WACC once, then EV = FCF/(WACC&minus;g)","Set WACC equal to K&#8337;","Ignore the tax shield"], answer:1, explain:"Target weights are constants independent of V, so WACC is a single number and value follows directly &mdash; the approach PYQ 2 asks you to demonstrate."},
+  {q:"APV values the firm as V&#8331; = V&#8340; + VTS. If V&#8340; = &#8377;1,050 m and the tax shield is worth &#8377;150 m, the levered value is:", options:["&#8377;900 m","&#8377;1,050 m","&#8377;1,200 m","&#8377;150 m"], answer:2, explain:"V&#8331; = 1,050 + 150 = &#8377;1,200 m. The unlevered business is worth 1,050; the debt's tax subsidy adds 150."},
+  {q:"Why is preference capital described as 'leverage without the tax break'?", options:["Because preferred shares are riskier than common equity","Because it sits between debt and equity but its dividends are not tax-deductible, so it creates no shield","Because preference dividends are always variable","Because preference ranks last in liquidation"], answer:1, explain:"Preference behaves like a fixed senior claim (like debt) but pays from after-tax profit, so unlike debt it generates no tax shield. In APV its financing benefit is zero."},
+  {q:"A company with only equity and preference (no debt) is valued by APV. Its enterprise value equals:", options:["V&#8340; + preference value","V&#8340; (the unlevered value), since preference adds no tax shield","V&#8340; minus the preferred dividend","The preferred dividend divided by K&#8337;"], answer:1, explain:"No shield &rArr; V&#8331; = V&#8340;. Preference merely reslices claims; common equity = V&#8340; &minus; value of preference."},
+  {q:"Under the US TCJA partial-shield example (EBIT 3, interest 2, deductible interest 0.9, tax 21%), the actual tax paid is:", options:["&#8377;0.63 m","&#8377;0.441 m","&#8377;0.189 m","&#8377;0.9 m"], answer:1, explain:"Taxable income = EBIT &minus; deductible interest = 3 &minus; 0.9 = 2.1; tax = 21%&times;2.1 = 0.441. The disallowed 1.1 of interest is carried forward."},
+  {q:"In the two-stage DCF, the terminal growth rate should be:", options:["The same high rate as the explicit forecast period","A low rate near long-run economic growth, reflecting a mature steady state","Higher than the cost of equity","Exactly equal to WACC"], answer:1, explain:"By the terminal year the firm is mature with few growth opportunities and high payout; terminal g is capped near long-run GDP growth."},
+  {q:"The reason the three valuation roads must converge on the same number is that:", options:["It is a regulatory requirement","They value the same firm, so any divergence signals a cash-flow / discount-rate mismatch","They each use a different tax rate","Convergence only happens by luck"], answer:1, explain:"Equity-direct, FCF-at-WACC, and CCF-at-pre-tax-rate are three consistent views of one firm. OLP gives &#8377;1,200 m all three ways; disagreement means an error."},
+  {q:"You must value a target being acquired with debt that will be repaid on a fixed schedule over five years. The best method is:", options:["A constant-WACC DCF","APV &mdash; value the target unlevered, then add the PV of each year's specific tax shield","A trailing P/E multiple","EV/Sales"], answer:1, explain:"A changing debt schedule breaks the constant-WACC assumption. APV handles year-by-year financing benefits cleanly &mdash; exactly the Tata&ndash;Tetley LBO situation."}
+];
+renderQuiz('quiz-mock', qmock);
+const qm12 = [
+  {q:"The textbook's careful definition of enterprise value is:", options:["Market value of debt + market value of equity","Market value of debt + equity, minus cash and other non-operating assets you could sell without harming the business","The book value of total assets","Market capitalisation on its own"], answer:1, explain:"EV is the price of the operating engine: add up every claim (D+E), then hand yourself back anything disposable on day one &mdash; cash, marketable securities, non-operating investments."},
+  {q:"A flat costs &#8377;50 lakh (&#8377;40 debt + &#8377;10 equity) and comes with furniture worth &#8377;8 lakh you could sell tomorrow. Its enterprise value is:", options:["&#8377;50 lakh","&#8377;42 lakh","&#8377;40 lakh","&#8377;58 lakh"], answer:1, explain:"You pay &#8377;50 lakh for all claims, but recover &#8377;8 lakh by selling the furniture without touching the flat, so the effective cost of the asset itself is 50 &minus; 8 = &#8377;42 lakh."},
+  {q:"In the Tata Steel calculation, roughly &#8377;48,000 cr of trade investments are NOT subtracted from EV because:", options:["They are worthless","They are strategic, operating stakes &mdash; not idle assets you can freely dispose of","They are cash equivalents","They belong to the shareholders"], answer:1, explain:"Only freely disposable, non-operating assets come out. Trade investments are strategic operating stakes; sell them and you are no longer buying the same business. Only the ~&#8377;2,000 cr of non-trade investments are subtracted."},
+  {q:"Whether to subtract the full cash balance when computing EV is:", options:["Always yes, no exceptions","A judgement call &mdash; subtract only the cash the business does not actually need to operate","Never; cash is always operating","Fixed by the tax rate"], answer:1, explain:"Idle or surplus cash is non-operating and subtracted; the minimum working cash the business needs to run is an operating asset and is not. Like the financing assumptions, the treatment of cash must be stated."}
+];
+renderQuiz('quiz-m12', qm12);
+
+const qm13 = [
+  {q:"The identity that unifies the FCF and CCF methods is:", options:["EBIT(1&minus;t) = PAT + I(1&minus;t)","EBIT = PAT + tax","FCF = FCFE + interest","WACC = &rho; &minus; K&#8332;"], answer:0, explain:"Since PBT = EBIT &minus; I, we get EBIT(1&minus;t) = (PBT+I)(1&minus;t) = PAT + I(1&minus;t). Operating cash after tax equals shareholders' cash plus the after-tax cost of debt &mdash; pure algebra."},
+  {q:"Setting the fictitious tax rate t&#7522; = 0 in the generalised formula produces:", options:["The FCF approach","The CCF approach","An arithmetic error","The APV method"], answer:1, explain:"With t&#7522; = 0 the numerator becomes PAT + I (the capital cash flow) and the rate loses its (1&minus;t) on debt, becoming the pre-tax &rho;. That is exactly the CCF approach."},
+  {q:"Setting the fictitious tax rate t&#7522; equal to the statutory rate t produces:", options:["The CCF approach","The FCF approach","A double-counted shield","The dividend discount model"], answer:1, explain:"With t&#7522; = t the numerator is EBIT(1&minus;t) = FCF and the rate is the after-tax WACC &mdash; the FCF approach. FCF parks the shield in the rate; CCF parks it in the cash flow."},
+  {q:"Why is the enterprise value unchanged as the fictitious tax rate is varied?", options:["Because the tax rate never affects value","Because the shield is counted exactly once &mdash; t&#7522; only chooses where it sits, and the algebra cancels","Because growth is assumed zero","Because debt is risk-free"], answer:1, explain:"For OLP, t&#7522; = 0 (190/0.15833), t&#7522; = 30% (175/0.14583) and t&#7522; = 50% (165/0.1375) all give &#8377;1,200 m. The dial moves the shield between rate and cash flow but never adds or drops it."}
+];
+renderQuiz('quiz-m13', qm13);
+
+const qm14 = [
+  {q:"Under Case 1 (rupee value of debt held constant), the interest tax shield is discounted at ___ and is worth ___:", options:["&rho;; D&middot;K&#8332;&middot;t/(&rho;&minus;g)","K&#8332;; D&middot;t","K&#8337;; D/E","the risk-free rate; zero"], answer:1, explain:"Fixed rupee debt makes the shield as safe as the debt, so discount at K&#8332;; for a perpetuity VTS = D&middot;K&#8332;&middot;t/K&#8332; = D&middot;t. For OLP that is 500&times;0.30 = 150."},
+  {q:"Under Case 2 (constant D/E, continuous rebalancing), the tax shield is discounted at:", options:["K&#8332;, the cost of debt","&rho;, the unlevered cost of equity","K&#8337;, the cost of equity","zero"], answer:1, explain:"Holding D/E constant means debt grows with the firm, so the shield is as risky as the firm &rarr; discount at &rho;. VTS = D&middot;K&#8332;&middot;t/(&rho;&minus;g), and WACC = &rho; &minus; (D/V)K&#8332;t."},
+  {q:"Why must MJ Limited be valued by APV rather than a single constant WACC?", options:["Because it has zero growth","Because its debt is repaid on a fixed schedule, so D/E changes every year and no single WACC is correct","Because it pays preference dividends","Because &rho; equals K&#8332;"], answer:1, explain:"The &#8377;20 m-a-year repayment means leverage falls each year; the year-by-year WACC drifts (14.66% &rarr; 15%) toward &rho;. A constant WACC cannot reproduce a changing debt schedule &mdash; APV can."},
+  {q:"For MJ Limited, unlevered value &#8377;653.39 m plus tax-shield value &#8377;4.84 m gives a levered (APV) value of &#8377;658.23 m. The equity value is:", options:["&#8377;658.23 m","&#8377;558.23 m","&#8377;653.39 m","&#8377;758.23 m"], answer:1, explain:"Equity = levered value &minus; debt today = 658.23 &minus; 100 = &#8377;558.23 m. The FCF and FCFE roads reconcile to the same figure."}
+];
+renderQuiz('quiz-m14', qm14);
+const qm15 = [
+  {q:"For the WACC, the pre-tax cost of debt should be:", options:["The bond's coupon rate","The bond's yield to maturity (its current market yield)","The book value of interest","The risk-free rate"], answer:1, explain:"The coupon is fixed at issue and sits on the book; the YTM is what the market demands today. They coincide only when the bond trades at par (market value = book value). Otherwise use the market yield."},
+  {q:"The cost of equity is best measured as:", options:["The dividend yield alone","Dividend yield + expected capital gains (the shareholder's total expected return)","The coupon rate on the firm's bonds","Net income divided by book equity"], answer:1, explain:"K&#8337; is the total return equity holders expect. A low-dividend growth stock is not 'cheap equity' &mdash; most of its expected return is price appreciation, which counts."},
+  {q:"An acquirer with a 12% WACC is valuing a riskier target whose cash flows warrant 15%. It should discount the target's cash flows at:", options:["12%, the acquirer's WACC","15%, the rate matching the target's risk","13.5%, the average","The risk-free rate"], answer:1, explain:"The discount rate belongs to the cash flow, not the discounter. Using the lower 12% on riskier cash flows overstates their value &mdash; 'riskier cash flows at lower rates' is the classic error."},
+  {q:"To value a growing firm financed by debt, equity AND preference with a single WACC, you must hold constant:", options:["Only the D/E ratio","Only the debt","Every financing ratio (D : E : P), raising new debt and new preference each year","Nothing; WACC is fixed regardless"], answer:2, explain:"Whatever sits in the cost of capital must keep a constant ratio. Holding D : E : P constant (raising 25 of new debt and 25 of new preference at 5% growth) gives FCFE 85, common equity 566.67 and EV = &#8377;1,566.67 m, which the WACC road reproduces."}
+];
+renderQuiz('quiz-m15', qm15);
+
+
+
+/* ===== SCROLLSPY ===== */
+const sections = document.querySelectorAll('main section, .hero');
+const tocLinks = document.querySelectorAll('.toc a');
+function onScroll(){
+  let current = '';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 120 && rect.bottom > 120){ current = sec.id; }
+  });
+  tocLinks.forEach(link => { link.classList.toggle('active', link.getAttribute('href') === '#' + current); });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+</script>
+</body>
+</html>
