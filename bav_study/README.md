@@ -8,7 +8,7 @@ Built from the Term IV Business Analysis & Valuation material in `../bav_materia
 | `BAV_Field_Manual.html` | The master guide. Beginner-friendly, covers Quiz 1 (multiples), Quiz 2 (DCF/APV), Quiz 3 (cost of capital, cash flow, EVA), the post-Quiz-3 interim block (VC method, private companies, real options, AI valuation, practical/M&A), the quant toolkit, and exam craft. |
 | `BAV_Recall_Sheets.html` | 40 single-topic revision sheets in a handwritten notebook style. A4, print or save as PDF with no scaling. |
 | `BAV_Question_Bank.html` | Predicted 25-question interim paper under +4/−1 marking, plus a 57-question end-term bank by topic. Interactive scoring, full worked solutions. |
-| `BAV_Solved_MCQs.html` / `.pdf` | 40 exam-style MCQs in the same handwritten format, each with the answer circled and the full working shown. Five are from the guest-lecture session, which sir has said is worth 4-5 questions. |
+| `BAV_Solved_MCQs.html` / `.pdf` | 40 exam-style MCQs in the same handwritten format, each with the answer circled and the full working shown. Q1-Q3 are **actual PYQs** photographed from sir's End Term Pattern slides (Lecture 18 notes); three more are built on the same patterns. Five are from the guest-lecture session. |
 | `build_notes.py` | Generator for `BAV_Recall_Sheets.html`. Edit the `PAGES` list and re-run. |
 | `build_qsheets.py` | Generator for `BAV_Solved_MCQs.html`. Questions are written with the correct option first; `shuffle_options()` permutes them deterministically at build time so the printed key is not a column of As. |
 
@@ -23,6 +23,8 @@ Built from the Term IV Business Analysis & Valuation material in `../bav_materia
 - `Adobe_Scan_29_Aug_2026.pdf` — Laura Martin (real options), Sampa Video (APV), and the
   Venture Capital Valuation Problem Set
 - `Adobe_Scan_08/27_Aug_2026.pdf` — class notes, Lectures 10–19
+- `BAV_18.pdf` — Lecture 18 notes, including photographs of the End Term Pattern
+  slides with three actual previous-year MCQs and the +4/−1 marking
 - `mohantybavvaluationcombined.skill` — the packaged method reference
 
 Numbers are reproduced from those sources. Check anything you intend to rely on

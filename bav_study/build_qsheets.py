@@ -108,12 +108,71 @@ b,strong{font-weight:700}
 Q = []
 
 
-def q(topic, stem, opts, ans, work):
+def q(topic, stem, opts, ans, work, pyq=False):
     """The correct option is written first in the source; build() shuffles them
     so the printed answer key is not a column of As. No working refers to an
-    option by letter, so the shuffle is safe."""
-    Q.append(dict(topic=topic, stem=stem, opts=opts, ans=ans, work=work))
+    option by letter, so the shuffle is safe.
 
+    pyq=True marks a question reproduced from Prof. Mohanty's own End Term
+    Pattern slides rather than written for this set."""
+    Q.append(dict(topic=topic, stem=stem, opts=opts, ans=ans, work=work, pyq=pyq))
+
+
+# =============================================== ACTUAL PYQs (1–3)
+# Reproduced from Prof. Mohanty's "End Term Pattern" slides, photographed in
+# the Lecture 18 class notes. Marking on those slides: +4 for a correct
+# answer, −1 for a wrong one.
+q("Terminal value",
+  "The EBITDA of a company in the last year of the explicit forecasting period is $200 million. "
+  "The free cash flow for the same year is $80 million. The cost of capital is 12%. "
+  "If the terminal growth rate is 5%, what is the terminal EBITDA multiple?",
+  ["6.0×", "5.7×", "8.6×", "15.0×"], 0,
+  "<div class='f'>TV = FCF × (1+g) ÷ (WACC − g) = 80 × 1.05 ÷ (0.12 − 0.05)\n"
+  "   = 84 ÷ 0.07 = <b>$1,200m</b>\n"
+  "Terminal EBITDA multiple = TV ÷ EBITDA = 1,200 ÷ 200 = <b>6.0×</b></div>"
+  "<p class='trapline'>⚠ 5.7× is what you get by dropping the (1+g): 80/0.07 = 1,142.9 ÷ 200. "
+  "15.0× divides by the FCF instead of the EBITDA.</p>"
+  "<p class='grn'>This is the <b>multiplier consistency</b> check in reverse: your Gordon terminal "
+  "value implies a multiple, and 6.0× is what a mature, modestly growing business should look like. "
+  "If it had come out at 25×, the g or the WACC would be wrong.</p>", pyq=True)
+
+q("VC method",
+  "After Series A the cap table is: founders 1,000,000 shares, Series A 250,000 shares "
+  "(total 1,250,000). The Series A investor holds 20%. At Series B the pre-money is $50 million "
+  "and a new investor puts in $20 million. If Series A wants to hold 20% after Series B, "
+  "approximately how much must it invest in Series B?",
+  ["$5 million", "$4 million", "$3 million", "$14 million"], 0,
+  "<div class='f'>Price per share = $50m ÷ 1.25m shares = <b>$40.00</b>\n"
+  "Series A's existing stake = 250,000 × 40 = <b>$10m</b>\n\n"
+  "Let x = what Series A puts in. Post-money = 50 + 20 + x = 70 + x\n"
+  "     (10 + x) ÷ (70 + x) = 0.20\n"
+  "     10 + x = 14 + 0.2x   ⟹   0.8x = 4   ⟹   <b>x = $5m</b></div>"
+  "<p class='trapline'>⚠ $4m is the trap: 20% of the $70m post-money is $14m, less the $10m already "
+  "held. That ignores the fact that <b>your own investment enlarges the post-money too.</b> "
+  "You must solve for x on both sides.</p>"
+  "<p class='pen'>Check: A buys 5 ÷ 40 = 125,000 shares → holds 375,000 of "
+  "1,250,000 + 500,000 + 125,000 = 1,875,000 = <b>20.0%</b> ✓</p>", pyq=True)
+
+q("Quant",
+  "An analyst regressed the P/E of 10 companies in a sector on their projected growth rate in EPS. "
+  "Figures in brackets are t-statistics:<br>"
+  "<span class='f' style='display:block;margin:1mm 0'>P/E = 16.38 + 1.2 × g(EPS)\n"
+  "      (3.24)   (0.8)</span>"
+  "Which is the most likely interpretation?",
+  ["None of the above",
+   "The ROE of an average company in the industry is lower than the required rate of return",
+   "Companies with a higher projected growth in EPS do necessarily trade at a higher P/E",
+   "Factors other than growth in EPS have no impact on the P/E of these companies"], 0,
+  "<div class='f'>n = 10, k = 2  ⟹  df = 8, 5% critical t ≈ <b>2.31</b>\n"
+  "intercept t = 3.24  ⟹  significant\n"
+  "<b>slope t = 0.8  ⟹  NOT significant</b> — growth does not explain P/E in this sample</div>"
+  "<p>Take the options one at a time. The growth option is <u>contradicted</u> by the insignificant "
+  "slope. \"Other factors have no impact\" <u>overclaims</u> — an insignificant growth coefficient "
+  "says growth does not explain P/E, not that nothing else does. The ROE statement is not "
+  "addressable from this regression at all. So <b>none of the above.</b></p>"
+  "<p class='trapline'>⚠ The whole question turns on reading the bracketed numbers as "
+  "<b>t-statistics, not standard errors.</b> Rule of thumb |t| &gt; 2; with only 10 observations "
+  "the bar is higher still at 2.31.</p>", pyq=True)
 
 # ======================================================= MULTIPLES (1–5)
 q("Multiples",
@@ -144,16 +203,6 @@ q("Multiples",
   "PEG also carries no risk term: same PEG, very different betas, not equally attractive.</p>")
 
 q("Multiples",
-  "Market capitalisation ₹4,100 cr, debt ₹1,200 cr, cash ₹300 cr, EBITDA ₹500 cr. "
-  "What is EV/EBITDA?",
-  ["10.0×", "8.2×", "10.6×", "11.2×"], 0,
-  "<div class='f'>EV = 4,100 + 1,200 − 300 = <b>₹5,000 cr</b>\n"
-  "EV/EBITDA = 5,000 ÷ 500 = <b>10.0×</b></div>"
-  "<p class='pen'>8.2× forgets the debt; 11.2× forgets to net off the cash. "
-  "Both numerator and denominator are pre-financing, which is what makes this multiple "
-  "comparable across different capital structures.</p>")
-
-q("Multiples",
   "Reported PAT is ₹120 cr, which includes a ₹30 cr post-tax gain on the sale of surplus land. "
   "There are 10 cr shares and the price is ₹250. What is the normalised P/E?",
   ["27.8×", "20.8×", "25.0×", "22.5×"], 0,
@@ -163,15 +212,6 @@ q("Multiples",
   "entirely. The stock is a third more expensive than the reported number suggests.</p>")
 
 # ======================================================= DCF FAMILY (6–12)
-q("DCF",
-  "A firm generates perpetual free cash flow of ₹80m with no growth. Its WACC is 16% and it has "
-  "₹150m of debt. What is the equity value?",
-  ["₹350m", "₹500m", "₹650m", "₹300m"], 0,
-  "<div class='f'>EV = FCF ÷ WACC = 80 ÷ 0.16 = <b>₹500m</b>\n"
-  "Equity = EV − debt = 500 − 150 = <b>₹350m</b></div>"
-  "<p class='pen'>₹650m adds the debt instead of subtracting it. The bridge runs "
-  "EV → <i>minus</i> debt and debt-like items → equity.</p>")
-
 q("DCF",
   "EBIT ₹300m in perpetuity, tax 30%, cost of equity 18%, debt ₹200m at 10%, zero growth. "
   "What is the equity value by the FCFE route?",
@@ -240,17 +280,20 @@ q("DCF",
   "its own cost with <b>no (1−t)</b>, and it must come out at the bridge. Miss it and you hand the "
   "preference holders' money to the equity.</p>")
 
-# ======================================================= COST OF CAPITAL / BETA (13–18)
-q("Cost of capital",
-  "A bond with a face value of ₹1,000 and an 8% coupon has 5 years left and trades at ₹920. "
-  "Roughly what is the cost of debt?",
-  ["About 10.0%", "8.0%", "8.7%", "About 11.5%"], 0,
-  "<div class='f'>approx YTM = [coupon + (face − price)/n] ÷ [(face + price)/2]\n"
-  "          = [80 + (1,000 − 920)/5] ÷ [(1,000 + 920)/2]\n"
-  "          = (80 + 16) ÷ 960 = 96 ÷ 960 = <b>10.0%</b></div>"
-  "<p class='trapline'>⚠ Technical point 1: the pre-tax cost of debt is the <b>YTM</b>, not the "
-  "coupon. The 8% is a historical promise fixed on the day the bond was issued.</p>")
 
+q("Terminal value",
+  "A terminal year shows EBITDA of $250 million and free cash flow of $100 million. "
+  "An exit multiple of 8× EBITDA is applied and terminal growth is 4%. "
+  "What cost of capital is implied by that exit multiple?",
+  ["9.2%", "9.0%", "5.2%", "13.2%"], 0,
+  "<div class='f'>TV = 8 × 250 = <b>$2,000m</b>\n"
+  "TV = FCF(1+g) ÷ (WACC − g)  ⟹  2,000 = 104 ÷ (WACC − 0.04)\n"
+  "WACC − 0.04 = 104 ÷ 2,000 = 0.052  ⟹  <b>WACC = 9.2%</b></div>"
+  "<p class='grn'>The mirror of the PYQ: there you were given the WACC and asked for the multiple; "
+  "here you are given the multiple and asked for the rate. Same identity, rearranged. "
+  "If the WACC your model actually uses is 13%, then an 8× exit multiple is too generous.</p>")
+
+# ======================================================= COST OF CAPITAL / BETA (13–18)
 q("Cost of capital",
   "A company has migrated to section 115BAA. Its pre-tax cost of debt is 9.5%. "
   "What is the after-tax cost of debt?",
@@ -307,15 +350,6 @@ q("Cash flow",
   "<p class='pen'>An increase in non-interest-bearing liabilities is a <i>source</i> of funds, so it "
   "reduces the investment the business needs.</p>")
 
-q("Cash flow",
-  "Net fixed assets rose from ₹1,800 cr to ₹2,050 cr and depreciation for the year was ₹240 cr. "
-  "What was capital expenditure?",
-  ["₹490 cr", "₹250 cr", "₹10 cr", "₹2,290 cr"], 0,
-  "<div class='f'>Capex = Δ net fixed assets + depreciation = 250 + 240 = <b>₹490 cr</b></div>"
-  "<p class='grn'>This definition is also the answer to 'why is depreciation <b>alone</b> added "
-  "back?' — it is already inside the capex you are about to subtract, so adding it back to NOPAT "
-  "cancels the effect. The two moves are a matched pair.</p>")
-
 q("ROIC",
   "NOPAT for FY25 is ₹375 cr. Operating invested capital was ₹2,500 cr at the end of FY24 and "
   "₹2,800 cr at the end of FY25. What is ROIC for FY25?",
@@ -324,14 +358,6 @@ q("ROIC",
   "<p class='trapline'>⚠ Mind the lag. This year's profit was earned on <b>last year's</b> capital. "
   "Using the closing figure gives 13.4%, and using the average gives 14.2% — both understate the "
   "return the business actually earned on the capital it had.</p>")
-
-q("EVA",
-  "Opening operating invested capital is ₹2,500 cr, ROIC is 15% and WACC is 11%. What is EVA?",
-  ["₹100 cr", "₹375 cr", "₹275 cr", "₹65 cr"], 0,
-  "<div class='f'>EVA = OIC_(t−1) × (ROIC − WACC) = 2,500 × (15% − 11%) = <b>₹100 cr</b>\n"
-  "  or  NOPAT − WACC × OIC = 375 − 275 = <b>₹100 cr</b></div>"
-  "<p class='pen'>₹375 cr is NOPAT and ₹275 cr is the capital charge. "
-  "Enterprise value = OIC + PV(all future EVA), and it must reconcile exactly to the FCF valuation.</p>")
 
 q("Terminal value",
   "An analyst's terminal year shows NOPAT ₹600m with <b>net investment of zero</b>, ROIC 14%, "
@@ -353,14 +379,6 @@ q("VC method",
   "<div class='f'>Terminal value = 15 × 12 = <b>$180m</b>\n"
   "FV of investment = 10 × 1.40⁵ = 10 × 5.3782 = <b>$53.78m</b>\n"
   "Required share = 53.78 ÷ 180 = <b>29.88%</b></div>")
-
-q("VC method",
-  "Continuing: what are the post-money and pre-money valuations?",
-  ["Post $33.5m, pre $23.5m", "Post $23.5m, pre $33.5m",
-   "Post $13.5m, pre $3.5m", "Post $30.0m, pre $20.0m"], 0,
-  "<div class='f'>Post-money = Investment ÷ required % = 10 ÷ 0.2988 = <b>$33.47m</b>\n"
-  "Pre-money  = 33.47 − 10                      = <b>$23.47m</b></div>"
-  "<p class='grn'>Cross-check every time: price per share = pre-money ÷ <b>old</b> share count.</p>")
 
 q("VC method",
   "The fund now insists management must own 12% of the company by exit. "
@@ -392,6 +410,19 @@ q("Anti-dilution",
   "<p class='grn'>Series A now converts into 8m × (2.00 ÷ 1.84) = 8.70m shares. The new investor's "
   "percentage is unchanged — the protection transfers value <b>from the founders</b> to the earlier "
   "investor. A full ratchet would reset the price all the way to the new round's price.</p>")
+
+
+q("VC method",
+  "Founders hold 2,000,000 shares and Series A holds 500,000 (20% of 2.5m). At Series B the "
+  "pre-money is $60 million and a new investor puts in $15 million. How much must Series A invest "
+  "to stay at 20%?",
+  ["$3.75 million", "$3.00 million", "$4.50 million", "$15.00 million"], 0,
+  "<div class='f'>Price = $60m ÷ 2.5m = <b>$24.00</b>   A's stake = 500,000 × 24 = <b>$12m</b>\n"
+  "(12 + x) ÷ (60 + 15 + x) = 0.20\n"
+  "12 + x = 15 + 0.2x  ⟹  0.8x = 3  ⟹  <b>x = $3.75m</b></div>"
+  "<p class='pen'>Post-money = $78.75m; A holds $15.75m = 20.0% ✓. "
+  "$3.00m is the trap of taking 20% of the $75m post-money and subtracting the $12m already held — "
+  "it forgets that your own cheque raises the post-money.</p>")
 
 # ======================================================= PRIVATE COMPANY (29–32)
 q("Private valuation",
@@ -482,6 +513,25 @@ q("AI valuation",
   "choice of denominator matters more than any argument about the numerator — quoting a multiple "
   "without stating the basis is meaningless.</p>")
 
+
+q("Quant",
+  "EV/EBITDA is regressed on ROIC for 12 companies: EV/EBITDA = 4.2 + 0.35 × ROIC(%), with "
+  "t-statistics of 2.9 and 2.6 and an R² of 41%. What is the best interpretation?",
+  ["Both coefficients are significant, and ROIC explains 41% of the cross-sectional variation — "
+   "the other 59% is everything else",
+   "ROIC fully determines EV/EBITDA in this sector",
+   "The slope is insignificant, so ROIC does not affect the multiple",
+   "41% of the companies in the sample are correctly valued"], 0,
+  "<div class='f'>n = 12, k = 2  ⟹  df = 10, 5% critical t ≈ <b>2.23</b>\n"
+  "2.9 and 2.6 both exceed it  ⟹  both coefficients significant\n"
+  "R² = 41%  ⟹  41% of the VARIATION explained, not 41% of the companies</div>"
+  "<p class='grn'>Contrast with the P/E PYQ, where the slope's t of 0.8 killed it. Here the "
+  "relationship is real — which is exactly the logic behind Laura Martin's ROIC target price, "
+  "where the same regression on cable companies had R² = 70%.</p>"
+  "<p class='trapline'>⚠ R² is about variance explained. It never says anything about how many "
+  "companies are \"correctly valued\", and a significant slope never means a variable is the "
+  "only thing that matters.</p>")
+
 # ======================================================= GUEST LECTURE (36–40)
 q("Guest lecture",
   "An Indian private company issues shares to a resident investor at a premium. Under which statute "
@@ -558,9 +608,10 @@ def qblock(i, d):
         f'<div class="opt{" right" if j == d["ans"] else ""}">'
         f'<span class="k">{"ABCD"[j]}</span><span class="txt">{o}</span></div>'
         for j, o in enumerate(d["opts"]))
+    badge = "\u2605 ACTUAL PYQ \u00b7 " if d["pyq"] else ""
     return (f'<div class="qb">'
             f'<div class="qhead"><span class="qno">Q{i}</span>'
-            f'<span class="qtag">{d["topic"]}</span></div>'
+            f'<span class="qtag">{badge}{d["topic"]}</span></div>'
             f'<div class="stem">{d["stem"]}</div>'
             f'<div class="opts">{opts}</div>'
             f'<div class="ans">Ans: {"ABCD"[d["ans"]]}</div>'
@@ -582,7 +633,8 @@ def shuffle_options(seed=20260831):
 
 # two questions per sheet, except where a long one needs the room to itself
 # questions whose working needs a sheet of its own (measured, not guessed)
-SOLO = {8, 12, 23, 28, 30, 32, 34, 36, 38, 40}
+# measured, not guessed: the three PYQs and these questions need a sheet each
+SOLO = {1, 2, 3, 4, 12, 14, 26, 28, 30, 32, 36, 38, 40}
 
 
 def pack():
@@ -617,8 +669,11 @@ def build():
         '<div style="margin-top:12mm" class="sub">'
         'The circled option is the answer. The boxed working below it is how you would '
         'get there in the exam.<br><br>'
-        '<span class="red">Q36–Q40 are from the guest-lecture session</span> — sir has said '
-        'that block is worth 4–5 questions.</div>'
+        '<span class="red">Q1–Q3 are actual questions</span> from sir\u2019s own End Term '
+        'Pattern slides, with his marking: <span class="red">+4 for right, \u22121 for wrong</span>. '
+        'Three more questions in this set are built on those same patterns, because he reuses them.<br><br>'
+        '<span class="red">Five questions are from the guest-lecture session</span> \u2014 sir has said '
+        'that block is worth 4\u20135 questions.</div>'
         '</div>\n')
     for n, group in enumerate(sheets, start=2):
         body = "".join(qblock(i, d) for i, d in group)
