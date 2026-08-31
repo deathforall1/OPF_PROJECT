@@ -8,7 +8,9 @@ Built from the Term IV Business Analysis & Valuation material in `../bav_materia
 | `BAV_Field_Manual.html` | The master guide. Beginner-friendly, covers Quiz 1 (multiples), Quiz 2 (DCF/APV), Quiz 3 (cost of capital, cash flow, EVA), the post-Quiz-3 interim block (VC method, private companies, real options, AI valuation, practical/M&A), the quant toolkit, and exam craft. |
 | `BAV_Recall_Sheets.html` | 40 single-topic revision sheets in a handwritten notebook style. A4, print or save as PDF with no scaling. |
 | `BAV_Question_Bank.html` | Predicted 25-question interim paper under +4/−1 marking, plus a 57-question end-term bank by topic. Interactive scoring, full worked solutions. |
+| `BAV_Solved_MCQs.html` / `.pdf` | 40 exam-style MCQs in the same handwritten format, each with the answer circled and the full working shown. Five are from the guest-lecture session, which sir has said is worth 4-5 questions. |
 | `build_notes.py` | Generator for `BAV_Recall_Sheets.html`. Edit the `PAGES` list and re-run. |
+| `build_qsheets.py` | Generator for `BAV_Solved_MCQs.html`. Questions are written with the correct option first; `shuffle_options()` permutes them deterministically at build time so the printed key is not a column of As. |
 
 ## Sources used
 

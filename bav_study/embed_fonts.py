@@ -5,9 +5,13 @@ Used to make a self-contained copy of a page before rendering it to PDF with a
 headless browser, which otherwise prints in fallback fonts.
 """
 import base64
+import hashlib
+import pathlib
 import re
 import subprocess
 import sys
+import tempfile
+import time
 
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -16,10 +20,27 @@ UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
 KEEP = ("latin", "latin-ext")
 
 
+CACHE = pathlib.Path(tempfile.gettempdir()) / "gf-cache"
+
+
 def fetch(url: str) -> bytes:
-    out = subprocess.run(["curl", "-sSL", "-A", UA, url],
-                         capture_output=True, check=True)
-    return out.stdout
+    """Download with a small cache and a few retries; the proxy times out
+    occasionally and a half-embedded stylesheet is worse than a slow build."""
+    CACHE.mkdir(exist_ok=True)
+    key = CACHE / hashlib.sha1(url.encode()).hexdigest()
+    if key.exists():
+        return key.read_bytes()
+    last = None
+    for attempt in range(4):
+        out = subprocess.run(
+            ["curl", "-sSL", "--connect-timeout", "20", "--max-time", "120",
+             "-A", UA, url], capture_output=True)
+        if out.returncode == 0 and out.stdout:
+            key.write_bytes(out.stdout)
+            return out.stdout
+        last = out.returncode
+        time.sleep(2 ** attempt)
+    raise RuntimeError(f"could not fetch {url} (curl exit {last})")
 
 
 def inline(css_url: str) -> str:
