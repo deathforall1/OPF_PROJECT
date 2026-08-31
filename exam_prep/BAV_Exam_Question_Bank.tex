@@ -1,0 +1,792 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{qstyle}
+\begin{document}
+
+% ----------------------------------------------------------------- cover
+\thispagestyle{empty}
+\vspace*{6mm}
+{\color{inkred}\Huge\bfseries BAV --- Exam Question Bank}\par\vspace{3mm}
+{\color{inkblue}\Large Business Analysis \& Valuation}\par\vspace{1mm}
+{\color{pencil}\large 45 solved multiple-choice questions}\par\vspace{6mm}
+
+\begin{minipage}{0.97\textwidth}
+{\color{inkblue}
+Forty questions on the taught course, plus five on the guest-lecture session.
+Every question carries four options, a full worked solution and the answer. Numbers
+are taken from the Ambuja and UltraTech valuations built for the project, so the
+arithmetic is checkable against the models.}
+\end{minipage}
+
+\vspace{7mm}
+\begin{minipage}{0.97\textwidth}
+{\color{inkblue}\bfseries What is in here}\par\vspace{2mm}
+\begin{tabular}{@{}p{0.13\textwidth}p{0.56\textwidth}p{0.11\textwidth}@{}}
+\textbf{A} & The five consistencies & Q1--8\\[1.5mm]
+\textbf{B} & DCF variants and why they must agree & Q9--17\\[1.5mm]
+\textbf{C} & Cost of capital, relevering and circularity & Q18--26\\[1.5mm]
+\textbf{D} & Terminal value, multiples and relative valuation & Q27--35\\[1.5mm]
+\textbf{E} & Applied: the cement valuations & Q36--40\\[1.5mm]
+\textbf{F} & Guest lecture: M\&A, synergy and exchange ratios & Q41--45\\
+\end{tabular}
+\end{minipage}
+
+\vspace{8mm}
+\begin{minipage}{0.97\textwidth}
+{\color{inkred}\bfseries How to use it.} {\color{inkblue}Cover the working with a
+sheet of paper, answer the four options, then check. The starred
+\textbf{$\star$ Remember} lines are the traps that separate marks --- most of them are
+sign errors, wrong-rate errors or double counting, not hard arithmetic.}
+\end{minipage}
+
+\vspace{6mm}
+\begin{minipage}{0.97\textwidth}
+{\color{pencil}\itshape Note on Section F: the guest-lecture questions are written on
+M\&A, synergy valuation and exchange ratios, which is the module the course carries
+separately from the core valuation syllabus. If the guest session covered a different
+topic, these five should be swapped.}
+\end{minipage}
+
+\newpage
+
+% ================================================================= SECTION A
+\sect{A}{The five consistencies}{Mohanty's central claim: a valuation is correct when
+it preserves five consistencies --- assumptions, risk, asset, liability, multiplier.
+Maintain all five and every DCF variant returns the same equity value.}
+
+\q{1}{Five consistencies --- risk}{A student discounts free cash flow to \emph{equity}
+at the WACC. Which consistency has been broken?}
+\opt{Assumptions consistency}{Risk consistency}{Asset consistency}{Multiplier consistency}
+\begin{soln}
+Risk consistency requires the cash flow and the discount rate to belong to the same
+claimholder. FCFE is an \emph{equity} flow, so it must be discounted at the cost of
+equity $K_e$. WACC is a firm-level rate and belongs with FCFF or CCF.
+\formula{Firm flows $\to$ WACC or $\rho$ \quad\textbar\quad Equity flows $\to$ $K_e$}
+Since WACC $<K_e$ whenever there is debt, this error \emph{overstates} equity value.
+\end{soln}
+\ans{b}{Risk consistency}
+\memo{The classic pair is FCFE at WACC and FCFF at $K_e$. Check the label on the cash
+flow before you check the arithmetic.}
+
+\q{2}{Five consistencies --- assumptions}{A forecast grows sales at 15\% a year while
+holding capital expenditure and working capital flat in rupee terms. Which consistency
+fails?}
+\opt{Assumptions consistency}{Liability consistency}{Risk consistency}{Multiplier consistency}
+\begin{soln}
+Growth requires reinvestment. Selling more cement needs more plant and more working
+capital; a model that grows revenue without growing the capital base is manufacturing
+free cash flow out of nothing.
+\formula{$g = \text{RONIC} \times \text{reinvestment rate}$}
+Rearranged, reinvestment rate $=g/\text{RONIC}$. If reinvestment is zero, $g$ must be
+zero unless RONIC is infinite.
+\end{soln}
+\ans{a}{Assumptions consistency}
+\memo{Every growth assumption has a matching investment assumption. If you cannot show
+where the money went, the growth is not real.}
+
+\q{3}{Five consistencies --- asset}{A model excludes interest income from NOPAT because
+cash is treated as non-operating, but forgets to add the cash balance back in the
+equity bridge. What is the effect?}
+\opt{Equity value is unchanged}{Equity value is overstated}{Equity value is
+understated}{Only the WACC is affected}
+\begin{soln}
+Asset consistency: every asset is counted exactly \emph{once}. Two valid treatments
+exist ---
+\formula{(i) income \emph{in} NOPAT $\to$ asset \emph{not} added back}
+\formula{(ii) income \emph{excluded} $\to$ asset added back at the bridge}
+Excluding the income and also omitting the add-back counts the cash \emph{zero} times.
+The company owns the cash but the valuation gives no credit for it, so value is
+understated by the cash balance.
+\end{soln}
+\ans{c}{Equity value is understated}
+\memo{Asset errors come in both directions. Adding back land while its rent still sits
+in operating income counts it twice; this question is the mirror image.}
+
+\q{4}{Five consistencies --- liability}{A deferred sales-tax liability is included as a
+source of funds in the WACC weights but is not subtracted in the bridge from enterprise
+value to equity. Which consistency fails, and in which direction?}
+\opt{Liability; equity overstated}{Liability; equity understated}{Asset; equity
+overstated}{Risk; no directional effect}
+\begin{soln}
+Liability consistency: whatever is included in the cost of capital as a source of funds
+\emph{must} be subtracted from enterprise value to reach equity. Including the
+liability in the weights but not in the bridge means the claim finances the assets but
+never gets repaid out of the value.
+\formula{Equity $=$ EV $+$ non-operating assets $-$ \emph{every} prior claim}
+The omitted deduction inflates the residual left for shareholders.
+\end{soln}
+\ans{a}{Liability; equity overstated}
+\memo{Non-interest-bearing items are either inside net working capital or treated as
+debt-like --- never both, and never neither.}
+
+\q{5}{Five consistencies --- multiplier}{A model assumes terminal growth of 10\% and
+produces an implied terminal EV/EBITDA of 4x. What does this indicate?}
+\opt{Nothing; multiples and DCF are unrelated}{Multiplier inconsistency}{The WACC must
+be too low}{The forecast horizon is too long}
+\begin{soln}
+A multiple is the \emph{output} of value divided by an accounting indicator, so the
+multiple your model implies must be arithmetically consistent with the growth, return
+and discount rate the model itself uses.
+\formula{Justified $\dfrac{EV}{EBITDA} = \dfrac{(NOPAT/EBITDA)\,(1-g/ROIC)}{WACC-g}$}
+High terminal growth with a very low exit multiple is internally contradictory: a
+company growing at 10\% forever would command a high multiple, not 4x.
+\end{soln}
+\ans{b}{Multiplier inconsistency}
+
+\q{6}{Method equivalence}{All five DCF methods in a model return exactly the same value
+per share. What does this prove?}
+\opt{The assumptions are correct}{The valuation is accurate}{The model is internally
+consistent, and nothing more}{The market price must be wrong}
+\begin{soln}
+The five methods are one model rearranged. Agreement demonstrates that no consistency
+has been broken in the \emph{construction} of the model. It says nothing whatever about
+whether the inputs are right.
+\formula{Agreement $\Rightarrow$ internal consistency \quad\textbf{but}\quad
+internal consistency $\nRightarrow$ correct value}
+A model with a badly wrong growth assumption will still reconcile across all five
+methods, perfectly and pointlessly.
+\end{soln}
+\ans{c}{The model is internally consistent, and nothing more}
+\memo{This is a favourite one-mark question. Never write that reconciliation proves the
+valuation is right.}
+
+\q{7}{Five consistencies --- liability}{Operating leases are capitalised and the lease
+liability is deducted in the equity bridge, but rent continues to be expensed inside
+the free cash flow. What has happened?}
+\opt{Correct treatment}{The lease is counted twice as a cost}{The lease is not counted
+at all}{Only the beta is affected}
+\begin{soln}
+Capitalising the lease means treating it as debt: the liability is deducted at the
+bridge and the rent should be \emph{removed} from operating expense (replaced by
+depreciation and interest, both of which sit below FCFF).
+Leaving rent in the cash flow \emph{and} deducting the liability charges the company
+for the same obligation twice --- once through lower FCFF and once through a smaller
+bridge.
+\end{soln}
+\ans{b}{The lease is counted twice as a cost}
+
+\q{8}{Terminal reinvestment}{A model charges terminal reinvestment as $g$ times invested
+capital \emph{including} acquisition goodwill. What does this implicitly assume?}
+\opt{That the company must keep buying goodwill forever merely to grow}{That goodwill
+depreciates}{That the tax shield is perpetual}{Nothing --- it is the standard treatment}
+\begin{soln}
+Reinvestment in the terminal year funds the assets that produce the extra output.
+Organic growth needs more plant and more working capital; it does not need the company
+to keep making acquisitions.
+\formula{Terminal reinvestment $= g \times$ \emph{operating} invested capital}
+Goodwill still belongs \emph{inside} invested capital when measuring the return
+shareholders earned on what they paid --- but not inside the reinvestment charge. In
+the Ambuja model, getting this wrong drove the equity value negative.
+\end{soln}
+\ans{a}{That the company must keep buying goodwill forever merely to grow}
+\memo{Goodwill: in the ROIC denominator, out of terminal reinvestment.}
+
+% ================================================================= SECTION B
+\sect{B}{DCF variants and why they must agree}{The OLP Limited test vector runs through
+Q9--Q12. Inputs: net operating income $X=\text{Rs }100$m in perpetuity, tax
+$t=20\%$, debt $D=\text{Rs }100$m at $K_d=10\%$, cost of equity $K_e=20\%$, no
+non-operating assets, zero growth.}
+
+\q{9}{OLP --- FCF at WACC}{Using the OLP inputs, what is the enterprise value under the
+enterprise FCF method?}
+\opt{Rs 400m}{Rs 440m}{Rs 460m}{Rs 500m}
+\begin{soln}
+Step 1 --- the cash flow. With zero growth there is no reinvestment, so
+$\text{FCF} = X(1-t) = 100(0.8) = \text{Rs }80$m.\par
+Step 2 --- equity value, needed for the weights. $\text{FCFE}=(X-K_dD)(1-t)
+=(100-10)(0.8)=72$, so $E = 72/0.20 = \text{Rs }360$m and $V = 360+100 = 460$.\par
+Step 3 --- the WACC.
+\formula{$\text{WACC}=\tfrac{E}{V}K_e+\tfrac{D}{V}K_d(1-t)
+=\tfrac{360}{460}(0.20)+\tfrac{100}{460}(0.10)(0.8)=17.391\%$}
+Step 4 --- $EV = 80/0.17391 = \textbf{Rs }\mathbf{460}$m.
+\end{soln}
+\ans{c}{Rs 460m}
+
+\q{10}{OLP --- FCFE at $K_e$}{Using the same inputs, what is the equity value under the
+FCFE method?}
+\opt{Rs 360m}{Rs 400m}{Rs 460m}{Rs 288m}
+\begin{soln}
+Equity cash flow is what is left after paying interest and tax, with zero growth so no
+net new borrowing.
+\formula{$\text{FCFE}=(X-K_dD)(1-t)=(100-10)(0.8)=\text{Rs }72$m}
+Discount at the \emph{equity} rate: $E = 72/0.20 = \textbf{Rs }\mathbf{360}$m.\par
+Cross-check: $EV = E+D = 360+100 = 460$, matching Q9 exactly. That equality is the
+whole point of the exercise.
+\end{soln}
+\ans{a}{Rs 360m}
+
+\q{11}{OLP --- CCF at pre-tax WACC}{What is the capital cash flow, and the rate at which
+it is discounted?}
+\opt{80 at 17.391\%}{82 at 17.826\%}{72 at 20.000\%}{82 at 17.391\%}
+\begin{soln}
+Capital cash flow adds the interest tax shield back into the flow, so the shield is no
+longer inside the discount rate --- which means the rate must be the \emph{pre-tax}
+WACC.
+\formula{$\text{CCF}=\text{FCF}+t\,K_d D = 80 + (0.20)(0.10)(100) = \text{Rs }82$m}
+\formula{$\text{pre-tax WACC}=\tfrac{E}{V}K_e+\tfrac{D}{V}K_d
+=\tfrac{360}{460}(0.20)+\tfrac{100}{460}(0.10)=17.826\%$}
+$EV = 82/0.17826 = \text{Rs }460$m. Same answer again.
+\end{soln}
+\ans{b}{82 at 17.826\%}
+\memo{If you add the shield to the numerator you must take it out of the denominator.
+Doing both, or neither, is the error.}
+
+\q{12}{OLP --- APV}{Under APV with debt fixed in rupee terms, what are the unlevered
+cost of capital and the value of the tax shield?}
+\opt{$K_u=20.000\%$, VTS $=$ Rs 10m}{$K_u=18.182\%$, VTS $=$ Rs 20m}{$K_u=17.391\%$,
+VTS $=$ Rs 20m}{$K_u=18.182\%$, VTS $=$ Rs 80m}
+\begin{soln}
+Unlever using the MM (1963) relation, which is the fixed-debt case:
+\formula{$K_e = K_u + (K_u-K_d)\tfrac{D}{E}(1-t)$}
+$0.20 = K_u + (K_u-0.10)\tfrac{100}{360}(0.8)$. Solving, $K_u = \mathbf{18.182\%}$.\par
+With debt fixed and zero growth the shield is a perpetuity discounted at $K_d$, which
+collapses to
+\formula{$\text{VTS} = \dfrac{t K_d D}{K_d} = tD = 0.20 \times 100 = \text{Rs }20$m}
+$\text{APV} = 80/0.18182 + 20 = 440 + 20 = \text{Rs }460$m.
+\end{soln}
+\ans{b}{$K_u=18.182\%$, VTS $=$ Rs 20m}
+
+\q{13}{FCFF to FCFE bridge}{Which identity converts free cash flow to the firm into free
+cash flow to equity?}
+\opt{FCFE $=$ FCFF $-$ interest $+$ tax}{FCFE $=$ FCFF $-$ interest$(1-t)$ $+$ net new
+borrowing}{FCFE $=$ FCFF $+$ interest$(1-t)$ $-$ net new borrowing}{FCFE $=$ FCFF $-$
+dividends}
+\begin{soln}
+FCFF is the cash available to \emph{all} providers of capital. To get to the equity
+holders you must pay the lenders and then add back anything the lenders newly advanced.
+\formula{$\text{FCFE} = \text{FCFF} - I(1-t) + \Delta D$}
+Interest is taken after tax because it is tax-deductible. Net new borrowing $\Delta D$
+is a genuine cash inflow to equity.
+\end{soln}
+\ans{b}{FCFE $=$ FCFF $-$ interest$(1-t)$ $+$ net new borrowing}
+
+\q{14}{Net new borrowing}{A firm grows at $g$ forever and maintains a constant debt
+ratio. What is net new borrowing each year?}
+\opt{Zero}{$g \times D$}{$K_d \times D$}{$t \times K_d \times D$}
+\begin{soln}
+A constant debt \emph{ratio} with a firm growing at $g$ means the rupee amount of debt
+must also grow at $g$; otherwise the ratio falls every year.
+\formula{$\Delta D = g \times D$}
+This is the most common error in the course: students discount a growing FCFE at a
+constant $K_e$ while implicitly holding debt fixed. Equity flows then grow faster than
+$g$, the debt ratio drifts, and the constant-$K_e$ assumption collapses.
+\end{soln}
+\ans{b}{$g \times D$}
+\memo{If you hold WACC constant you have assumed a constant D/E, which \emph{requires}
+debt to grow at $g$. Put the net borrowing line in the model and show it.}
+
+\q{15}{Choice of method}{A company is deleveraging on a announced schedule over five
+years. Which valuation method is most appropriate?}
+\opt{FCFF at a single constant WACC}{APV}{Relative valuation only}{Dividend discount
+model}
+\begin{soln}
+A single constant WACC embeds a constant capital structure. If leverage is changing on
+a known path, the WACC changes every year and one average rate is simply wrong.\par
+APV separates the two effects: value the assets unlevered at $K_u$, then add the
+present value of the year-by-year tax shields the actual debt schedule produces.
+\formula{$\text{APV} = V_u + \text{PV(tax shields)}$}
+\end{soln}
+\ans{b}{APV}
+\memo{APV is the LBO and deleveraging method precisely because the financing side is
+modelled explicitly rather than buried in a rate.}
+
+\q{16}{EVA reconciliation}{Enterprise value under EVA equals opening invested capital
+plus the present value of future EVA. Which two conditions are necessary for this to
+tie to the FCFF answer?}
+\opt{Positive EVA, and a five-year horizon}{FCFF defined as NOPAT less the change in
+invested capital, and a true steady-state terminal year}{A constant WACC, and zero
+growth}{Goodwill excluded from invested capital}
+\begin{soln}
+EVA is not an independent method; it is the same cash flows re-expressed.
+\formula{$\text{EVA}_t = \text{NOPAT}_t - \text{WACC}\times \text{IC}_{t-1}$}
+\formula{$EV = \text{IC}_0 + \sum \dfrac{\text{EVA}_t}{(1+\text{WACC})^t}$}
+The identity holds only if (i) FCFF is defined consistently as
+$\text{NOPAT}-\Delta\text{IC}$, so that capital charged equals capital invested, and
+(ii) the terminal year is a genuine steady state, so the perpetuity of EVA matches the
+perpetuity of FCFF. Drop either and the two answers diverge.
+\end{soln}
+\ans{b}{FCFF $=$ NOPAT $-\,\Delta$IC, and a true steady-state terminal year}
+
+\q{17}{When methods disagree}{Your FCFF valuation gives Rs 520 per share and your FCFE
+valuation gives Rs 480. What should you do?}
+\opt{Average them to Rs 500}{Report the more conservative figure}{Find and fix the
+inconsistency}{Report both as a range}
+\begin{soln}
+The methods are algebraically identical when the five consistencies hold. A gap is not
+a modelling choice or a legitimate range --- it is proof of an error.\par
+The three usual culprits, in order of frequency: debt not growing at $g$ where a
+constant WACC was assumed; the tax shield double-counted (in the rate \emph{and} in the
+flow); cash or investments treated differently in the flows and in the bridge.
+\end{soln}
+\ans{c}{Find and fix the inconsistency}
+\memo{Never average. Averaging two answers that must be equal hides the error and
+throws away the diagnostic.}
+
+% ================================================================= SECTION C
+\sect{C}{Cost of capital, relevering and circularity}{Nine questions on the inputs that
+decide the discount rate --- and on the two places where students most often break risk
+consistency without noticing.}
+
+\q{18}{Risk-free rate}{The 10-year G-Sec yield is 6.85\% and the India sovereign default
+spread is 1.87\%. The equity risk premium being used already includes a country risk
+premium. What risk-free rate should be used?}
+\opt{6.85\%}{8.72\%}{4.98\%}{7.08\%}
+\begin{soln}
+The G-Sec is not default-free: India is rated Baa3, so the yield contains compensation
+for sovereign default risk. If the ERP already carries a country risk premium, using
+the raw G-Sec counts India risk \emph{twice}.
+\formula{$r_f = 6.85\% - 1.87\% = \mathbf{4.98\%}$}
+The rule is symmetric: strip the spread from the risk-free rate \emph{or} use an ERP
+without a country premium. Do one, never both and never neither.
+\end{soln}
+\ans{c}{4.98\%}
+\memo{Double-counting country risk is a silent error --- the number still looks
+plausible. State which convention you used.}
+
+\q{19}{Relevering --- Hamada}{Unlevered beta is 0.90, market D/E is 6.4681\% and the
+marginal tax rate is 25.168\%. What is the levered beta under the fixed-debt (Hamada)
+formula?}
+\opt{0.9436}{0.9582}{0.9729}{0.9000}
+\begin{soln}
+\formula{$\beta_L = \beta_U\left[1+(1-t)\tfrac{D}{E}\right]$}
+$= 0.90\,[1 + (1-0.25168)(0.064681)]$\par
+$= 0.90\,[1 + (0.74832)(0.064681)] = 0.90 \times 1.048403 = \mathbf{0.9436}$.
+\end{soln}
+\ans{a}{0.9436}
+\memo{The tax term is $(1-t)$, not $(1+t)$. A sign slip here is a real error that
+appeared in one of the project workbooks.}
+
+\q{20}{Relevering --- Harris--Pringle}{The same company states a policy of constant
+debt-to-value with continuous rebalancing, and discounts its tax shield at $\rho$. What
+is the correct levered beta?}
+\opt{0.9436}{0.9582}{0.9000}{0.9729}
+\begin{soln}
+Under Case 2 --- constant $D/V$, continuously rebalanced --- the debt level moves with
+firm value, so the tax shield carries \emph{asset} risk rather than debt risk. It is
+discounted at $\rho$, and the relevering formula carries \textbf{no tax term}.
+\formula{$\beta_L = \beta_U\left(1+\tfrac{D}{E}\right) = 0.90\,(1.064681)
+= \mathbf{0.9582}$}
+Using the Hamada formula while discounting the shield at $\rho$ mixes Case 1 and Case 2
+and breaks risk consistency.
+\end{soln}
+\ans{b}{0.9582}
+\memo{Match the unlever, the relever and the shield discount rate to \emph{one} debt
+policy. This is the single most common risk-consistency failure in real models.}
+
+\q{21}{The $\rho$ identity}{WACC is 11.4286\%, $K_d$ is 8.34\%, the tax rate is 25.168\%
+and $D/V$ is 6.0751\%. What is the unlevered cost of capital $\rho$?}
+\opt{11.4286\%}{11.5561\%}{11.3011\%}{11.7641\%}
+\begin{soln}
+\formula{$\rho = \text{WACC} + K_d\,t\,\tfrac{D}{V}$}
+$= 0.114286 + (0.0834)(0.25168)(0.060751)$\par
+$= 0.114286 + 0.001275 = \mathbf{11.5561\%}$.\par
+Equivalently $\rho = \tfrac{E}{V}K_e + \tfrac{D}{V}K_d$ --- the unweighted mix with no
+tax relief, because under CCF and APV the shield has been taken out of the rate.
+\end{soln}
+\ans{b}{11.5561\%}
+\memo{This identity is the fastest audit in the whole model. If $\rho$ and WACC do not
+satisfy it to the last decimal, something is wrong.}
+
+\q{22}{Debt policy and the shield}{Under which debt policy is the interest tax shield
+discounted at the cost of debt $K_d$?}
+\opt{Constant $D/V$, continuously rebalanced}{Debt fixed in rupee terms}{Constant
+$D/V$, rebalanced annually}{All three}
+\begin{soln}
+The discount rate for the shield must match the risk of the shield, which follows the
+risk of the debt.
+\formula{Case 1 --- debt fixed in Rs: shield is as safe as the debt $\to$ discount at $K_d$}
+\formula{Case 2 --- Harris--Pringle: debt moves with value $\to$ discount at $\rho$}
+\formula{Case 3 --- Miles--Ezzell: first year at $K_d$, later years at $\rho$}
+Only fixed rupee debt gives a shield whose amount is known in advance and therefore
+carries debt risk throughout.
+\end{soln}
+\ans{b}{Debt fixed in rupee terms}
+
+\q{23}{Circularity}{WACC needs market-value weights, but the equity value is what you
+are solving for. What are the two sanctioned solutions?}
+\opt{Use book-value weights, or ignore the problem}{Use a target D/E, or iterate to
+convergence}{Use the industry average, or use book values}{Use the risk-free rate
+instead of WACC}
+\begin{soln}
+Both solutions are legitimate and both must be disclosed.\par
+\textbf{(i) Target D/E.} Use management's stated or the industry's structure.
+Appropriate when the firm will migrate to it. Only the \emph{ratio} is needed, never
+rupee values.\par
+\textbf{(ii) Iterative convergence.} Seed with market capitalisation, compute
+WACC $\to$ value $\to$ implied equity, feed that back and repeat until
+$(\text{implied} - \text{assumed}) = 0$. In Excel: enable iterative calculation or use
+Goal Seek.\par
+For a listed company, using market cap is acceptable \emph{if stated} --- but note the
+tension: you are using the very price you claim may be wrong.
+\end{soln}
+\ans{b}{Use a target D/E, or iterate to convergence}
+\memo{Never silently use book-value weights. That is an automatic mark lost.}
+
+\q{24}{Tax rate}{A company has migrated to section 115BAA. What is the effective
+marginal corporate tax rate?}
+\opt{22.000\%}{25.168\%}{34.944\%}{17.160\%}
+\begin{soln}
+Section 115BAA is a 22\% base rate, plus a 10\% surcharge, plus a 4\% health and
+education cess. The loadings are multiplicative, not additive.
+\formula{$22\% \times 1.10 \times 1.04 = \mathbf{25.168\%}$}
+MAT does not apply under 115BAA. The old regime works out near 34.944\% and section
+115BAB (new manufacturing) near 17.16\%. Always verify the regime from the tax
+reconciliation note --- never assume.
+\end{soln}
+\ans{b}{25.168\%}
+
+\q{25}{Cost of debt}{Which is the preferred source for the pre-tax cost of debt?}
+\opt{Interest expense divided by average debt}{The yield on the company's traded bonds,
+or the rate disclosed in the borrowings note}{The risk-free rate plus 2\%}{The coupon
+on the oldest outstanding loan}
+\begin{soln}
+$K_d$ must be a \emph{forward-looking market} rate --- what the company would pay to
+borrow today. Interest expense over average debt is a historical average of legacy
+borrowings at legacy rates, distorted by drawdowns and repayments during the year.\par
+Use it only as a sanity check. And remember the after-tax conversion for the WACC:
+\formula{$K_d^{\text{after-tax}} = K_d(1-t)$}
+\end{soln}
+\ans{b}{The yield on the company's traded bonds, or the rate disclosed in the
+borrowings note}
+
+\q{26}{Beta}{A regression beta from 60 monthly observations is 1.15 with an $R^2$ of
+0.27. The bottom-up beta from 469 sector peers is 0.91. Which should you use, and why?}
+\opt{The regression beta, because it uses the company's own price history}{The
+bottom-up beta, because the regression explains little of the variance}{The average of
+the two}{Whichever gives the higher valuation}
+\begin{soln}
+An $R^2$ of 0.27 means the market explains only 27\% of the stock's variation --- the
+regression estimate carries a wide standard error and is unstable to the choice of
+window and frequency.\par
+A bottom-up beta averages the unlevered betas of many firms in the same business, so
+estimation errors diversify away, and it is then relevered at the subject's own D/E.
+Where the two diverge materially, prefer bottom-up and \emph{explain} the choice.
+\end{soln}
+\ans{b}{The bottom-up beta, because the regression explains little of the variance}
+\memo{Note the direction: here bottom-up is lower, so it \emph{raises} the valuation.
+Say so --- disclosing that your choice helped the answer is what earns the mark.}
+
+% ================================================================= SECTION D
+\sect{D}{Terminal value, multiples and relative valuation}{Terminal value usually
+carries 70--80\% of enterprise value, so these are the highest-leverage assumptions in
+any model --- and the ones examiners probe hardest.}
+
+\q{27}{Nominal growth}{Long-run real GDP growth is 6.5\% and long-run inflation 4.0\%.
+What is nominal GDP growth, built the way the method requires?}
+\opt{10.50\%}{10.76\%}{2.50\%}{26.00\%}
+\begin{soln}
+Growth rates compound; they do not add.
+\formula{$g_{\text{nom}} = (1+g_{\text{real}})(1+i)-1 = (1.065)(1.040)-1 = \mathbf{10.76\%}$}
+The additive shortcut gives 10.50\%, which is 26 basis points too low. Over a
+perpetuity that error is not trivial.
+\end{soln}
+\ans{b}{10.76\%}
+\memo{Terminal $g$ must also stay below WACC, and a mature single-country firm should
+not out-grow nominal GDP forever.}
+
+\q{28}{Steady state}{Terminal growth is 6.99\% and terminal ROIC is 11.94\%. What
+reinvestment rate does steady state require?}
+\opt{41.4\%}{58.6\%}{69.9\%}{11.9\%}
+\begin{soln}
+In steady state, growth is funded entirely by reinvesting a fraction of NOPAT at the
+return on new capital.
+\formula{$g = \text{RONIC}\times\text{reinvestment rate} \;\Rightarrow\;
+\text{reinvestment rate} = \dfrac{g}{\text{RONIC}}$}
+$= 0.0699 / 0.1194 = \mathbf{58.6\%}$.\par
+So terminal FCFF $=$ NOPAT $\times (1-0.586) = 41.4\%$ of NOPAT. Forgetting to charge
+this reinvestment is the fastest way to overstate a terminal value.
+\end{soln}
+\ans{b}{58.6\%}
+
+\q{29}{Justified multiple}{Terminal NOPAT/EBITDA is 0.4902, terminal ROIC 11.94\%,
+terminal growth 6.99\% and $\rho$ 11.39\%. What EV/EBITDA do these fundamentals justify?}
+\opt{19.4x}{4.65x}{7.52x}{1.13x}
+\begin{soln}
+\formula{$\dfrac{EV}{EBITDA} = \dfrac{(NOPAT/EBITDA)\left(1-g/ROIC\right)}{WACC-g}$}
+Reinvestment rate $= 0.0699/0.1194 = 0.5858$, so $1-0.5858 = 0.4142$.\par
+Numerator $= 0.4902 \times 0.4142 = 0.2031$.\par
+Denominator $= 0.1139 - 0.0699 = 0.0440$.\par
+$EV/EBITDA = 0.2031/0.0440 = \mathbf{4.65x}$.
+\end{soln}
+\ans{b}{4.65x}
+\memo{The test is not whether your multiple equals the peer multiple. It is whether
+your multiple is arithmetically consistent with your own $g$, ROIC and WACC.}
+
+\q{30}{EV to invested capital}{A company earns ROIC of 3.3\% today, terminal growth is
+6.99\% and WACC 11.36\%. What multiple of invested capital is justified?}
+\opt{1.66x}{0.46x}{Negative --- no positive multiple is justified}{2.02x}
+\begin{soln}
+\formula{$\dfrac{EV}{IC} = \dfrac{ROIC-g}{WACC-g}
+= \dfrac{0.033-0.0699}{0.1136-0.0699} = \dfrac{-0.0369}{0.0437} = \mathbf{-0.85x}$}
+The numerator is negative because the company earns \emph{less} than the rate at which
+it is being asked to grow. Every rupee reinvested destroys value, so no positive
+multiple of invested capital is warranted at all.\par
+This is the sharpest single statement of the Ambuja investment case.
+\end{soln}
+\ans{c}{Negative --- no positive multiple is justified}
+\memo{When ROIC $<g$, growth is value-destroying. When ROIC $=$ WACC, growth is
+value-neutral. Only ROIC $>$ WACC makes growth worth having.}
+
+\q{31}{Reverse cross-check}{A peer median exit multiple implies terminal growth of
+10.33\%, while nominal GDP growth is 10.76\% and the company's realisation has
+compounded at 2.0\% over ten years. What is the correct conclusion?}
+\opt{Adopt the peer multiple --- the market knows best}{The peer multiple is the
+implausible end of the range, and you should say so}{Raise your terminal growth to
+10.33\%}{Relative valuation cannot be reconciled with DCF, so ignore it}
+\begin{soln}
+Solving a peer multiple back for the growth it implies is the reverse cross-check the
+method requires. Here it demands perpetual growth at roughly 96\% of the whole
+economy's rate, from a company whose price has compounded at 2.0\%.\par
+A company growing faster than the economy forever eventually \emph{becomes} the
+economy. Adopting that growth to justify the multiple would contradict your own model.
+Take a position, evidence it, and record the gap honestly.
+\end{soln}
+\ans{b}{The peer multiple is the implausible end of the range, and you should say so}
+
+\q{32}{Terminal dominance}{Two models value similar companies. Model A uses a five-year
+explicit horizon and terminal value is 79\% of EV; Model B uses ten years and terminal
+value is 72\%. What does this mainly reflect?}
+\opt{Model B is more optimistic}{Horizon length, not optimism}{Model A has a higher
+WACC}{Model B has higher terminal growth}
+\begin{soln}
+Lengthening the explicit forecast moves cash flows out of the terminal perpetuity and
+into the modelled period. The \emph{same} company modelled over ten years will always
+show a lower terminal share than over five.\par
+The method's guidance: extend the explicit period until steady state is credible ---
+particularly when ROIC $\gg$ WACC or growth is far above steady state. Report terminal
+value as a percentage of EV, and treat 80--90\% as the level demanding scrutiny.
+\end{soln}
+\ans{b}{Horizon length, not optimism}
+
+\q{33}{Choice of multiple}{For which type of business is price-to-book the appropriate
+primary multiple?}
+\opt{FMCG and IT services}{Banks, NBFCs, oil and gas, real estate}{Any company with
+negative earnings}{Companies with high operating leverage}
+\begin{soln}
+The selection rule follows where value actually sits on the financial statements.
+\formula{Income-statement businesses $\to$ P/E or EV/EBITDA}
+\formula{Balance-sheet businesses $\to$ P/B, paired with ROE}
+For a bank, the balance sheet \emph{is} the business, so book value is the meaningful
+scale variable. P/E is meaningless with negative earnings; P/B needs positive net
+worth.
+\end{soln}
+\ans{b}{Banks, NBFCs, oil and gas, real estate}
+
+\q{34}{Valuing a bank}{Why is an enterprise FCF model inappropriate for a bank, and
+what should be used instead?}
+\opt{Banks have no cash flows; use EV/EBITDA}{Debt and working capital are the raw
+material, so value equity directly with DDM or FCFE at $K_e$}{Banks are too volatile;
+use book value only}{Use FCFF but with a higher WACC}
+\begin{soln}
+For an industrial firm, debt is financing. For a bank, deposits and borrowings are
+\emph{inputs to production} --- the thing it buys and sells. Separating operating from
+financing flows is therefore meaningless, and enterprise value has no clear content.
+\formula{Value equity directly: DDM or FCFE, discounted at $K_e$}
+Reinvestment is driven by capital-adequacy requirements rather than by capex. The
+primary multiple is P/B paired with ROE, and residual income works well too.
+\end{soln}
+\ans{b}{Value equity directly --- DDM or FCFE at $K_e$}
+\memo{Stating this method switch prominently is itself graded --- it demonstrates you
+understand risk consistency rather than just following a template.}
+
+\q{35}{Order of work}{Where does relative valuation belong in the workflow, and why?}
+\opt{Before the DCF, to anchor the target price}{After the DCF, because a multiple is
+an outcome of valuation rather than its cause}{In place of the DCF when time is
+short}{Only for loss-making companies}
+\begin{soln}
+A multiple is value divided by an accounting indicator --- it is the \emph{result} of a
+valuation, not an input to one. Anchoring a DCF to ``the market multiple says so''
+reverses the logic and imports the market's assumptions into what is meant to be an
+independent estimate.\par
+The correct sequence: build the DCF, derive the multiple your own model implies, then
+place it beside the peer set and \emph{explain} any gap through fundamentals ---
+growth for P/E, ROE for P/B, returns for EV/IC.
+\end{soln}
+\ans{b}{After the DCF, because a multiple is an outcome of valuation rather than its
+cause}
+
+% ================================================================= SECTION E
+\sect{E}{Applied: the cement valuations}{Five questions using the actual figures from
+the Ambuja and UltraTech models, where the theory above has to survive contact with
+real accounts.}
+
+\q{36}{Basis error}{Ambuja's group market capitalisation is Rs 99,095 cr. Standalone
+EBITDA is Rs 2,930 cr; consolidated EBITDA is Rs 6,559 cr; non-controlling interest is
+Rs 12,499 cr and the group is roughly net-cash. Which EV/EBITDA is correct, and why?}
+\opt{34.0x, on standalone EBITDA}{17.0x, on consolidated EBITDA with NCI added to
+EV}{15.1x, on consolidated EBITDA without NCI}{Either is acceptable if disclosed}
+\begin{soln}
+Market capitalisation prices the \emph{whole group}, including the 50.05\% stake in the
+separately listed ACC. Standalone EBITDA excludes ACC entirely. Dividing one by the
+other is a category error.
+\formula{Wrong: $99{,}676 / 2{,}930 = 34.0x$}
+\formula{Right: $(99{,}095 + 12{,}499 - 93)/6{,}559 = 111{,}501/6{,}559 = \mathbf{17.0x}$}
+Non-controlling interest is added to enterprise value because consolidated EBITDA
+includes 100\% of the partly owned subsidiaries that produce it. Numerator and
+denominator must cover the same set of assets.
+\end{soln}
+\ans{b}{17.0x, on consolidated EBITDA with NCI added to EV}
+\memo{Whenever a multiple looks absurd, check the basis before you check the market.}
+
+\q{37}{The bridge}{Ambuja's consolidated cash flows include 100\% of its partly owned
+subsidiaries. Non-controlling interest is Rs 12,499 cr and there are 247.18 cr shares.
+What happens if the NCI is not deducted in the bridge?}
+\opt{Nothing --- NCI is a book entry}{Value per share is overstated by about
+Rs 51}{Value per share is understated by about Rs 51}{Only the WACC changes}
+\begin{soln}
+If the cash flows being discounted belong 100\% to the group, but only part of the
+group belongs to Ambuja's shareholders, the minority's share must be removed before
+dividing by Ambuja's share count.
+\formula{$12{,}499 / 247.18 = \mathbf{Rs\ 50.57}$ per share}
+Omitting it hands the parent's shareholders value that belongs to the minorities ---
+liability consistency again, in its most expensive form.
+\end{soln}
+\ans{b}{Value per share is overstated by about Rs 51}
+
+\q{38}{After-tax returns}{A workbook computes historical ROIC as EBIT of Rs 11,761 cr
+over invested capital of Rs 81,733 cr, but the cell meant to apply tax references an
+empty cell. Statutory tax is 25.168\%. What is the reported ROIC, and what is the
+correct one?}
+\opt{Reported 14.39\%, correct 10.77\%}{Reported 10.77\%, correct 14.39\%}{Both 14.39\%}{Reported 14.39\%, correct 12.50\%}
+\begin{soln}
+With the tax reference broken, NOPAT collapses to EBIT and the series becomes a
+\emph{pre-tax} return.
+\formula{Reported: $11{,}761/81{,}733 = 14.39\%$ \quad (pre-tax)}
+\formula{Correct: $11{,}761 \times (1-0.25168)/81{,}733 = \mathbf{10.77\%}$}
+The distinction matters enormously here: 14.39\% sits comfortably above an 11.4\% cost
+of capital, while 10.77\% sits \emph{below} it. The same company looks value-creating
+or value-destroying depending on one cell reference.
+\end{soln}
+\ans{a}{Reported 14.39\%, correct 10.77\%}
+\memo{ROIC is always after tax. A pre-tax return compared with a WACC is comparing
+unlike with unlike.}
+
+\q{39}{Normalising a tax credit}{Ambuja reports a net tax \emph{credit} of Rs 2,338 cr,
+so reported profit exceeds pre-tax profit and the effective rate is minus 71\%. How
+should the valuation treat it?}
+\opt{Use the reported effective rate of $-71\%$}{Use the statutory rate throughout and
+decompose the credit by its economics}{Ignore tax entirely for that year}{Average the
+reported rate over five years}
+\begin{soln}
+A negative effective rate is unusable as a forward-looking assumption. Tax EBIT at the
+statutory 25.168\% throughout, then treat each component of the credit on its
+economics, not its accounting:\par
+$\bullet$ Provision reversals (Rs 1,251 cr) --- non-cash, prior period. \textbf{Excluded}:
+the credit was never in the cash flows.\par
+$\bullet$ Tax paid under protest (Rs 614 cr) --- real cash already handed over,
+recoverable. \textbf{Added} as a non-operating asset.\par
+$\bullet$ Deferred tax liability (Rs 3,466 cr) --- a real claim. \textbf{Deducted} once
+in the bridge.\par
+Net effect: about \textbf{minus Rs 11.54 per share}. A Rs 2,338 cr headline gain is
+worth negative value.
+\end{soln}
+\ans{b}{Use the statutory rate throughout and decompose the credit by its economics}
+
+\q{40}{EVA and enterprise value}{A company's EVA is negative in nine of ten forecast
+years. What must be true of its enterprise value?}
+\opt{It must be negative}{It must sit below invested capital}{It must exceed invested
+capital}{Nothing follows}
+\begin{soln}
+\formula{$EV = \text{IC}_0 + \text{PV(future EVA)}$}
+If EVA is persistently negative, the present value of future EVA is negative, so EV
+falls below opening invested capital. That is not an error --- it is exactly what the
+theory predicts when a company earns less on capital than capital costs.\par
+EV can still be comfortably positive; it is simply worth less than the capital sunk
+into it. Equivalently, EV/IC $<1$, which the identity in Q30 also produces.
+\end{soln}
+\ans{b}{It must sit below invested capital}
+\memo{Negative EVA with a positive EV is perfectly coherent. Do not ``fix'' it.}
+
+% ================================================================= SECTION F
+\sect{F}{Guest lecture --- M\&A, synergy and exchange ratios}{Five questions on the
+transaction module. Value each entity standalone first, then value only the
+\emph{incremental} synergy cash flows, at a rate that matches their risk.}
+
+\q{41}{Definition of synergy}{Acquirer A is worth Rs 800 cr standalone and target B
+Rs 300 cr standalone. The combined entity is valued at Rs 1,250 cr. What is the synergy
+value?}
+\opt{Rs 1,250 cr}{Rs 450 cr}{Rs 150 cr}{Rs 950 cr}
+\begin{soln}
+Synergy is the value the combination creates over and above what the two businesses are
+already worth apart.
+\formula{$\text{Synergy} = V_{AB} - (V_A + V_B) = 1{,}250 - (800+300) = \mathbf{Rs\ 150\ cr}$}
+Note what this requires: both standalone valuations must be built \emph{first} and on a
+consistent basis. Synergy is a residual, so any error in either standalone figure lands
+entirely in the synergy number.
+\end{soln}
+\ans{c}{Rs 150 cr}
+
+\q{42}{Net gain to the acquirer}{On the same facts, A pays Rs 380 cr for B. What is the
+net gain to A's shareholders?}
+\opt{Rs 150 cr}{Rs 80 cr}{Rs 70 cr}{Rs 380 cr}
+\begin{soln}
+The premium is what the acquirer hands to the target's shareholders; the net gain is
+what is left of the synergy after paying it.
+\formula{Premium $= 380 - 300 = \text{Rs }80$ cr}
+\formula{Net gain to A $=$ Synergy $-$ Premium $= 150 - 80 = \mathbf{Rs\ 70\ cr}$}
+The transaction creates Rs 150 cr of value, of which A's shareholders keep Rs 70 cr and
+B's shareholders capture Rs 80 cr. If the premium had exceeded Rs 150 cr, A would be
+transferring value to B despite a genuinely synergistic deal.
+\end{soln}
+\ans{c}{Rs 70 cr}
+\memo{A good deal at a bad price is a bad deal. Always report the net gain after the
+premium, not the synergy alone.}
+
+\q{43}{Exchange ratio}{A share-swap merger values the target at Rs 480 per share and the
+acquirer at Rs 1,600 per share. What is the exchange ratio?}
+\opt{0.30 acquirer shares per target}{3.33 acquirer shares per target}{0.48 acquirer shares per target}{1.60 acquirer shares per target}
+\begin{soln}
+The exchange ratio equates the value given to the value received, per share.
+\formula{$\text{ER} = \dfrac{\text{value per target share}}{\text{value per acquirer share}}
+= \dfrac{480}{1{,}600} = \mathbf{0.30}$}
+So each target shareholder receives 0.30 acquirer shares. If the target has 100 cr
+shares, the acquirer issues 30 cr new shares.\par
+The ratio should be set on \emph{intrinsic} values, including the target's share of
+synergy that the acquirer is willing to pay away --- not on traded prices alone, which
+already contain deal speculation.
+\end{soln}
+\ans{a}{0.30 acquirer shares per target share}
+
+\q{44}{EPS accretion}{A merger is EPS-accretive in year one. What does this tell you
+about value creation?}
+\opt{The deal creates value}{Nothing reliable --- accretion depends on the relative P/E
+ratios}{The deal destroys value}{The synergies must be real}
+\begin{soln}
+A company with a \emph{higher} P/E acquiring one with a \emph{lower} P/E will report
+EPS accretion arithmetically, with no synergy whatever, simply because it buys more
+earnings per share issued. The reverse produces dilution even when the deal is
+excellent.
+\formula{Accretion is an artefact of relative P/E, not evidence of economic value}
+Value creation is tested by discounting incremental synergy cash flows and comparing
+them with the premium paid --- Q41 and Q42, not the EPS line.
+\end{soln}
+\ans{b}{Nothing reliable --- accretion depends on the relative P/E ratios}
+\memo{Never substitute EPS accretion for economic value creation. This is the single
+most tested point in the transaction module.}
+
+\q{45}{Valuing synergies}{Which set of cash flows may be included when valuing synergy,
+and at what rate?}
+\opt{All the target's cash flows, at the acquirer's WACC}{Only incremental, timing-specific flows, at a risk-matched rate}{The combined entity's total cash flows, at the target's WACC}{Cost savings only, at the risk-free rate}
+\begin{soln}
+Three disciplines apply.\par
+\textbf{Incremental.} Only cash flows that would not exist without the combination.
+The target's standalone flows are already in $V_B$; counting them again double-counts.\par
+\textbf{Timing-specific.} Synergies arrive on a schedule and cost money to achieve.
+Implementation costs and their timing must be explicit.\par
+\textbf{Risk-matched.} Cost synergies are usually more certain than revenue synergies,
+so they do not deserve the same discount rate. Revenue synergies should carry a higher
+rate, or a probability weighting.\par
+Treat revenue, cost, tax and financing effects separately, and sensitise the
+assumptions that drive the premium decision.
+\end{soln}
+\ans{b}{Only incremental, timing-specific cash flows, discounted at a rate matching
+their own risk}
+\memo{Revenue synergies are the ones that most often fail to arrive. Examiners expect
+you to say so.}
+
+\vspace{8mm}
+\begin{center}
+{\color{inkred}\bfseries\large --- end of question bank ---}\par\vspace{2mm}
+{\color{pencil}\itshape 45 questions \quad\textbar\quad 40 core $+$ 5 guest lecture}
+\end{center}
+
+\end{document}
